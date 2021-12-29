@@ -5,7 +5,6 @@
 
 /* global console, document, Excel, Office */
 
-
 /*
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
@@ -15,7 +14,6 @@ Office.onReady((info) => {
   }
 });
 */
-
 
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
