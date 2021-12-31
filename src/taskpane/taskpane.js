@@ -265,8 +265,8 @@ Office.onReady((info) => {
         //var artistColumn = changedTable.columns.getItem("Artist").load("name");
 
         var pickupTurnaroundTimeTable = context.workbook.tables.getItem("PickupTurnaroundTime");
-        var projectTypeHourColumn = projectTypeTable.columns.getItem("Project Type Hour");
-        projectTypeHourColumn.load("name");
+       // var pickupTurnaroundTimeColumn = pickupTurnaroundTimeTable.columns.getItem("Project Type Hour");
+       // pickupTurnaroundTimeColumn.load("name");
         var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows
         pickupTurnaroundTimeTableRows.load("items")
 
@@ -829,7 +829,8 @@ Office.onReady((info) => {
       var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values;
         //console.log(pickupTurnaroundTimeValues);
           if (i == 0) {
-            brandNewBuild = pickupTurnaroundTimeValues[0][1];
+            startTurnAroundTime.menu.brandNewBuild = pickupTurnaroundTimeValues[0][1, 2, 3, 4, 5, 6, 7, 8];
+            //need to make a variable for startTurnAroundTime that is an array of all products, with each product having an array of 8 numbers
           } else if (i == 1) {
             newBuildOtherNatives = pickupTurnaroundTimeValues[0][1];
           } else if (i == 2) {
