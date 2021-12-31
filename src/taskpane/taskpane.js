@@ -264,11 +264,11 @@ Office.onReady((info) => {
         //var addedColumn = changedTable.columns.getItem("Added").load("name");
         //var artistColumn = changedTable.columns.getItem("Artist").load("name");
 
-        var projectTypeTable = context.workbook.tables.getItem("ProjectTypeTable");
+        var pickupTurnaroundTimeTable = context.workbook.tables.getItem("PickupTurnaroundTime");
         var projectTypeHourColumn = projectTypeTable.columns.getItem("Project Type Hour");
         projectTypeHourColumn.load("name");
-        var projectTypeTableRows = projectTypeTable.rows
-        projectTypeTableRows.load("items")
+        var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows
+        pickupTurnaroundTimeTableRows.load("items")
 
         var productTable = context.workbook.tables.getItem("ProductTable");
         var productTableHoursColumn = productTable.columns.getItem("Product Hours");
@@ -472,6 +472,8 @@ Office.onReady((info) => {
               return;
             };
 
+            //hi
+
           //#endregion --------------------------------------------------------------------------------------------
             
           //#region LOAD VARIABLES AND DO FUNCTIONS ----------------------------------------------------------------
@@ -482,9 +484,11 @@ Office.onReady((info) => {
 
                 var rowValues = myRow.values;
 
+                console.log(pickupTurnaroundTimeTableRows.items);
+
                 //if (changedTable.id == projectTypeTable.id) {
-                  for (var i = 0; i < projectTypeTableRows.items.length; i++) {
-                    assignProjectTypeValues(projectTypeTableRows, i); //loads value from validation sheet for each project type
+                  for (var i = 0; i < pickupTurnaroundTimeTableRows.items.length; i++) {
+                    assignPickupTurnaroundTimeValues(pickupTurnaroundTimeTableRows, i); //loads value from validation sheet for each project type
                   };
                 //};
 
@@ -817,29 +821,29 @@ Office.onReady((info) => {
 
   //#region ASSIGN PROJECT TYPE VALUES FROM VALIDATION SHEET TO CODED VARIABLES -------------------------------------
     /**
-     * Loads values from the Project Type Table in Validation and assigns these values to the associated variable to be used in the code
-     * @param {Array} projectTypeTableRows An array of all the rows in the Project Type table
+     * Loads values from the Picked-Up / Started By Turn Around Time Table in Validation and assigns these values to the associated variable to be used in the code
+     * @param {Array} pickupTurnaroundTimeTableRows An array of all the rows in the Picked-Up / Started By Turn Around Time table
      * @param {Number} i The number of the row that values will be assigned to
      */
-    function assignProjectTypeValues(projectTypeTableRows, i) {
-      var projectTypeValues = projectTypeTableRows.items[i].values;
-        //console.log(projectTypeValues);
+    function assignPickupTurnaroundTimeValues(pickupTurnaroundTimeTableRows, i) {
+      var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values;
+        //console.log(pickupTurnaroundTimeValues);
           if (i == 0) {
-            brandNewBuild = projectTypeValues[0][1];
+            brandNewBuild = pickupTurnaroundTimeValues[0][1];
           } else if (i == 1) {
-            newBuildOtherNatives = projectTypeValues[0][1];
+            newBuildOtherNatives = pickupTurnaroundTimeValues[0][1];
           } else if (i == 2) {
-            newBuildFromTemplate = projectTypeValues[0][1];
+            newBuildFromTemplate = pickupTurnaroundTimeValues[0][1];
           } else if (i == 3) {
-            changesToExistingNatives = projectTypeValues[0][1];
+            changesToExistingNatives = pickupTurnaroundTimeValues[0][1];
           } else if (i == 4) {
-            specCheck = projectTypeValues[0][1];
+            specCheck = pickupTurnaroundTimeValues[0][1];
           } else if (i == 5) {
-            weTransferUpload = projectTypeValues[0][1];
+            weTransferUpload = pickupTurnaroundTimeValues[0][1];
           } else if (i == 6) {
-            specialRequest = projectTypeValues[0][1];
+            specialRequest = pickupTurnaroundTimeValues[0][1];
           } else if (i == 7) {
-            otherProjectType = projectTypeValues[0][1];
+            otherProjectType = pickupTurnaroundTimeValues[0][1];
           };
     };
       //console.log("The updated projectType values are: " + brandNewBuild + ", " + newBuildOtherNatives + ", " + newBuildFromTemplate + ", " + changesToExistingNatives + ", " + specCheck + ", " + weTransferUpload + ", " + specialRequest + ", " + otherProjectType)
