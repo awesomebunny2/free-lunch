@@ -1050,16 +1050,12 @@ Office.onReady((info) => {
               day: 'numeric',
               year: '2-digit'
           });
-
           var formatTime = override.toLocaleTimeString("en-us", { //formats the time to display correctly
             hour: '2-digit',
             minute:'2-digit'
           });
-
           var squeekday = formatDate + " " + formatTime; //adds the correctly displayed date and time together
-
           range.values = [[squeekday]]; //assigns the returned date value to the cell
-
           return range.values; //commits changes and exits the function
           */
         //#endregion ------------------------------------------------------------------------------------------------
@@ -1245,16 +1241,12 @@ Office.onReady((info) => {
               day: 'numeric',
               year: '2-digit'
           });
-
           var formatTime = workOverride.toLocaleTimeString("en-us", { //formats the time to display correctly
             hour: '2-digit',
             minute:'2-digit'
           });
-
           var squeekday = formatDate + " " + formatTime; //adds the correctly displayed date and time together
-
           range.values = [[squeekday]]; //assigns the returned date value to the cell
-
           return range.values; //commits changes and exits the function
           */
       //#endregion -------------------------------------------------------------------------------------------------
