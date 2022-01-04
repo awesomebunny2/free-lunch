@@ -1080,6 +1080,10 @@ Office.onReady((info) => {
         var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows
         pickupTurnaroundTimeTableRows.load("items")
 
+        var artTurnaroundTimeTable = context.workbook.tables.getItem("ArtTurnaroundTime");
+        var artTurnaroundTimeTableRows = artTurnaroundTimeTable.rows
+        artTurnaroundTimeTableRows.load("items")
+
         var productTable = context.workbook.tables.getItem("ProductTable");
         var productTableHoursColumn = productTable.columns.getItem("Product Hours");
         productTableHoursColumn.load("name");
@@ -1294,38 +1298,52 @@ Office.onReady((info) => {
 
                 var rowValues = myRow.values;
 
-               // console.log(pickupTurnaroundTimeTableRows.items[0]);
-
-
-                //console.log(pickupTurnaroundTimeValues[0][1]);
-
 
                 //if (changedTable.id == projectTypeTable.id) {
 
-                //var snee = Object.keys(startTurnAroundTime);
-                //console.log(snee);
+                //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
 
-                //var hhh = pickupTurnaroundTimeTableRows.items[0].values;
-              
+                  var i = 0;
+                  for (var key of Object.keys(startTurnAroundTime)) {
+                    var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values;
+                    console.log(pickupTurnaroundTimeValues[0][1]);
+                    startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1];
+                    startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2];
+                    startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3];
+                    startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
+                    startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
+                    startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
+                    startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
+                    startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
+                    i++;
+                  };
 
-                //var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items;
+                  //console.log(startTurnAroundTime);
 
-                var i = 0;
-                for (var key of Object.keys(startTurnAroundTime)) {
-                  var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values;
-                  console.log(pickupTurnaroundTimeValues[0][1]);
-                  startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1];
-                  startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2];
-                  startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3];
-                  startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
-                  startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
-                  startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
-                  startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
-                  startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
-                  i++;
-                };
+                //#endregion --------------------------------------------------------------------------------------------
 
-                console.log(startTurnAroundTime);
+
+                //#region ASSIGN ART TURNAROUND TIME VALUES -------------------------------------------------------------
+
+                  var j = 0;
+                  for (var key of Object.keys(artTurnAroundTime)) {
+                    var artTurnaroundTimeValues = artTurnaroundTimeTableRows.items[j].values;
+                    console.log(artTurnaroundTimeValues[0][1]);
+                    artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1];
+                    artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2];
+                    artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3];
+                    artTurnAroundTime[key].changesToExisitingNatives = artTurnaroundTimeValues[0][4];
+                    artTurnAroundTime[key].specCheck = artTurnaroundTimeValues[0][5];
+                    artTurnAroundTime[key].weTransferUpload = artTurnaroundTimeValues[0][6];
+                    artTurnAroundTime[key].specialRequest = artTurnaroundTimeValues[0][7];
+                    artTurnAroundTime[key].other = artTurnaroundTimeValues[0][8];
+                    j++;
+                  };
+
+                  //console.log(artTurnAroundTime);
+
+                //#endregion --------------------------------------------------------------------------------------------
+
                   /*
                   for (var i = 0; i < pickupTurnaroundTimeTableRows.items.length; i++) {
                     assignPickupTurnaroundTimeValues(pickupTurnaroundTimeTableRows, i); //loads value from validation sheet for each project type
