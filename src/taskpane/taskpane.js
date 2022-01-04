@@ -1294,9 +1294,39 @@ Office.onReady((info) => {
 
                 var rowValues = myRow.values;
 
-                console.log(pickupTurnaroundTimeTableRows.items);
+               // console.log(pickupTurnaroundTimeTableRows.items[0]);
+
+
+                //console.log(pickupTurnaroundTimeValues[0][1]);
+
 
                 //if (changedTable.id == projectTypeTable.id) {
+
+                //var snee = Object.keys(startTurnAroundTime);
+                //console.log(snee);
+
+                //var hhh = pickupTurnaroundTimeTableRows.items[0].values;
+              
+
+                //var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items;
+
+                var i = 0;
+                for (var key of Object.keys(startTurnAroundTime)) {
+                  var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values;
+                  console.log(pickupTurnaroundTimeValues[0][1]);
+                  startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1];
+                  startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2];
+                  startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3];
+                  startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
+                  startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
+                  startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
+                  startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
+                  startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
+                  i++;
+                };
+
+                console.log(startTurnAroundTime);
+                  /*
                   for (var i = 0; i < pickupTurnaroundTimeTableRows.items.length; i++) {
                     assignPickupTurnaroundTimeValues(pickupTurnaroundTimeTableRows, i); //loads value from validation sheet for each project type
                   };
@@ -1307,6 +1337,7 @@ Office.onReady((info) => {
                     assignProductValues(productTableRows, i); //loads value from validation sheet for each product
                   };
                 //};
+                */
 
               //#endregion --------------------------------------------------------------------------------------------
 
@@ -1496,6 +1527,7 @@ Office.onReady((info) => {
                   }
                   //console.log("Promise Rejected");
                 });
+                console.log(startTurnAroundTime.values);
 
               //#endregion ------------------------------------------------------------------------------------------------
 
@@ -1643,7 +1675,8 @@ Office.onReady((info) => {
             startTurnAroundTime.menu = pickupTurnaroundTimeValues[0][1, 2, 3, 4, 5, 6, 7, 8];
             //need to make a variable for startTurnAroundTime that is an array of all products, with each product having an array of 8 numbers
           } else if (i == 1) {
-            newBuildOtherNatives = pickupTurnaroundTimeValues[0][1];
+            startTurnAroundTime.menuXL = pickupTurnaroundTimeValues[1][1, 2, 3, 4, 5, 6, 7, 8];
+            // newBuildOtherNatives = pickupTurnaroundTimeValues[0][1];
           } else if (i == 2) {
             newBuildFromTemplate = pickupTurnaroundTimeValues[0][1];
           } else if (i == 3) {
