@@ -1375,19 +1375,19 @@ Office.onReady((info) => {
 
                     if (changedColumn == projectTypeColumn || changedColumn == productColumn || changedColumn == addedColumn || changedColumn == startOverrideColumn || changedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
 
-                      var projectTypeHours = lookupStart(rowValues, changedRow); //adds hours to turn-around time based on Project Type
+                      var startAdjustmentHours = startHoursNumber(rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
                     
-                      var productHours = preLookupWork(rowValues, projectTypeHours); //adds hours based on Product and adds to lookupStart output
+                      var artAdjustmentHours = workHoursNumber(rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
                     
-                      var workHoursAdjust = lookupWork(productHours, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
+                      //var workHoursAdjust = lookupWork(artAdjustmentHours, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
                 
                       var myDate = receivedAdjust(rowValues, changedRow); //grabs values from Added column and converts into date object in EST.
                     
-                      var override = startPreAdjust(rowValues, projectTypeHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
+                      var override = startPreAdjust(rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
                     
                       var startedPickedUpBy = startedBy(changedRow, sheet, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
                 
-                      var workOverride = workPrePreAdjust(rowValues, workHoursAdjust, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
+                      var workOverride = workPrePreAdjust(rowValues, artAdjustmentHours, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
                   
                       var proofToClient = toClient(changedRow, sheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
 
@@ -1812,40 +1812,130 @@ Office.onReady((info) => {
 //#endregion ----------------------------------------------------------------------------------------------------
 
 
-  //#region PROJECT TYPE HOURS -----------------------------------------------------------------------------------
+  //#region START ADJUSTMENT HOURS -----------------------------------------------------------------------------------
     /**
-     * Finds the value of Project Type in the changed row and returns a number of hours depending on the project type
+     * Finds the value of Project Type and Product in the changed row and returns a number of hours for the Start By Turn Around Time
      * @param {Array} rowValues loads the values of the changed row
-     * @param {Number} changedRow loads the row number of the changed row
+     * @param {Object} startTurnAroundTime a variable containing objects that represent all the given values for start time based on project type and product, pulled from the validation sheet
      * @returns Number
      */   
-    function lookupStart(rowValues, changedRow) { //loads these variables from another function to use in this function
-      var address = "H" + (changedRow + 2); //takes the row that was updated and locates the address from the Project Type column.
-      // console.log("The address of the new Project Type is " + address);
-      var input = rowValues[0][7]; //assigns input the cell value in the changed row and the Project Type column (a nested array of values)
-      // console.log(input);
+    function startHoursNumber(rowValues, startTurnAroundTime) { //loads these variables from another function to use in this function
 
-      var output;
+      var productInput = rowValues[0][6]; //assigns to productInput the cell value in the changed row and the Product column (a nested array of values)
+      var A;
 
-      if (input == "Brand New Build") {
-        output = brandNewBuild;
-      } else if (input == "Brand New Build from Other Product Natives") {
-        output = newBuildOtherNatives;
-      } else if (input == "Brand New Build From Template") {
-        output = newBuildFromTemplate;
-      } else if (input == "Changes to Exisiting Natives") {
-        output = changesToExistingNatives;
-      } else if (input == "Specification Check") {
-        output = specCheck;
-      } else if (input == "WeTransfer Upload to MS") {
-        output = weTransferUpload;
-      } else if (input == "Special Request") {
-        output = specialRequest;
+      if (productInput == "Menu") {
+        A = "menu";
+      } else if (productInput == "MenuXL") {
+        A = "menuXL";
+      } else if (productInput == "Small Menu") {
+        A = "smallMenu";
+      } else if (productInput == "Brochure") {
+        A = "brochure";
+      } else if (productInput == "BrochureXL") {
+        A = "brochureXL";
+      } else if (productInput == "Small Brochure") {
+        A = "smallBrochure";
+      } else if (productInput == "Postcard") {
+        A = "postcard";
+      } else if (productInput == "Jumbo Postcard") {
+        A = "jumboPostcard";
+      } else if (productInput == "Colossal Postcard") {
+        A = "colossalPostcard";
+      } else if (productInput == "Scratch-Off Postcard") {
+        A = "scratchoffPostcard";
+      } else if (productInput == "Jumbo Scratch-Off Postcard") {
+        A = "jumboScratchoffPostcard";
+      } else if (productInput == "Peel-A-Box Postcard") {
+        A = "peelBoxPostcard";
+      } else if (productInput == "Magnet") {
+        A = "magnet";
+      } else if (productInput == "Folded Magnet") {
+        A = "foldedMagnet";
+      } else if (productInput == "2SBT") {
+        A = "twoSBT";
+      } else if (productInput == "Box Topper") {
+        A = "boxTopper";
+      } else if (productInput == "Flyer") {
+        A = "flyer";
+      } else if (productInput == "Door Hanger") {
+        A = "doorHanger";
+      } else if (productInput == "Small Plastic") {
+        A = "smallPlastic";
+      } else if (productInput == "Medium Plastic") {
+        A = "mediumPlastic";
+      } else if (productInput == "Large Plastic") {
+        A = "largePlastic";
+      } else if (productInput == "Coupon Booklet") {
+        A = "couponBooklet";
+      } else if (productInput == "Envelope Mailer") {
+        A = "envelopeMailer";
+      } else if (productInput == "Birthday Postcard") {
+        A = "birthdayPostcard";
+      } else if (productInput == "New Mover") {
+        A = "newMover";
+      } else if (productInput == "Plastic New Mover") {
+        A = "plasticNewMover";
+      } else if (productInput == "Birthday Plastic") {
+        A = "birthdayPlastic";
+      } else if (productInput == "Wide Format") {
+        A = "wideFormat";
+      } else if (productInput == "Window Clings") {
+        A = "windowClings";
+      } else if (productInput == "Business Cards") {
+        A = "businessCards";
+      } else if (productInput == "Artwork Only") {
+        A = "artworkOnly";
+      } else if (productInput == "Logo Creation") {
+        A = "logoCreation";
+      } else if (productInput == "Logo Recreation") {
+        A = "logoRecreation";
+      } else if (productInput == "Legal Letter") {
+        A = "legalLetter";
+      } else if (productInput == "Letter") {
+        A = "letter";
+      } else if (productInput == "Map Creation") {
+        A = "mapCreation";
+      } else if (productInput == "MenuXXL") {
+        A = "menuXXL";
+      } else if (productInput == "Bi-Fold Menu") {
+        A = "biFoldMenu";
+      } else if (productInput == "Media Kit") {
+        A = "mediaKit";
+      } else if (productInput == "POP Banner") {
+        A = "popBanner";
       } else {
-        output = otherProjectType;
+        A = "";
       };
 
-      return output;
+      var projectTypeInput = rowValues[0][7]; //assigns projectTypeInput the cell value in the changed row and the Project Type column (a nested array of values)
+
+      var B;
+
+      if (projectTypeInput == "Brand New Build") {
+        B = "brandNewBuild";
+      } else if (projectTypeInput == "Brand New Build from Other Product Natives") {
+        B = "brandNewBuildFromNatives";
+      } else if (projectTypeInput == "Brand New Build From Template") {
+        B = "brandNewBuildFromTemplate";
+      } else if (projectTypeInput == "Changes to Exisiting Natives") {
+        B = "changesToExistingNatives";
+      } else if (projectTypeInput == "Specification Check") {
+        B = "specCheck";
+      } else if (projectTypeInput == "WeTransfer Upload to MS") {
+        B = "weTransferUpload";
+      } else if (projectTypeInput == "Special Request") {
+        B = "specialRequest";
+      } else if (projectTypeInput == "Other") {
+        B = "other";
+      } else {
+        B = "";
+      }; 
+
+      var startHours = startTurnAroundTime.A.B; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
+        // console.log(startHours);
+
+      return startHours;
 
     };
   
@@ -1877,13 +1967,13 @@ Office.onReady((info) => {
       /**
        * Finds the value of Start Override in the changed row and adds it to projectTypeHours, then adds that new number as hours to myDate. Adjusts for office hours and weekends.
        * @param {Array} rowValues loads the values of the changed row
-       * @param {Number} projectTypeHours lookupStart returned number
+       * @param {Number} startAdjustmentHours returned number representing amount of hours before project needs to be picked up
        * @param {Date} myDate receivedAdjust returned date
        * @return {Date}
        */
-      function startPreAdjust(rowValues, projectTypeHours, myDate) {
+      function startPreAdjust(rowValues, startAdjustmentHours, myDate) {
         var startOverride = rowValues[0][20]; //gets values of Start Orverride cell
-        var startManualOverride = projectTypeHours + startOverride; //adds start override value to the number of hours for the project type
+        var startManualOverride = startAdjustmentHours + startOverride; //adds start override value to the start hours adjustment
         var myDateCopy = new Date(myDate); //sets myDateCopy to myDate as a new date variable (so the old date doesnt get changed)
         var adjustedDateTime = officeHours(myDateCopy, startManualOverride); //converts to be within office hours if it already isn't
         return adjustedDateTime;
@@ -1942,125 +2032,152 @@ Office.onReady((info) => {
 
     //References the Project Type column (H), Product column (G), and the Work Override column (V) to return a specific date and time for a proof to be sent to the client. This value is returned in the Proof to Client column (N).
 
-    //#region PRODUCT HOURS ----------------------------------------------------------------------------------------
-      /**
-       * Finds the value of Product in the changed row, returns a number of hours based on the product, and adds this number to projectTypeHours
-       * @param {Array} rowValues loads the values of the changed row
-       * @param {Number} projectTypeHours lookupStart returned number
-       * @returns A Number
-       */
-      function preLookupWork(rowValues, projectTypeHours) {
-        var input = rowValues[0][6]; //assigns input the cell value in the changed row and the Product column (a nested array of values)
-        // console.log(input);
-        var output;
+    //#region ART ADJUSTMENT HOURS -----------------------------------------------------------------------------------
+    /**
+     * Finds the value of Project Type and Product in the changed row and returns a number of hours for the Art Turn Around Time
+     * @param {Array} rowValues loads the values of the changed row
+     * @param {Object} artTurnAroundTime a variable containing objects that represent all the given values for art working time based on project type and product, pulled from the validation sheet
+     * @returns Number
+     */   
+     function workHoursNumber(rowValues, artTurnAroundTime) { //loads these variables from another function to use in this function
 
-        if (input == "Menu") {
-          output = menu;
-        } else if (input == "MenuXL") {
-          output = menuXL;
-        } else if (input == "Small Menu") {
-          output = smallMenu;
-        } else if (input == "Brochure") {
-          output = brochure;
-        } else if (input == "BrochureXL") {
-          output = brochureXL;
-        } else if (input == "Small Brochure") {
-          output = smallBrochure;
-        } else if (input == "Postcard") {
-          output = postcard;
-        } else if (input == "Jumbo Postcard") {
-          output = jumboPostcard;
-        } else if (input == "Colossal Postcard") {
-          output = colossalPostcard;
-        } else if (input == "Scratch-Off Postcard") {
-          output = scratchoffPostcard;
-        } else if (input == "Jumbo Scratch-Off Postcard") {
-          output = jumboScratchoffPostcard;
-        } else if (input == "Peel-A-Box Postcard") {
-          output = peelBoxPostcard;
-        } else if (input == "Magnet") {
-          output = magnet;
-        } else if (input == "Folded Magnet") {
-          output = foldedMagnet;
-        } else if (input == "2SBT") {
-          output = twoSBT;
-        } else if (input == "Box Topper") {
-          output = boxTopper;
-        } else if (input == "Flyer") {
-          output = flyer;
-        } else if (input == "Door Hanger") {
-          output = doorHanger;
-        } else if (input == "Small Plastic") {
-          output = smallPlastic;
-        } else if (input == "Medium Plastic") {
-          output = mediumPlastic;
-        } else if (input == "Large Plastic") {
-          output = largePlastic;
-        } else if (input == "Coupon Booklet") {
-          output = couponBooklet;
-        } else if (input == "Envelope Mailer") {
-          output = envelopeMailer;
-        } else if (input == "Birthday Postcard") {
-          output = birthdayPostcard;
-        } else if (input == "New Mover") {
-          output = newMover;
-        } else if (input == "Plastic New Mover") {
-          output = plasticNewMover;
-        } else if (input == "Birthday Plastic") {
-          output = birthdayPlastic;
-        } else if (input == "Wide Format") {
-          output = wideFormat;
-        } else if (input == "Window Clings") {
-          output = windowClings;
-        } else if (input == "Business Cards") {
-          output = businessCards;
-        } else if (input == "Artwork Only") {
-          output = artworkOnly;
-        } else if (input == "Logo Creation") {
-          output = logoCreation;
-        } else if (input == "Logo Recreation") {
-          output = logoRecreation;
-        } else if (input == "Legal Letter") {
-          output = legalLetter;
-        } else if (input == "Letter") {
-          output = letter;
-        } else if (input == "Map Creation") {
-          output = mapCreation;
-        } else if (input == "MenuXXL") {
-          output = menuXXL;
-        } else if (input == "Bi-Fold Menu") {
-          output = biFoldMenu;
-        } else if (input == "Media Kit") {
-          output = mediaKit;
-        } else if (input == "POP Banner") {
-          output = popBanner;
-        } else {
-          output = otherProduct;
-        };
+      var productInput = rowValues[0][6]; //assigns to productInput the cell value in the changed row and the Product column (a nested array of values)
+      var A;
 
-        var newOutput = output + projectTypeHours; //adds hours from lookupStart to output and assigns new output to global variable
-        // console.log(newOutput);
-        return newOutput;
-
+      if (productInput == "Menu") {
+        A = "menu";
+      } else if (productInput == "MenuXL") {
+        A = "menuXL";
+      } else if (productInput == "Small Menu") {
+        A = "smallMenu";
+      } else if (productInput == "Brochure") {
+        A = "brochure";
+      } else if (productInput == "BrochureXL") {
+        A = "brochureXL";
+      } else if (productInput == "Small Brochure") {
+        A = "smallBrochure";
+      } else if (productInput == "Postcard") {
+        A = "postcard";
+      } else if (productInput == "Jumbo Postcard") {
+        A = "jumboPostcard";
+      } else if (productInput == "Colossal Postcard") {
+        A = "colossalPostcard";
+      } else if (productInput == "Scratch-Off Postcard") {
+        A = "scratchoffPostcard";
+      } else if (productInput == "Jumbo Scratch-Off Postcard") {
+        A = "jumboScratchoffPostcard";
+      } else if (productInput == "Peel-A-Box Postcard") {
+        A = "peelBoxPostcard";
+      } else if (productInput == "Magnet") {
+        A = "magnet";
+      } else if (productInput == "Folded Magnet") {
+        A = "foldedMagnet";
+      } else if (productInput == "2SBT") {
+        A = "twoSBT";
+      } else if (productInput == "Box Topper") {
+        A = "boxTopper";
+      } else if (productInput == "Flyer") {
+        A = "flyer";
+      } else if (productInput == "Door Hanger") {
+        A = "doorHanger";
+      } else if (productInput == "Small Plastic") {
+        A = "smallPlastic";
+      } else if (productInput == "Medium Plastic") {
+        A = "mediumPlastic";
+      } else if (productInput == "Large Plastic") {
+        A = "largePlastic";
+      } else if (productInput == "Coupon Booklet") {
+        A = "couponBooklet";
+      } else if (productInput == "Envelope Mailer") {
+        A = "envelopeMailer";
+      } else if (productInput == "Birthday Postcard") {
+        A = "birthdayPostcard";
+      } else if (productInput == "New Mover") {
+        A = "newMover";
+      } else if (productInput == "Plastic New Mover") {
+        A = "plasticNewMover";
+      } else if (productInput == "Birthday Plastic") {
+        A = "birthdayPlastic";
+      } else if (productInput == "Wide Format") {
+        A = "wideFormat";
+      } else if (productInput == "Window Clings") {
+        A = "windowClings";
+      } else if (productInput == "Business Cards") {
+        A = "businessCards";
+      } else if (productInput == "Artwork Only") {
+        A = "artworkOnly";
+      } else if (productInput == "Logo Creation") {
+        A = "logoCreation";
+      } else if (productInput == "Logo Recreation") {
+        A = "logoRecreation";
+      } else if (productInput == "Legal Letter") {
+        A = "legalLetter";
+      } else if (productInput == "Letter") {
+        A = "letter";
+      } else if (productInput == "Map Creation") {
+        A = "mapCreation";
+      } else if (productInput == "MenuXXL") {
+        A = "menuXXL";
+      } else if (productInput == "Bi-Fold Menu") {
+        A = "biFoldMenu";
+      } else if (productInput == "Media Kit") {
+        A = "mediaKit";
+      } else if (productInput == "POP Banner") {
+        A = "popBanner";
+      } else {
+        A = "";
       };
 
-    //#endregion --------------------------------------------------------------------------------------------------
+      var projectTypeInput = rowValues[0][7]; //assigns projectTypeInput the cell value in the changed row and the Project Type column (a nested array of values)
+
+      var B;
+
+      if (projectTypeInput == "Brand New Build") {
+        B = "brandNewBuild";
+      } else if (projectTypeInput == "Brand New Build from Other Product Natives") {
+        B = "brandNewBuildFromNatives";
+      } else if (projectTypeInput == "Brand New Build From Template") {
+        B = "brandNewBuildFromTemplate";
+      } else if (projectTypeInput == "Changes to Exisiting Natives") {
+        B = "changesToExistingNatives";
+      } else if (projectTypeInput == "Specification Check") {
+        B = "specCheck";
+      } else if (projectTypeInput == "WeTransfer Upload to MS") {
+        B = "weTransferUpload";
+      } else if (projectTypeInput == "Special Request") {
+        B = "specialRequest";
+      } else if (projectTypeInput == "Other") {
+        B = "other";
+      } else {
+        B = "";
+      }; 
+
+      var workHours = artTurnAroundTime.A.B; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
+        // console.log(startHours);
+
+      return workHours;
+
+    };
+  
+  //#endregion ---------------------------------------------------------------------------------------------------
+
+    
 
     //#region WORK HOURS ADJUST ------------------------------------------------------------------------------------
       /**
        * if Project Type value is anything other than a new build (and friends), adjusts the Product Hours number to be a third of it's normal value, resulting in a shorter proof to client time
-       * @param {Number} productHours preLookupWork returned number
+       * @param {Number} artAdjustmentHours returned number representing amount of hours before proof needs to be submitted to client
        * @param {Number} rowValues loads the values of the changed row
        * @returns Number
        */
-      function lookupWork(productHours, rowValues) {
+      function lookupWork(artAdjustmentHours, rowValues) {
 
         var input = rowValues[0][7]; //assigns input the cell value in the changed row and the Project Type column (a nested array of values)
 
         if(input == "Brand New Build" || input == "Special Request" || input == "Other") { //if input from Project Type column is any of these values...
-          return productHours; //returns the productHours number unaltered
+          return artAdjustmentHours; //returns the productHours number unaltered
         };
-        var output = productHours / 3; //returns the productHours number divided by 3
+        var output = artAdjustmentHours / 3; //returns the productHours number divided by 3
         return output;
       };
     //#endregion ---------------------------------------------------------------------------------------------------
@@ -2069,13 +2186,13 @@ Office.onReady((info) => {
       /**
        * Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
        * @param {Array} rowValues loads the values of the changed row
-       * @param {Number} workHoursAdjust loads the values of lookupWork
+       * @param {Number} artAdjustmentHours returned number representing amount of hours before proof needs to be submitted to client
        * @param {Date} startedPickedUpBy loads the date that the project should be picked up by
        * @returns Date
        */
-      function workPrePreAdjust (rowValues, workHoursAdjust, override) {
+      function workPrePreAdjust (rowValues, artAdjustmentHours, override) {
         var workOverride = rowValues[0][21]; //gets values of Work Orverride cell
-        var workManualAdjust = workHoursAdjust + workOverride; //adds start override value to the number of hours for the project type
+        var workManualAdjust = artAdjustmentHours + workOverride; //adds start override value to the number of hours for the project type
         var overrideCopy = new Date(override); //sets overrideCopy to a new date variable (so the old date doesnt get changed)
         var adjustedDateTime = officeHours(overrideCopy, workManualAdjust);
         return adjustedDateTime;
