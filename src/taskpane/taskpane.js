@@ -44,7 +44,7 @@ Office.onReady((info) => {
 
   var brandNewBuild;
   var newBuildOtherNatives;
-  var newBuildFromTemplate;
+  var brandNewBuildFromTemplate;
   var changesToExistingNatives;
   var specCheck;
   var weTransferUpload;
@@ -1822,118 +1822,126 @@ Office.onReady((info) => {
     function startHoursNumber(rowValues, startTurnAroundTime) { //loads these variables from another function to use in this function
 
       var productInput = rowValues[0][6]; //assigns to productInput the cell value in the changed row and the Product column (a nested array of values)
-      var A;
+      var x;
 
       if (productInput == "Menu") {
-        A = "menu";
+        x = "menu";
       } else if (productInput == "MenuXL") {
-        A = "menuXL";
+        x = "menuXL";
       } else if (productInput == "Small Menu") {
-        A = "smallMenu";
+        x = "smallMenu";
       } else if (productInput == "Brochure") {
-        A = "brochure";
+        x = "brochure";
       } else if (productInput == "BrochureXL") {
-        A = "brochureXL";
+        x = "brochureXL";
       } else if (productInput == "Small Brochure") {
-        A = "smallBrochure";
+        x = "smallBrochure";
       } else if (productInput == "Postcard") {
-        A = "postcard";
+        x = "postcard";
       } else if (productInput == "Jumbo Postcard") {
-        A = "jumboPostcard";
+        x = "jumboPostcard";
       } else if (productInput == "Colossal Postcard") {
-        A = "colossalPostcard";
+        x = "colossalPostcard";
       } else if (productInput == "Scratch-Off Postcard") {
-        A = "scratchoffPostcard";
+        x = "scratchoffPostcard";
       } else if (productInput == "Jumbo Scratch-Off Postcard") {
-        A = "jumboScratchoffPostcard";
+        x = "jumboScratchoffPostcard";
       } else if (productInput == "Peel-A-Box Postcard") {
-        A = "peelBoxPostcard";
+        x = "peelBoxPostcard";
       } else if (productInput == "Magnet") {
-        A = "magnet";
+        x = "magnet";
       } else if (productInput == "Folded Magnet") {
-        A = "foldedMagnet";
+        x = "foldedMagnet";
       } else if (productInput == "2SBT") {
-        A = "twoSBT";
+        x = "twoSBT";
       } else if (productInput == "Box Topper") {
-        A = "boxTopper";
+        x = "boxTopper";
       } else if (productInput == "Flyer") {
-        A = "flyer";
+        x = "flyer";
       } else if (productInput == "Door Hanger") {
-        A = "doorHanger";
+        x = "doorHanger";
       } else if (productInput == "Small Plastic") {
-        A = "smallPlastic";
+        x = "smallPlastic";
       } else if (productInput == "Medium Plastic") {
-        A = "mediumPlastic";
+        x = "mediumPlastic";
       } else if (productInput == "Large Plastic") {
-        A = "largePlastic";
+        x = "largePlastic";
       } else if (productInput == "Coupon Booklet") {
-        A = "couponBooklet";
+        x = "couponBooklet";
       } else if (productInput == "Envelope Mailer") {
-        A = "envelopeMailer";
+        x = "envelopeMailer";
       } else if (productInput == "Birthday Postcard") {
-        A = "birthdayPostcard";
+        x = "birthdayPostcard";
       } else if (productInput == "New Mover") {
-        A = "newMover";
+        x = "newMover";
       } else if (productInput == "Plastic New Mover") {
-        A = "plasticNewMover";
+        x = "plasticNewMover";
       } else if (productInput == "Birthday Plastic") {
-        A = "birthdayPlastic";
+        x = "birthdayPlastic";
       } else if (productInput == "Wide Format") {
-        A = "wideFormat";
+        x = "wideFormat";
       } else if (productInput == "Window Clings") {
-        A = "windowClings";
+        x = "windowClings";
       } else if (productInput == "Business Cards") {
-        A = "businessCards";
+        x = "businessCards";
       } else if (productInput == "Artwork Only") {
-        A = "artworkOnly";
+        x = "artworkOnly";
       } else if (productInput == "Logo Creation") {
-        A = "logoCreation";
+        x = "logoCreation";
       } else if (productInput == "Logo Recreation") {
-        A = "logoRecreation";
+        x = "logoRecreation";
       } else if (productInput == "Legal Letter") {
-        A = "legalLetter";
+        x = "legalLetter";
       } else if (productInput == "Letter") {
-        A = "letter";
+        x = "letter";
       } else if (productInput == "Map Creation") {
-        A = "mapCreation";
+        x = "mapCreation";
       } else if (productInput == "MenuXXL") {
-        A = "menuXXL";
+        x = "menuXXL";
       } else if (productInput == "Bi-Fold Menu") {
-        A = "biFoldMenu";
+        x = "biFoldMenu";
       } else if (productInput == "Media Kit") {
-        A = "mediaKit";
+        x = "mediaKit";
       } else if (productInput == "POP Banner") {
-        A = "popBanner";
+        x = "popBanner";
       } else {
-        A = "";
+        x = "";
       };
 
       var projectTypeInput = rowValues[0][7]; //assigns projectTypeInput the cell value in the changed row and the Project Type column (a nested array of values)
 
-      var B;
+      var y;
 
       if (projectTypeInput == "Brand New Build") {
-        B = "brandNewBuild";
+        y = "brandNewBuild";
       } else if (projectTypeInput == "Brand New Build from Other Product Natives") {
-        B = "brandNewBuildFromNatives";
+        y = "brandNewBuildFromNatives";
       } else if (projectTypeInput == "Brand New Build From Template") {
-        B = "brandNewBuildFromTemplate";
+        y = "brandNewBuildFromTemplate";
       } else if (projectTypeInput == "Changes to Exisiting Natives") {
-        B = "changesToExistingNatives";
+        y = "changesToExistingNatives";
       } else if (projectTypeInput == "Specification Check") {
-        B = "specCheck";
+        y = "specCheck";
       } else if (projectTypeInput == "WeTransfer Upload to MS") {
-        B = "weTransferUpload";
+        y = "weTransferUpload";
       } else if (projectTypeInput == "Special Request") {
-        B = "specialRequest";
+        y = "specialRequest";
       } else if (projectTypeInput == "Other") {
-        B = "other";
+        y = "other";
       } else {
-        B = "";
+        y = "";
       }; 
 
-      var startHours = startTurnAroundTime.A.B; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
-        // console.log(startHours);
+      //console.log(x);
+      //console.log(y);
+      //console.log(startTurnAroundTime);
+      //console.log(startTurnAroundTime.menu);
+      //console.log(startTurnAroundTime.menu.brandNewBuildFromTemplate);
+      //console.log(startTurnAroundTime[x]);
+      //console.log(startTurnAroundTime[x][y]);
+
+      var startHours = startTurnAroundTime[x][y]; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
+      console.log(startHours);
 
       return startHours;
 
@@ -2042,117 +2050,117 @@ Office.onReady((info) => {
      function workHoursNumber(rowValues, artTurnAroundTime) { //loads these variables from another function to use in this function
 
       var productInput = rowValues[0][6]; //assigns to productInput the cell value in the changed row and the Product column (a nested array of values)
-      var A;
+      var x;
 
       if (productInput == "Menu") {
-        A = "menu";
+        x = "menu";
       } else if (productInput == "MenuXL") {
-        A = "menuXL";
+        x = "menuXL";
       } else if (productInput == "Small Menu") {
-        A = "smallMenu";
+        x = "smallMenu";
       } else if (productInput == "Brochure") {
-        A = "brochure";
+        x = "brochure";
       } else if (productInput == "BrochureXL") {
-        A = "brochureXL";
+        x = "brochureXL";
       } else if (productInput == "Small Brochure") {
-        A = "smallBrochure";
+        x = "smallBrochure";
       } else if (productInput == "Postcard") {
-        A = "postcard";
+        x = "postcard";
       } else if (productInput == "Jumbo Postcard") {
-        A = "jumboPostcard";
+        x = "jumboPostcard";
       } else if (productInput == "Colossal Postcard") {
-        A = "colossalPostcard";
+        x = "colossalPostcard";
       } else if (productInput == "Scratch-Off Postcard") {
-        A = "scratchoffPostcard";
+        x = "scratchoffPostcard";
       } else if (productInput == "Jumbo Scratch-Off Postcard") {
-        A = "jumboScratchoffPostcard";
+        x = "jumboScratchoffPostcard";
       } else if (productInput == "Peel-A-Box Postcard") {
-        A = "peelBoxPostcard";
+        x = "peelBoxPostcard";
       } else if (productInput == "Magnet") {
-        A = "magnet";
+        x = "magnet";
       } else if (productInput == "Folded Magnet") {
-        A = "foldedMagnet";
+        x = "foldedMagnet";
       } else if (productInput == "2SBT") {
-        A = "twoSBT";
+        x = "twoSBT";
       } else if (productInput == "Box Topper") {
-        A = "boxTopper";
+        x = "boxTopper";
       } else if (productInput == "Flyer") {
-        A = "flyer";
+        x = "flyer";
       } else if (productInput == "Door Hanger") {
-        A = "doorHanger";
+        x = "doorHanger";
       } else if (productInput == "Small Plastic") {
-        A = "smallPlastic";
+        x = "smallPlastic";
       } else if (productInput == "Medium Plastic") {
-        A = "mediumPlastic";
+        x = "mediumPlastic";
       } else if (productInput == "Large Plastic") {
-        A = "largePlastic";
+        x = "largePlastic";
       } else if (productInput == "Coupon Booklet") {
-        A = "couponBooklet";
+        x = "couponBooklet";
       } else if (productInput == "Envelope Mailer") {
-        A = "envelopeMailer";
+        x = "envelopeMailer";
       } else if (productInput == "Birthday Postcard") {
-        A = "birthdayPostcard";
+        x = "birthdayPostcard";
       } else if (productInput == "New Mover") {
-        A = "newMover";
+        x = "newMover";
       } else if (productInput == "Plastic New Mover") {
-        A = "plasticNewMover";
+        x = "plasticNewMover";
       } else if (productInput == "Birthday Plastic") {
-        A = "birthdayPlastic";
+        x = "birthdayPlastic";
       } else if (productInput == "Wide Format") {
-        A = "wideFormat";
+        x = "wideFormat";
       } else if (productInput == "Window Clings") {
-        A = "windowClings";
+        x = "windowClings";
       } else if (productInput == "Business Cards") {
-        A = "businessCards";
+        x = "businessCards";
       } else if (productInput == "Artwork Only") {
-        A = "artworkOnly";
+        x = "artworkOnly";
       } else if (productInput == "Logo Creation") {
-        A = "logoCreation";
+        x = "logoCreation";
       } else if (productInput == "Logo Recreation") {
-        A = "logoRecreation";
+        x = "logoRecreation";
       } else if (productInput == "Legal Letter") {
-        A = "legalLetter";
+        x = "legalLetter";
       } else if (productInput == "Letter") {
-        A = "letter";
+        x = "letter";
       } else if (productInput == "Map Creation") {
-        A = "mapCreation";
+        x = "mapCreation";
       } else if (productInput == "MenuXXL") {
-        A = "menuXXL";
+        x = "menuXXL";
       } else if (productInput == "Bi-Fold Menu") {
-        A = "biFoldMenu";
+        x = "biFoldMenu";
       } else if (productInput == "Media Kit") {
-        A = "mediaKit";
+        x = "mediaKit";
       } else if (productInput == "POP Banner") {
-        A = "popBanner";
+        x = "popBanner";
       } else {
-        A = "";
+        x = "";
       };
 
       var projectTypeInput = rowValues[0][7]; //assigns projectTypeInput the cell value in the changed row and the Project Type column (a nested array of values)
 
-      var B;
+      var y;
 
       if (projectTypeInput == "Brand New Build") {
-        B = "brandNewBuild";
+        y = "brandNewBuild";
       } else if (projectTypeInput == "Brand New Build from Other Product Natives") {
-        B = "brandNewBuildFromNatives";
+        y = "brandNewBuildFromNatives";
       } else if (projectTypeInput == "Brand New Build From Template") {
-        B = "brandNewBuildFromTemplate";
+        y = "brandNewBuildFromTemplate";
       } else if (projectTypeInput == "Changes to Exisiting Natives") {
-        B = "changesToExistingNatives";
+        y = "changesToExistingNatives";
       } else if (projectTypeInput == "Specification Check") {
-        B = "specCheck";
+        y = "specCheck";
       } else if (projectTypeInput == "WeTransfer Upload to MS") {
-        B = "weTransferUpload";
+        y = "weTransferUpload";
       } else if (projectTypeInput == "Special Request") {
-        B = "specialRequest";
+        y = "specialRequest";
       } else if (projectTypeInput == "Other") {
-        B = "other";
+        y = "other";
       } else {
-        B = "";
+        y = "";
       }; 
 
-      var workHours = artTurnAroundTime.A.B; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
+      var workHours = artTurnAroundTime[x][y]; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
         // console.log(startHours);
 
       return workHours;
