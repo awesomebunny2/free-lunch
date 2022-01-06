@@ -900,8 +900,51 @@ Office.onReady((info) => {
     }
   };
 
-  console.log(startTurnAroundTime.menu);
-  console.log(startTurnAroundTime.menu.brandNewBuild);
+  var creativeReviewTime = {
+    menu: 0,
+    menuXL: 0,
+    smallMenu: 0,
+    brochure: 0,
+    brochureXL: 0,
+    smallBrochure: 0,
+    postcard: 0,
+    jumboPostcard: 0,
+    colossalPostcard: 0,
+    scratchoffPostcard: 0,
+    jumboScratchoffPostcard: 0,
+    peelBoxPostcard: 0,
+    magnet: 0,
+    foldedMagnet: 0,
+    twoSBT: 0,
+    boxTopper: 0,
+    flyer: 0,
+    doorHanger: 0,
+    smallPlastic: 0,
+    mediumPlastic: 0,
+    largePlastic: 0,
+    couponBooklet: 0,
+    envelopeMailer: 0,
+    birthdayPostcard: 0,
+    newMover: 0,
+    plasticNewMover: 0,
+    birthdayPlastic: 0,
+    wideFormat: 0,
+    windowClings: 0,
+    businessCards: 0,
+    artworkOnly: 0,
+    logoCreation: 0,
+    logoRecreation: 0,
+    legalLetter: 0,
+    letter: 0,
+    mapCreation: 0,
+    menuXXL: 0,
+    biFoldMenu: 0,
+    mediaKit: 0,
+    popBanner: 0,
+  };
+
+  //console.log(startTurnAroundTime.menu);
+  //console.log(startTurnAroundTime.menu.brandNewBuild);
 
     //#region WEEKDAY VARIABLES ----------------------------------------------------------------------------------------------------------------
 
@@ -1077,12 +1120,16 @@ Office.onReady((info) => {
         var pickupTurnaroundTimeTable = context.workbook.tables.getItem("PickupTurnaroundTime");
        // var pickupTurnaroundTimeColumn = pickupTurnaroundTimeTable.columns.getItem("Project Type Hour");
        // pickupTurnaroundTimeColumn.load("name");
-        var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows
-        pickupTurnaroundTimeTableRows.load("items")
+        var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows;
+        pickupTurnaroundTimeTableRows.load("items");
 
         var artTurnaroundTimeTable = context.workbook.tables.getItem("ArtTurnaroundTime");
-        var artTurnaroundTimeTableRows = artTurnaroundTimeTable.rows
-        artTurnaroundTimeTableRows.load("items")
+        var artTurnaroundTimeTableRows = artTurnaroundTimeTable.rows;
+        artTurnaroundTimeTableRows.load("items");
+
+        var creativeProofTable = context.workbook.tables.getItem("CreativeProofAdjust");
+        var creativeProofTableRows = creativeProofTable.rows;
+        creativeProofTableRows.load("items");
 
         var productTable = context.workbook.tables.getItem("ProductTable");
         var productTableHoursColumn = productTable.columns.getItem("Product Hours");
@@ -1103,6 +1150,9 @@ Office.onReady((info) => {
         //#region MATT VARIABLES --------------------------------------------------------
           var mattSheet = context.workbook.worksheets.getItem("Matt");
           var mattTable = mattSheet.tables.getItem("MattProjects");
+          var mattTableRows = mattTable.rows;
+          mattTable.load("items");
+          var mattCompleteTable = mattSheet.tables.getItem("MattCompletedProjects");
         //#endregion --------------------------------------------------------------------------
 
         //#region ALAINA VARIABLES ------------------------------------------------------
@@ -1304,21 +1354,21 @@ Office.onReady((info) => {
                 //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
 
                   var i = 0;
-                  for (var key of Object.keys(startTurnAroundTime)) {
-                    var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values;
-                    console.log(pickupTurnaroundTimeValues[0][1]);
-                    startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1];
-                    startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2];
-                    startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3];
+                  for (var key of Object.keys(startTurnAroundTime)) { //loops through startTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+                    var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values; //returns values of first level object based on positon i (so if i=0, this is the menu objects. If i=1, this is menuXL objects, etc.)
+                    //console.log(pickupTurnaroundTimeValues[0][1]);
+                    startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [i] sub-object the value in the first data cell in the table 
+                    startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [i] sub-object the value in the second data cell in the table 
+                    startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3]; //you get the point...
                     startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
                     startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
                     startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
                     startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
                     startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
-                    i++;
+                    i++; //i increases so that this continues to loop through all the products, until the key gets to the end
                   };
 
-                  console.log(startTurnAroundTime);
+                  //console.log(startTurnAroundTime);
 
                 //#endregion --------------------------------------------------------------------------------------------
 
@@ -1326,21 +1376,36 @@ Office.onReady((info) => {
                 //#region ASSIGN ART TURNAROUND TIME VALUES -------------------------------------------------------------
 
                   var j = 0;
-                  for (var key of Object.keys(artTurnAroundTime)) {
-                    var artTurnaroundTimeValues = artTurnaroundTimeTableRows.items[j].values;
-                    console.log(artTurnaroundTimeValues[0][1]);
-                    artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1];
-                    artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2];
-                    artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3];
+                  for (var key of Object.keys(artTurnAroundTime)) { //loops through artTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+                    var artTurnaroundTimeValues = artTurnaroundTimeTableRows.items[j].values; //returns values of first level object based on positon j (so if j=0, this is the menu objects. If j=1, this is menuXL objects, etc.)
+                    //console.log(artTurnaroundTimeValues[0][1]);
+                    artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [j] sub-object the value in the first data cell in the table 
+                    artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [j] sub-object the value in the second data cell in the table
+                    artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3]; //you get it, right?
                     artTurnAroundTime[key].changesToExisitingNatives = artTurnaroundTimeValues[0][4];
                     artTurnAroundTime[key].specCheck = artTurnaroundTimeValues[0][5];
                     artTurnAroundTime[key].weTransferUpload = artTurnaroundTimeValues[0][6];
                     artTurnAroundTime[key].specialRequest = artTurnaroundTimeValues[0][7];
                     artTurnAroundTime[key].other = artTurnaroundTimeValues[0][8];
-                    j++;
+                    j++; //j increases so that this continues to loop through all the products, until the key gets to the end
                   };
 
-                  console.log(artTurnAroundTime);
+                  //console.log(artTurnAroundTime);
+
+                //#endregion --------------------------------------------------------------------------------------------
+
+
+                //#region ASSIGN CREATIVE REVIEW TIME VALUES ------------------------------------------------------------
+
+                  var k = 0;
+                  for (var key of Object.keys(creativeReviewTime)) { //loops through creativeReviewTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+                    var creativeReviewTimeValues = creativeProofTableRows.items[k].values; //returns values of first level object based on positon k (so if k=0, this is the menu objects. If k=1, this is menuXL objects, etc.)
+                    //console.log(creativeReviewTimeValues[0][1]);
+                    creativeReviewTime[key] = creativeReviewTimeValues[0][1]; //assigns the property of [k] sub-object the value in the first data cell in the table 
+                    k++; //k increases so that this continues to loop through all the products, until the key gets to the end
+                  };
+
+                  //console.log(creativeReviewTime);
 
                 //#endregion --------------------------------------------------------------------------------------------
 
@@ -1358,6 +1423,25 @@ Office.onReady((info) => {
                 */
 
               //#endregion --------------------------------------------------------------------------------------------
+
+                //#region MOVE DATA BETWEEN TABLES ---------------------------------------------------------------------
+
+                var mattsChangedRow = mattTableRows.items[changedRow].values;
+                var mattsStatusColumn = mattsChangedRow[0][17];
+                console.log(mattsStatusColumn);
+
+                /*
+                  if (changedColumn == artistColumn) { //if updated data was in the Artist column, run the following code
+
+                    if (details.valueAfter == "Unassigned") {
+                      unassignedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                      myRow.delete(); //Deletes the changed row from the original sheet
+                      console.log("Data was moved to the Unassigned Projects Table!");
+                      return;
+                    }
+                  */
+
+                //#endregion ----------------------------------------------------------------------------------------------------
 
               //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
 
@@ -1379,7 +1463,7 @@ Office.onReady((info) => {
                     
                       var artAdjustmentHours = workHoursNumber(rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
                     
-                      //var workHoursAdjust = lookupWork(artAdjustmentHours, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
+                      var artAdjustForCreativeReview = addCreativeReview(artAdjustmentHours, creativeReviewTime, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
                 
                       var myDate = receivedAdjust(rowValues, changedRow); //grabs values from Added column and converts into date object in EST.
                     
@@ -1387,7 +1471,7 @@ Office.onReady((info) => {
                     
                       var startedPickedUpBy = startedBy(changedRow, sheet, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
                 
-                      var workOverride = workPrePreAdjust(rowValues, artAdjustmentHours, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
+                      var workOverride = workPrePreAdjust(rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
                   
                       var proofToClient = toClient(changedRow, sheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
 
@@ -1528,6 +1612,11 @@ Office.onReady((info) => {
                     };
 
                   //#endregion ----------------------------------------------------------------------------------------------------
+
+
+
+                
+
                   
                 } else {
                   console.log("Adjustments were made to the validation sheet, therefore the date variables and move functions were not triggered");
@@ -2171,23 +2260,112 @@ Office.onReady((info) => {
 
     
 
-    //#region WORK HOURS ADJUST ------------------------------------------------------------------------------------
+    //#region ART ADJUST FOR CREATIVE REVIEW ------------------------------------------------------------------------------------
       /**
        * if Project Type value is anything other than a new build (and friends), adjusts the Product Hours number to be a third of it's normal value, resulting in a shorter proof to client time
        * @param {Number} artAdjustmentHours returned number representing amount of hours before proof needs to be submitted to client
+       * @param {Number} creativeReviewTime a variable containing objects that represent all the given values for creative review process time based on product, pulled from the validation sheet
        * @param {Number} rowValues loads the values of the changed row
        * @returns Number
        */
-      function lookupWork(artAdjustmentHours, rowValues) {
+      function addCreativeReview(artAdjustmentHours, creativeReviewTime, rowValues) {
 
-        var input = rowValues[0][7]; //assigns input the cell value in the changed row and the Project Type column (a nested array of values)
+        var productInput = rowValues[0][6]; //assigns to productInput the cell value in the changed row and the Product column (a nested array of values)
 
-        if(input == "Brand New Build" || input == "Special Request" || input == "Other") { //if input from Project Type column is any of these values...
-          return artAdjustmentHours; //returns the productHours number unaltered
+        var x;
+
+        if (productInput == "Menu") {
+          x = "menu";
+        } else if (productInput == "MenuXL") {
+          x = "menuXL";
+        } else if (productInput == "Small Menu") {
+          x = "smallMenu";
+        } else if (productInput == "Brochure") {
+          x = "brochure";
+        } else if (productInput == "BrochureXL") {
+          x = "brochureXL";
+        } else if (productInput == "Small Brochure") {
+          x = "smallBrochure";
+        } else if (productInput == "Postcard") {
+          x = "postcard";
+        } else if (productInput == "Jumbo Postcard") {
+          x = "jumboPostcard";
+        } else if (productInput == "Colossal Postcard") {
+          x = "colossalPostcard";
+        } else if (productInput == "Scratch-Off Postcard") {
+          x = "scratchoffPostcard";
+        } else if (productInput == "Jumbo Scratch-Off Postcard") {
+          x = "jumboScratchoffPostcard";
+        } else if (productInput == "Peel-A-Box Postcard") {
+          x = "peelBoxPostcard";
+        } else if (productInput == "Magnet") {
+          x = "magnet";
+        } else if (productInput == "Folded Magnet") {
+          x = "foldedMagnet";
+        } else if (productInput == "2SBT") {
+          x = "twoSBT";
+        } else if (productInput == "Box Topper") {
+          x = "boxTopper";
+        } else if (productInput == "Flyer") {
+          x = "flyer";
+        } else if (productInput == "Door Hanger") {
+          x = "doorHanger";
+        } else if (productInput == "Small Plastic") {
+          x = "smallPlastic";
+        } else if (productInput == "Medium Plastic") {
+          x = "mediumPlastic";
+        } else if (productInput == "Large Plastic") {
+          x = "largePlastic";
+        } else if (productInput == "Coupon Booklet") {
+          x = "couponBooklet";
+        } else if (productInput == "Envelope Mailer") {
+          x = "envelopeMailer";
+        } else if (productInput == "Birthday Postcard") {
+          x = "birthdayPostcard";
+        } else if (productInput == "New Mover") {
+          x = "newMover";
+        } else if (productInput == "Plastic New Mover") {
+          x = "plasticNewMover";
+        } else if (productInput == "Birthday Plastic") {
+          x = "birthdayPlastic";
+        } else if (productInput == "Wide Format") {
+          x = "wideFormat";
+        } else if (productInput == "Window Clings") {
+          x = "windowClings";
+        } else if (productInput == "Business Cards") {
+          x = "businessCards";
+        } else if (productInput == "Artwork Only") {
+          x = "artworkOnly";
+        } else if (productInput == "Logo Creation") {
+          x = "logoCreation";
+        } else if (productInput == "Logo Recreation") {
+          x = "logoRecreation";
+        } else if (productInput == "Legal Letter") {
+          x = "legalLetter";
+        } else if (productInput == "Letter") {
+          x = "letter";
+        } else if (productInput == "Map Creation") {
+          x = "mapCreation";
+        } else if (productInput == "MenuXXL") {
+          x = "menuXXL";
+        } else if (productInput == "Bi-Fold Menu") {
+          x = "biFoldMenu";
+        } else if (productInput == "Media Kit") {
+          x = "mediaKit";
+        } else if (productInput == "POP Banner") {
+          x = "popBanner";
+        } else {
+          x = "";
         };
-        var output = artAdjustmentHours / 3; //returns the productHours number divided by 3
-        return output;
+
+        var creativeHours = creativeReviewTime[x]; //loads the creative review hours for the specific product
+
+        var adjustedForCreativeReview = artAdjustmentHours + creativeHours; //adds creative review hours to art adjustment hours found in previous function
+
+        return adjustedForCreativeReview;
+
       };
+
     //#endregion ---------------------------------------------------------------------------------------------------
 
     //#region WORKOVERRIDE --------------------------------------------------------------------------------------------
@@ -2198,9 +2376,9 @@ Office.onReady((info) => {
        * @param {Date} startedPickedUpBy loads the date that the project should be picked up by
        * @returns Date
        */
-      function workPrePreAdjust (rowValues, artAdjustmentHours, override) {
+      function workPrePreAdjust (rowValues, artAdjustForCreativeReview, override) {
         var workOverride = rowValues[0][21]; //gets values of Work Orverride cell
-        var workManualAdjust = artAdjustmentHours + workOverride; //adds start override value to the number of hours for the project type
+        var workManualAdjust = artAdjustForCreativeReview + workOverride; //adds start override value to the number of hours for the project type
         var overrideCopy = new Date(override); //sets overrideCopy to a new date variable (so the old date doesnt get changed)
         var adjustedDateTime = officeHours(overrideCopy, workManualAdjust);
         return adjustedDateTime;
@@ -2660,3 +2838,138 @@ Office.onReady((info) => {
 //#endregion ---------------------------------------------------------------------------------------------------
 
 //#endregion -----------------------------------------------------------------------------------------------------
+
+/*
+//#region CALCULATE TURN AROUND TIME -----------------------------------------------------------------------------------
+    /**
+     * Finds the value of Project Type and Product in the changed row and returns a number of hours for the Art Turn Around Time
+     * @param {Array} rowValues loads the values of the changed row
+     * @param {Object} artTurnAroundTime a variable containing objects that represent all the given values for art working time based on project type and product, pulled from the validation sheet
+     * @returns Number
+     */   
+
+    /*
+     function turnAround(rowValues, turnAroundTime, productColumnNumber, projectTypeColumnNumber) { //loads these variables from another function to use in this function
+
+      var productInput = rowValues[0][productColumnNumber]; //assigns to productInput the cell value in the changed row and the Product column (a nested array of values)
+      var x;
+
+      if (productInput == "Menu") {
+        x = "menu";
+      } else if (productInput == "MenuXL") {
+        x = "menuXL";
+      } else if (productInput == "Small Menu") {
+        x = "smallMenu";
+      } else if (productInput == "Brochure") {
+        x = "brochure";
+      } else if (productInput == "BrochureXL") {
+        x = "brochureXL";
+      } else if (productInput == "Small Brochure") {
+        x = "smallBrochure";
+      } else if (productInput == "Postcard") {
+        x = "postcard";
+      } else if (productInput == "Jumbo Postcard") {
+        x = "jumboPostcard";
+      } else if (productInput == "Colossal Postcard") {
+        x = "colossalPostcard";
+      } else if (productInput == "Scratch-Off Postcard") {
+        x = "scratchoffPostcard";
+      } else if (productInput == "Jumbo Scratch-Off Postcard") {
+        x = "jumboScratchoffPostcard";
+      } else if (productInput == "Peel-A-Box Postcard") {
+        x = "peelBoxPostcard";
+      } else if (productInput == "Magnet") {
+        x = "magnet";
+      } else if (productInput == "Folded Magnet") {
+        x = "foldedMagnet";
+      } else if (productInput == "2SBT") {
+        x = "twoSBT";
+      } else if (productInput == "Box Topper") {
+        x = "boxTopper";
+      } else if (productInput == "Flyer") {
+        x = "flyer";
+      } else if (productInput == "Door Hanger") {
+        x = "doorHanger";
+      } else if (productInput == "Small Plastic") {
+        x = "smallPlastic";
+      } else if (productInput == "Medium Plastic") {
+        x = "mediumPlastic";
+      } else if (productInput == "Large Plastic") {
+        x = "largePlastic";
+      } else if (productInput == "Coupon Booklet") {
+        x = "couponBooklet";
+      } else if (productInput == "Envelope Mailer") {
+        x = "envelopeMailer";
+      } else if (productInput == "Birthday Postcard") {
+        x = "birthdayPostcard";
+      } else if (productInput == "New Mover") {
+        x = "newMover";
+      } else if (productInput == "Plastic New Mover") {
+        x = "plasticNewMover";
+      } else if (productInput == "Birthday Plastic") {
+        x = "birthdayPlastic";
+      } else if (productInput == "Wide Format") {
+        x = "wideFormat";
+      } else if (productInput == "Window Clings") {
+        x = "windowClings";
+      } else if (productInput == "Business Cards") {
+        x = "businessCards";
+      } else if (productInput == "Artwork Only") {
+        x = "artworkOnly";
+      } else if (productInput == "Logo Creation") {
+        x = "logoCreation";
+      } else if (productInput == "Logo Recreation") {
+        x = "logoRecreation";
+      } else if (productInput == "Legal Letter") {
+        x = "legalLetter";
+      } else if (productInput == "Letter") {
+        x = "letter";
+      } else if (productInput == "Map Creation") {
+        x = "mapCreation";
+      } else if (productInput == "MenuXXL") {
+        x = "menuXXL";
+      } else if (productInput == "Bi-Fold Menu") {
+        x = "biFoldMenu";
+      } else if (productInput == "Media Kit") {
+        x = "mediaKit";
+      } else if (productInput == "POP Banner") {
+        x = "popBanner";
+      } else {
+        x = "";
+      };
+
+      var projectTypeInput = rowValues[0][projectTypeColumnNumber]; //assigns projectTypeInput the cell value in the changed row and the Project Type column (a nested array of values)
+
+      var y;
+
+      if (projectTypeInput == "Brand New Build") {
+        y = "brandNewBuild";
+      } else if (projectTypeInput == "Brand New Build from Other Product Natives") {
+        y = "brandNewBuildFromNatives";
+      } else if (projectTypeInput == "Brand New Build From Template") {
+        y = "brandNewBuildFromTemplate";
+      } else if (projectTypeInput == "Changes to Exisiting Natives") {
+        y = "changesToExistingNatives";
+      } else if (projectTypeInput == "Specification Check") {
+        y = "specCheck";
+      } else if (projectTypeInput == "WeTransfer Upload to MS") {
+        y = "weTransferUpload";
+      } else if (projectTypeInput == "Special Request") {
+        y = "specialRequest";
+      } else if (projectTypeInput == "Other") {
+        y = "other";
+      } else {
+        y = "";
+      }; 
+
+      var returnedTurnAroundTime = turnAroundTime[x][y]; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
+        // console.log(startHours);
+
+      return returnedTurnAroundTime;
+
+    };
+  
+  //#endregion ---------------------------------------------------------------------------------------------------
+
+  */
+
