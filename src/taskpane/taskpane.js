@@ -1089,8 +1089,19 @@ Office.onReady((info) => {
         var details = eventArgs.details; //Loads the values before and after the event
         var address = eventArgs.address; //Loads the cell's address where the event took place
         var changeType = eventArgs.changeType;
+        var allWorksheets = context.workbook.worksheets;
+        allWorksheets.load("items/name");
+        var allTables = context.workbook.tables;
+        allTables.load("items/name");
         var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
+        var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
+        var worksheetTables = changedWorksheet.tables.load("items/name");
+
         var changedTable = context.workbook.tables.getItem(eventArgs.tableId).load("name"); //Returns tableId of the table where the event occured
+        var changedColumns = changedTable.columns
+        changedColumns.load("items/name");
+        var changedTableRows = changedTable.rows;
+        changedTableRows.load("items");
         var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
         var changedColumn = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
         var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
@@ -1150,9 +1161,11 @@ Office.onReady((info) => {
         //#region MATT VARIABLES --------------------------------------------------------
           var mattSheet = context.workbook.worksheets.getItem("Matt");
           var mattTable = mattSheet.tables.getItem("MattProjects");
+          var mattTableColumns = mattTable.columns;
+          mattTableColumns.load("items/name");
           var mattTableRows = mattTable.rows;
-          mattTable.load("items");
-          var mattCompleteTable = mattSheet.tables.getItem("MattCompletedProjects");
+          mattTableRows.load("items");
+          var mattCompletedTable = mattSheet.tables.getItem("MattCompletedProjects");
         //#endregion --------------------------------------------------------------------------
 
         //#region ALAINA VARIABLES ------------------------------------------------------
@@ -1426,9 +1439,92 @@ Office.onReady((info) => {
 
                 //#region MOVE DATA BETWEEN TABLES ---------------------------------------------------------------------
 
-                var mattsChangedRow = mattTableRows.items[changedRow].values;
-                var mattsStatusColumn = mattsChangedRow[0][17];
-                console.log(mattsStatusColumn);
+                //var cheese = allTables.items;
+
+                var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+
+                var statusCellValue = cellValue(changedTableColumns, changedRow, "Status");
+
+
+
+                function cellValue(tableColumns, changedRow, columnName) {
+
+                  var statusColumn = findColumnPosition(tableColumns, columnName);
+
+                  var changedTableRowValues = changedTableRows.items[changedRow].values;
+                  var changedRowStatusColumnValue = changedTableRowValues[0][statusColumn];
+
+                  return changedRowStatusColumnValue;
+
+                };
+
+
+
+                function findColumnPosition(changedTableColumns, columnName) {
+
+                  var l = 0;
+                  for (var key of Object.keys(changedTableColumns)) { //loops through each column item in the changedTableColumns array
+                    var columnParent = changedTableColumns[l]; //gives us the array that was in whatever position l represents in the changedTableColumns array
+                    var nameOfColumn = columnParent.name; //returns the name of the column in position l
+                    if (nameOfColumn == columnName) { //if column name is Status, then return the position number of said column in the array to be used in the future
+                      var output = l;
+                      return output;
+                    } else { //otherwise, keep going
+                      l++;
+                    };
+                  };
+                };
+                
+               
+
+                //var mattsChangedRow = mattTableRows.items[changedRow].values;
+                //var mattsStatusColumn = mattsChangedRow[0][16];
+                //console.log(mattsStatusColumn);
+
+                
+
+                var h = allWorksheets.items;
+                var r = allWorksheets.name;
+
+                var listOfCompletedTables = [];
+
+                allTables.items.forEach(function (table) {
+                  if (table.name.includes("Completed")) {
+                    listOfCompletedTables.push(table.name);
+                  };
+                });
+
+                var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
+
+                var changedWorksheetName = changedWorksheet.name;
+
+                var g = worksheetTables.items;
+
+                var completedTable;
+
+                worksheetTables.items.forEach(function (table) {
+                  if (table.name.includes("Completed")) {
+                    var snail = table.name;
+                    completedTable = worksheetTables.getItem(snail);
+                  };
+                });
+
+
+
+
+
+
+
+               //if (statusCellValue == "Completed")  //&& changedTable.id !== mattCompleteTable.id)
+
+               if (statusCellValue == "Completed" && includesCompletedTables == false) {
+
+                completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                myRow.delete(); //Deletes the changed row from the original sheet
+                console.log("Data was moved to the artist's Completed Projects Table!");
+
+               };
+
 
                 /*
                   if (changedColumn == artistColumn) { //if updated data was in the Artist column, run the following code
