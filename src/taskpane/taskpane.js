@@ -1357,12 +1357,13 @@ Office.onReady((info) => {
 
             await context.sync().then(function () { //loads variable values
           
+
               //#region LOAD & ASSIGN TABLE VALUES --------------------------------------------------------------------
 
                 var rowValues = myRow.values;
 
+                var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
 
-                //if (changedTable.id == projectTypeTable.id) {
 
                 //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
 
@@ -1422,162 +1423,230 @@ Office.onReady((info) => {
 
                 //#endregion --------------------------------------------------------------------------------------------
 
-                  /*
-                  for (var i = 0; i < pickupTurnaroundTimeTableRows.items.length; i++) {
-                    assignPickupTurnaroundTimeValues(pickupTurnaroundTimeTableRows, i); //loads value from validation sheet for each project type
-                  };
-                //};
 
-                //if (changedTable.id == productTable.id) {
-                  for (var i = 0; i < productTableRows.items.length; i++) {
-                    assignProductValues(productTableRows, i); //loads value from validation sheet for each product
-                  };
-                //};
-                */
-
-              //#endregion --------------------------------------------------------------------------------------------
-
-                //#region MOVE DATA BETWEEN TABLES ---------------------------------------------------------------------
-
-                //var cheese = allTables.items;
-
-                var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
-
-                var statusCellValue = cellValue(changedTableColumns, changedRow, "Status");
-
-
-
-                function cellValue(tableColumns, changedRow, columnName) {
-
-                  var statusColumn = findColumnPosition(tableColumns, columnName);
-
-                  var changedTableRowValues = changedTableRows.items[changedRow].values;
-                  var changedRowStatusColumnValue = changedTableRowValues[0][statusColumn];
-
-                  return changedRowStatusColumnValue;
-
-                };
-
-
-
-                function findColumnPosition(changedTableColumns, columnName) {
-
-                  var l = 0;
-                  for (var key of Object.keys(changedTableColumns)) { //loops through each column item in the changedTableColumns array
-                    var columnParent = changedTableColumns[l]; //gives us the array that was in whatever position l represents in the changedTableColumns array
-                    var nameOfColumn = columnParent.name; //returns the name of the column in position l
-                    if (nameOfColumn == columnName) { //if column name is Status, then return the position number of said column in the array to be used in the future
-                      var output = l;
-                      return output;
-                    } else { //otherwise, keep going
-                      l++;
-                    };
-                  };
-                };
-                
-               
-
-                //var mattsChangedRow = mattTableRows.items[changedRow].values;
-                //var mattsStatusColumn = mattsChangedRow[0][16];
-                //console.log(mattsStatusColumn);
-
-                
-
-                var h = allWorksheets.items;
-                var r = allWorksheets.name;
-
-                var listOfCompletedTables = [];
-
-                allTables.items.forEach(function (table) {
-                  if (table.name.includes("Completed")) {
-                    listOfCompletedTables.push(table.name);
-                  };
-                });
-
-                var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
-
-                var changedWorksheetName = changedWorksheet.name;
-
-                var g = worksheetTables.items;
-
-                var completedTable;
-
-                worksheetTables.items.forEach(function (table) {
-                  if (table.name.includes("Completed")) {
-                    var snail = table.name;
-                    completedTable = worksheetTables.getItem(snail);
-                  };
-                });
-
-
-
-
-
-
-
-               //if (statusCellValue == "Completed")  //&& changedTable.id !== mattCompleteTable.id)
-
-               if (statusCellValue == "Completed" && includesCompletedTables == false) {
-
-                completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                myRow.delete(); //Deletes the changed row from the original sheet
-                console.log("Data was moved to the artist's Completed Projects Table!");
-
-               };
-
-
-                /*
-                  if (changedColumn == artistColumn) { //if updated data was in the Artist column, run the following code
-
-                    if (details.valueAfter == "Unassigned") {
-                      unassignedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                      myRow.delete(); //Deletes the changed row from the original sheet
-                      console.log("Data was moved to the Unassigned Projects Table!");
-                      return;
-                    }
-                  */
-
-                //#endregion ----------------------------------------------------------------------------------------------------
-
+              //#endregion ----------------------------------------------------------------------------------------------
+                    
+              
               //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
 
                 changedRange.format.font.name = "Calibri";
                 changedRange.format.font.size = 12;
                 changedRange.format.font.color = "#000000";
 
-              //#endregion --------------------------------------------------------------------------------------------
+            //#endregion --------------------------------------------------------------------------------------------
+              
 
-              //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
+            //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
 
-                if (sheet.id !== validationSheet.id) {
+              if (sheet.id !== validationSheet.id) {
 
-                  //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
+                //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
 
-                    if (changedColumn == projectTypeColumn || changedColumn == productColumn || changedColumn == addedColumn || changedColumn == startOverrideColumn || changedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
+                  if (changedColumn == projectTypeColumn || changedColumn == productColumn || changedColumn == addedColumn || changedColumn == startOverrideColumn || changedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
 
-                      var startAdjustmentHours = startHoursNumber(rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
-                    
-                      var artAdjustmentHours = workHoursNumber(rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
-                    
-                      var artAdjustForCreativeReview = addCreativeReview(artAdjustmentHours, creativeReviewTime, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
-                
-                      var myDate = receivedAdjust(rowValues, changedRow); //grabs values from Added column and converts into date object in EST.
-                    
-                      var override = startPreAdjust(rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
-                    
-                      var startedPickedUpBy = startedBy(changedRow, sheet, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
-                
-                      var workOverride = workPrePreAdjust(rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
+                    var startAdjustmentHours = startHoursNumber(rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
                   
-                      var proofToClient = toClient(changedRow, sheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
-
-                      console.log("Turn Around time variables were updated!");
-
-                      return;
+                    var artAdjustmentHours = workHoursNumber(rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
                   
-                  };
+                    var artAdjustForCreativeReview = addCreativeReview(artAdjustmentHours, creativeReviewTime, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
+              
+                    var myDate = receivedAdjust(rowValues, changedRow); //grabs values from Added column and converts into date object in EST.
+                  
+                    var override = startPreAdjust(rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
+                  
+                    var startedPickedUpBy = startedBy(changedRow, sheet, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
+              
+                    var workOverride = workPrePreAdjust(rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
+                
+                    var proofToClient = toClient(changedRow, sheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
+
+                    console.log("Turn Around time variables were updated!");
+
+                    return;
+                
+                };
+
+              //#endregion ------------------------------------------------------------------------------------------
+
+
+                //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
+
+
+                  //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
+
+                    //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+
+                    var statusCellValue = cellValue(changedTableColumns, changedRow, "Status");
 
                   //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
+
+                    var listOfCompletedTables = [];
+
+                    allTables.items.forEach(function (table) { //for each table in the workbook...
+                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                        listOfCompletedTables.push(table.name); //push the name of that table into an array
+                      };
+                    });
+
+                    //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
+                    var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
+
+                    var completedTable;
+
+                    worksheetTables.items.forEach(function (table) { //for each table in the changed worksheet...
+                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                        var leTable = table.name; //sets var to name of said completed table
+                        completedTable = worksheetTables.getItem(leTable); //grabs said table's data from the worksheet
+                      };
+                    });
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
+
+                    if (statusCellValue == "Completed" && includesCompletedTables == false) {
+
+                    completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                    myRow.delete(); //Deletes the changed row from the original sheet
+                    console.log("Data was moved to the artist's Completed Projects Table!");
+                    return;
+
+                    };
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+                //#endregion ---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+                //#region MOVE DATA TO UNASSIGNED TABLE ------------------------------------------------------------------
+
+
+                  //#region LOCATE ARTIST COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
+
+                    //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+
+                    var statusCellValue = cellValue(changedTableColumns, changedRow, "Artist");
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
+
+                    var isUnassigned;
+
+                    if (changedWorksheet.name == "Unassigned Projects") {
+                      isUnassigned = true;
+                    } else {
+                      isUnassigned = false;
+                    };
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region MOVES DATA TO UNASSIGNED TABLE ----------------------------------------------------------------
+
+                    if (statusCellValue == "Unassigned" && isUnassigned == false) {
+
+                    unassignedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                    myRow.delete(); //Deletes the changed row from the original sheet
+                    console.log("Data was moved to the Unassigned Projects Table!");
+                    return;
+
+                    };
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+                //#endregion ---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+                //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
+
+
+                  //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
+
+                    //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+
+                    var artistCellValue = cellValue(changedTableColumns, changedRow, "Artist");
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
+
+                    var listOfNonArtistTables = [];
+
+                    allTables.items.forEach(function (table) { //for each table in the workbook...
+                      if (table.name.includes("Unassigned" || "Completed")) { //if the table name includes the word "Unassigned" or "Completed" in it...
+                        listOfNonArtistTables.push(table.name); //push the name of that table into an array
+                      };
+                    });
+
+                    //returns true if the changedTable is a completed table or is the Unassigned Projects table from the array previously made, false if it is anything else
+                    var includesNonArtistTables = listOfNonArtistTables.includes(changedTable.name);
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
+
+                    var completedTable;
+
+                    worksheetTables.items.forEach(function (table) { //for each table in the changed worksheet...
+                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                        var leTable = table.name; //sets var to name of said completed table
+                        completedTable = worksheetTables.getItem(leTable); //grabs said table's data from the worksheet
+                      };
+                    });
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                  //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
+
+                    if (artistCellValue == "Unassigned" && includesNonArtistTables == false) {
+
+                    unassignedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                    myRow.delete(); //Deletes the changed row from the original sheet
+                    console.log("Data was moved to the artist's Completed Projects Table!");
+                    return;
+
+                    };
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+
+                //#endregion ---------------------------------------------------------------------------------------------
+            
 
 
                   //#region MOVE DATA BETWEEN TABLES ---------------------------------------------------------------------
@@ -1995,6 +2064,54 @@ Office.onReady((info) => {
   //console.log("The updated date for Other is: " + otherProduct);
 
 //#endregion ----------------------------------------------------------------------------------------------------
+
+
+  //#region RETRIVE CELL VALUE -------------------------------------------------------------------------
+
+  /**
+   * Returns the value of the cell where the specified column and the changedRow intersect
+   * @param {Array} tableColumns a collection of all the columns in a table in an array of objects
+   * @param {Number} changedRow the row number of the changed value
+   * @param {String} columnName the name of the column to locate in the table
+   * @returns the value of the cell where the specified column and changedRow intersect
+   */
+    function cellValue(tableColumns, changedRow, columnName) {
+
+    var statusColumn = findColumnPosition(tableColumns, columnName);
+
+    var changedTableRowValues = changedTableRows.items[changedRow].values;
+    var changedRowStatusColumnValue = changedTableRowValues[0][statusColumn];
+
+    return changedRowStatusColumnValue;
+
+  };
+
+  //#endregion -----------------------------------------------------------------------------------------
+
+
+  //#region FIND COLUMN POSITION -----------------------------------------------------------------------
+  /**
+   * Finds the array index number of the column that matches the name of the columnName variable
+   * @param {Array} changedTableColumns a collection of all the columns in a tab;e in an array of objects
+   * @param {String} columnName the name of the column to locate in the table
+   * @returns Number
+   */
+  function findColumnPosition(changedTableColumns, columnName) {
+
+    var l = 0;
+    for (var key of Object.keys(changedTableColumns)) { //loops through each column item in the changedTableColumns array
+      var columnParent = changedTableColumns[l]; //gives us the array that was in whatever position l represents in the changedTableColumns array
+      var nameOfColumn = columnParent.name; //returns the name of the column in position l
+      if (nameOfColumn == columnName) { //if column name is Status, then return the position number of said column in the array to be used in the future
+        var output = l;
+        return output;
+      } else { //otherwise, keep going
+        l++;
+      };
+    };
+  };
+
+  //#endregion -------------------------------------------------------------------------------------------
 
 
   //#region START ADJUSTMENT HOURS -----------------------------------------------------------------------------------
