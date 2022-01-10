@@ -41,6 +41,7 @@ Office.onReady((info) => {
   var loop = true;
   var startOverrideColumn = "U";
   var workOverrideColumn = "V";
+  var destinationTable;
 
   var brandNewBuild;
   var newBuildOtherNatives;
@@ -1601,16 +1602,16 @@ Office.onReady((info) => {
 
                   //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
 
-                    var listOfNonArtistTables = [];
+                   // var listOfNonArtistTables = [];
 
-                    allTables.items.forEach(function (table) { //for each table in the workbook...
-                      if (table.name.includes("Unassigned" || "Completed")) { //if the table name includes the word "Unassigned" or "Completed" in it...
-                        listOfNonArtistTables.push(table.name); //push the name of that table into an array
-                      };
-                    });
+                   // allTables.items.forEach(function (table) { //for each table in the workbook...
+                   //   if (table.name.includes("Unassigned" || "Completed")) { //if the table name includes the word "Unassigned" or "Completed" in it...
+                   //     listOfNonArtistTables.push(table.name); //push the name of that table into an array
+                   //   };
+                   // });
 
                     //returns true if the changedTable is a completed table or is the Unassigned Projects table from the array previously made, false if it is anything else
-                    var includesNonArtistTables = listOfNonArtistTables.includes(changedTable.name);
+                   // var includesNonArtistTables = listOfNonArtistTables.includes(changedTable.name);
 
                   //#endregion ------------------------------------------------------------------------------------------
 
@@ -1633,19 +1634,67 @@ Office.onReady((info) => {
 
                   //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
 
-                    if (artistCellValue == "Unassigned" && includesNonArtistTables == false) {
-
-                    unassignedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                    myRow.delete(); //Deletes the changed row from the original sheet
-                    console.log("Data was moved to the artist's Completed Projects Table!");
-                    return;
-
-                    };
+                    if (artistCellValue == "Matt") {
+                      destinationTable = mattTable;
+                    } else if (artistCellValue == "Alaina") {
+                      destinationTable = alainaTable;
+                    } else if (artistCellValue == "Berto") {
+                      destinationTable = bertoTable;
+                    } else if (artistCellValue == "Bre B.") {
+                      destinationTable = breBTable;
+                    } else if (artistCellValue == "Christian") {
+                      destinationTable = christianTable;
+                    } else if (artistCellValue == "Emily") {
+                      destinationTable = emilyTable;
+                    } else if (artistCellValue == "Ian") {
+                      destinationTable = ianTable;
+                    } else if (artistCellValue == "Jeff") {
+                      destinationTable = jeffTable;
+                    } else if (artistCellValue == "Josh") {
+                      destinationTable = joshTable;
+                    } else if (artistCellValue == "Kristen") {
+                      destinationTable = kristenTable;
+                    } else if (artistCellValue == "Robin") {
+                      destinationTable = robinTable;
+                    } else if (artistCellValue == "Luke") {
+                      destinationTable = lukeTable;
+                    } else if (artistCellValue == "Lisa") {
+                      destinationTable = lisaTable;
+                    } else if (artistCellValue == "Luis") {
+                      destinationTable = luisTable;
+                    } else if (artistCellValue == "Peter") {
+                      destinationTable = peterTable;
+                    } else if (artistCellValue == "Rita") {
+                      destinationTable = ritaTable;
+                    } else if (artistCellValue == "Ethan") {
+                      destinationTable = ethanTable;
+                    } else if (artistCellValue == "Bre Z.") {
+                      destinationTable = breZTable;
+                    } else if (artistCellValue == "Joe") {
+                      destinationTable = joeTable;
+                    } else if (artistCellValue == "Jordan") {
+                      destinationTable = jordanTable;
+                    } else if (artistCellValue == "Hazel-Rah") {
+                      destinationTable = hazelTable;
+                    } else if (artistCellValue == "Todd") {
+                      destinationTable = toddTable;
+                    } else {
+                      console.log("No artist was assigned or updated, so no data was moved.")
+                    }
 
                   //#endregion ------------------------------------------------------------------------------------------
 
+                  moveData(destinationTable, myRow, artistCellValue);
+
 
                 //#endregion ---------------------------------------------------------------------------------------------
+
+
+                function moveData(destinationTable, myRow) {
+                  destinationTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                  myRow.delete(); //Deletes the changed row from the original sheet
+                  console.log("Data was moved to the " + artistCellValue + "'s Completed Projects Table!");
+                };
             
 
 
