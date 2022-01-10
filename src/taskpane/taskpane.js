@@ -29,923 +29,925 @@ Office.onReady((info) => {
   import "../../assets/icon-80.png";
   //#endregion ----------------------------------------------------------------------------------------------------
 
-
   //#region GLOBAL VARIABLES --------------------------------------------------------------------------------------
-  var artistColumn = "S";
-  var moveEvent;
-  var sortEvent;
-  var sortColumn = "Priority";
-  var projectTypeColumn = "H";
-  var productColumn = "G";
-  var addedColumn = "J";
-  var loop = true;
-  var startOverrideColumn = "U";
-  var workOverrideColumn = "V";
-  var destinationTable;
 
-  var brandNewBuild;
-  var newBuildOtherNatives;
-  var brandNewBuildFromTemplate;
-  var changesToExistingNatives;
-  var specCheck;
-  var weTransferUpload;
-  var specialRequest;
-  var otherProjectType;
+    //var artistColumn = "S";
+    var moveEvent;
+    var sortEvent;
+    var sortColumn = "Priority";
+    //var projectTypeColumn = "H";
+    //var productColumn = "G";
+   // var addedColumn = "J";
+    var loop = true;
+    //var startOverrideColumn = "U";
+    //var workOverrideColumn = "V";
+    var destinationTable;
 
-  var menu;
-  var menuXL;
-  var smallMenu;
-  var brochure;
-  var brochureXL;
-  var smallBrochure;
-  var postcard;
-  var jumboPostcard;
-  var colossalPostcard;
-  var scratchoffPostcard;
-  var jumboScratchoffPostcard;
-  var peelBoxPostcard;
-  var magnet;
-  var foldedMagnet;
-  var twoSBT;
-  var boxTopper;
-  var flyer;
-  var doorHanger;
-  var smallPlastic;
-  var mediumPlastic;
-  var largePlastic;
-  var couponBooklet;
-  var envelopeMailer;
-  var birthdayPostcard;
-  var newMover;
-  var plasticNewMover;
-  var birthdayPlastic;
-  var wideFormat;
-  var windowClings;
-  var businessCards;
-  var artworkOnly;
-  var logoCreation;
-  var logoRecreation;
-  var legalLetter;
-  var letter;
-  var mapCreation;
-  var menuXXL;
-  var biFoldMenu;
-  var mediaKit;
-  var popBanner;
-  var otherProduct;
+    var brandNewBuild;
+    var newBuildOtherNatives;
+    var brandNewBuildFromTemplate;
+    var changesToExistingNatives;
+    var specCheck;
+    var weTransferUpload;
+    var specialRequest;
+    var otherProjectType;
+
+    var menu;
+    var menuXL;
+    var smallMenu;
+    var brochure;
+    var brochureXL;
+    var smallBrochure;
+    var postcard;
+    var jumboPostcard;
+    var colossalPostcard;
+    var scratchoffPostcard;
+    var jumboScratchoffPostcard;
+    var peelBoxPostcard;
+    var magnet;
+    var foldedMagnet;
+    var twoSBT;
+    var boxTopper;
+    var flyer;
+    var doorHanger;
+    var smallPlastic;
+    var mediumPlastic;
+    var largePlastic;
+    var couponBooklet;
+    var envelopeMailer;
+    var birthdayPostcard;
+    var newMover;
+    var plasticNewMover;
+    var birthdayPlastic;
+    var wideFormat;
+    var windowClings;
+    var businessCards;
+    var artworkOnly;
+    var logoCreation;
+    var logoRecreation;
+    var legalLetter;
+    var letter;
+    var mapCreation;
+    var menuXXL;
+    var biFoldMenu;
+    var mediaKit;
+    var popBanner;
+    var otherProduct;
 
 
-  var startTurnAroundTime = {
-    menu: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    menuXL: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    smallMenu: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    brochure: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    brochureXL: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    smallBrochure: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    postcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    jumboPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    colossalPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    scratchoffPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    jumboScratchoffPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    peelBoxPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    magnet: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    foldedMagnet: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    twoSBT: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    boxTopper: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    flyer: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    doorHanger: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    smallPlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    mediumPlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    largePlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    couponBooklet: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    envelopeMailer: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    birthdayPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    newMover: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    plasticNewMover: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    birthdayPlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    wideFormat: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    windowClings: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    businessCards: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    artworkOnly: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    logoCreation: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    logoRecreation: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    legalLetter: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    letter: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    mapCreation: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    menuXXL: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    biFoldMenu: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    mediaKit: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    popBanner: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    }
-  };
+    //#region TURN AROUND TIME VARIABLES ---------------------------------------------------------------------------
 
-  var artTurnAroundTime = {
-    menu: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    menuXL: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    smallMenu: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    brochure: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    brochureXL: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    smallBrochure: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    postcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    jumboPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    colossalPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    scratchoffPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    jumboScratchoffPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    peelBoxPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    magnet: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    foldedMagnet: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    twoSBT: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    boxTopper: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    flyer: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    doorHanger: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    smallPlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    mediumPlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    largePlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    couponBooklet: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    envelopeMailer: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    birthdayPostcard: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    newMover: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    plasticNewMover: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    birthdayPlastic: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    wideFormat: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    windowClings: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    businessCards: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    artworkOnly: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    logoCreation: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    logoRecreation: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    legalLetter: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    letter: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    mapCreation: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    menuXXL: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    biFoldMenu: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    mediaKit: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    },
-    popBanner: {
-      brandNewBuild: 0,
-      brandNewBuildFromNatives: 0,
-      brandNewBuildFromTemplate: 0,
-      changesToExisitingNatives: 0,
-      specCheck: 0,
-      weTransferUpload: 0,
-      specialRequest: 0,
-      other: 0,
-    }
-  };
+      var startTurnAroundTime = {
+        menu: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        menuXL: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        smallMenu: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        brochure: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        brochureXL: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        smallBrochure: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        postcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        jumboPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        colossalPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        scratchoffPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        jumboScratchoffPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        peelBoxPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        magnet: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        foldedMagnet: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        twoSBT: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        boxTopper: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        flyer: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        doorHanger: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        smallPlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        mediumPlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        largePlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        couponBooklet: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        envelopeMailer: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        birthdayPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        newMover: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        plasticNewMover: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        birthdayPlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        wideFormat: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        windowClings: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        businessCards: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        artworkOnly: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        logoCreation: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        logoRecreation: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        legalLetter: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        letter: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        mapCreation: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        menuXXL: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        biFoldMenu: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        mediaKit: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        popBanner: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        }
+      };
 
-  var creativeReviewTime = {
-    menu: 0,
-    menuXL: 0,
-    smallMenu: 0,
-    brochure: 0,
-    brochureXL: 0,
-    smallBrochure: 0,
-    postcard: 0,
-    jumboPostcard: 0,
-    colossalPostcard: 0,
-    scratchoffPostcard: 0,
-    jumboScratchoffPostcard: 0,
-    peelBoxPostcard: 0,
-    magnet: 0,
-    foldedMagnet: 0,
-    twoSBT: 0,
-    boxTopper: 0,
-    flyer: 0,
-    doorHanger: 0,
-    smallPlastic: 0,
-    mediumPlastic: 0,
-    largePlastic: 0,
-    couponBooklet: 0,
-    envelopeMailer: 0,
-    birthdayPostcard: 0,
-    newMover: 0,
-    plasticNewMover: 0,
-    birthdayPlastic: 0,
-    wideFormat: 0,
-    windowClings: 0,
-    businessCards: 0,
-    artworkOnly: 0,
-    logoCreation: 0,
-    logoRecreation: 0,
-    legalLetter: 0,
-    letter: 0,
-    mapCreation: 0,
-    menuXXL: 0,
-    biFoldMenu: 0,
-    mediaKit: 0,
-    popBanner: 0,
-  };
+      var artTurnAroundTime = {
+        menu: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        menuXL: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        smallMenu: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        brochure: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        brochureXL: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        smallBrochure: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        postcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        jumboPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        colossalPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        scratchoffPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        jumboScratchoffPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        peelBoxPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        magnet: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        foldedMagnet: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        twoSBT: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        boxTopper: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        flyer: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        doorHanger: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        smallPlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        mediumPlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        largePlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        couponBooklet: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        envelopeMailer: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        birthdayPostcard: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        newMover: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        plasticNewMover: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        birthdayPlastic: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        wideFormat: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        windowClings: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        businessCards: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        artworkOnly: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        logoCreation: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        logoRecreation: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        legalLetter: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        letter: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        mapCreation: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        menuXXL: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        biFoldMenu: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        mediaKit: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        },
+        popBanner: {
+          brandNewBuild: 0,
+          brandNewBuildFromNatives: 0,
+          brandNewBuildFromTemplate: 0,
+          changesToExisitingNatives: 0,
+          specCheck: 0,
+          weTransferUpload: 0,
+          specialRequest: 0,
+          other: 0,
+        }
+      };
 
-  //console.log(startTurnAroundTime.menu);
-  //console.log(startTurnAroundTime.menu.brandNewBuild);
+      var creativeReviewTime = {
+        menu: 0,
+        menuXL: 0,
+        smallMenu: 0,
+        brochure: 0,
+        brochureXL: 0,
+        smallBrochure: 0,
+        postcard: 0,
+        jumboPostcard: 0,
+        colossalPostcard: 0,
+        scratchoffPostcard: 0,
+        jumboScratchoffPostcard: 0,
+        peelBoxPostcard: 0,
+        magnet: 0,
+        foldedMagnet: 0,
+        twoSBT: 0,
+        boxTopper: 0,
+        flyer: 0,
+        doorHanger: 0,
+        smallPlastic: 0,
+        mediumPlastic: 0,
+        largePlastic: 0,
+        couponBooklet: 0,
+        envelopeMailer: 0,
+        birthdayPostcard: 0,
+        newMover: 0,
+        plasticNewMover: 0,
+        birthdayPlastic: 0,
+        wideFormat: 0,
+        windowClings: 0,
+        businessCards: 0,
+        artworkOnly: 0,
+        logoCreation: 0,
+        logoRecreation: 0,
+        legalLetter: 0,
+        letter: 0,
+        mapCreation: 0,
+        menuXXL: 0,
+        biFoldMenu: 0,
+        mediaKit: 0,
+        popBanner: 0,
+      };
+    
+    //#endregion --------------------------------------------------------------------------------------------------------------
+
 
     //#region WEEKDAY VARIABLES ----------------------------------------------------------------------------------------------------------------
 
@@ -1090,6 +1092,7 @@ Office.onReady((info) => {
         var details = eventArgs.details; //Loads the values before and after the event
         var address = eventArgs.address; //Loads the cell's address where the event took place
         var changeType = eventArgs.changeType;
+        //var strange = eventArgs.getRange();
         var allWorksheets = context.workbook.worksheets;
         allWorksheets.load("items/name");
         var allTables = context.workbook.tables;
@@ -1104,9 +1107,13 @@ Office.onReady((info) => {
         var changedTableRows = changedTable.rows;
         changedTableRows.load("items");
         var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
-        var changedColumn = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
+        //var changedColumn = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
         var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
         var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+
+        var startOfTable = changedTable.getRange().load("columnIndex");
+
+        var changedAddress = changedWorksheet.getRange(address).load("columnIndex/rowIndex");
 
         var addedAddress = "J" + (changedRow + 2); //takes the row that was updated and locates the address from the Added column.
         var addedRange = sheet.getRange(addedAddress);
@@ -1122,16 +1129,8 @@ Office.onReady((info) => {
 
         var changedRowAddress = "A" + (changedRow + 2) + ":" + "V" + (changedRow + 2);
         var changedRange = sheet.getRange(changedRowAddress);
-      
-        //var unassignedTable = context.workbook.tables.getItem("UnassignedProjects");
-        //var productColumn = changedTable.columns.getItem("Product").load("name");
-        //var projectTypeColumn = changedTable.columns.getItem("Project Type").load("name");
-        //var addedColumn = changedTable.columns.getItem("Added").load("name");
-        //var artistColumn = changedTable.columns.getItem("Artist").load("name");
 
         var pickupTurnaroundTimeTable = context.workbook.tables.getItem("PickupTurnaroundTime");
-       // var pickupTurnaroundTimeColumn = pickupTurnaroundTimeTable.columns.getItem("Project Type Hour");
-       // pickupTurnaroundTimeColumn.load("name");
         var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows;
         pickupTurnaroundTimeTableRows.load("items");
 
@@ -1162,11 +1161,6 @@ Office.onReady((info) => {
         //#region MATT VARIABLES --------------------------------------------------------
           var mattSheet = context.workbook.worksheets.getItem("Matt");
           var mattTable = mattSheet.tables.getItem("MattProjects");
-          var mattTableColumns = mattTable.columns;
-          mattTableColumns.load("items/name");
-          var mattTableRows = mattTable.rows;
-          mattTableRows.load("items");
-          var mattCompletedTable = mattSheet.tables.getItem("MattCompletedProjects");
         //#endregion --------------------------------------------------------------------------
 
         //#region ALAINA VARIABLES ------------------------------------------------------
@@ -1283,7 +1277,7 @@ Office.onReady((info) => {
 
 
       //#region ON ROW INSERTED ----------------------------------------------------------------------------------- 
-
+        
         if (changeType == "RowInserted") {
 
           //#region LOAD VARIABLES AND DO FUNCTIONS ---------------------------------------------------------------
@@ -1336,6 +1330,7 @@ Office.onReady((info) => {
           //#endregion -------------------------------------------------------------------------------------------------
 
       //#endregion --------------------------------------------------------------------------------------------------
+      
 
 
       //#region ON RANGE EDITED ------------------------------------------------------------------------------------
@@ -1350,8 +1345,6 @@ Office.onReady((info) => {
               return;
             };
 
-            //hi
-
           //#endregion --------------------------------------------------------------------------------------------
             
           //#region LOAD VARIABLES AND DO FUNCTIONS ----------------------------------------------------------------
@@ -1364,6 +1357,34 @@ Office.onReady((info) => {
                 var rowValues = myRow.values;
 
                 var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+
+                var newChangedColumn = changedAddress.columnIndex;
+
+                var tableStart = startOfTable.columnIndex;
+
+                newChangedColumn = newChangedColumn - tableStart;
+
+                //var newChangedRow = changedAddress.rowIndex;
+
+
+                //var cheeseMan = findColumnPosition
+
+                var art = changedRow;
+
+
+                var projectTypeColumn = findColumnPosition(changedTableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
+                var productColumn = findColumnPosition(changedTableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
+                var addedColumn = findColumnPosition(changedTableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
+                var artistColumn = findColumnPosition(changedTableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
+                var startOverrideColumn = findColumnPosition(changedTableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
+                var workOverrideColumn = findColumnPosition(changedTableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
+
+
+
+
+
+
+
 
 
                 //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
@@ -1443,7 +1464,7 @@ Office.onReady((info) => {
 
                 //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
 
-                  if (changedColumn == projectTypeColumn || changedColumn == productColumn || changedColumn == addedColumn || changedColumn == startOverrideColumn || changedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
+                  if (newChangedColumn == projectTypeColumn || newChangedColumn == productColumn || newChangedColumn == addedColumn || newChangedColumn == startOverrideColumn || newChangedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
 
                     var startAdjustmentHours = startHoursNumber(rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
                   
@@ -1470,389 +1491,209 @@ Office.onReady((info) => {
               //#endregion ------------------------------------------------------------------------------------------
 
 
-                //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
+                //#region MOVE DATA BETWEEN SHEETS ------------------------------------------------------------------------ 
 
+                  if (newChangedColumn == artistColumn) {
 
-                  //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
+                    //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
 
-                    //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
 
-                    var statusCellValue = cellValue(changedTableColumns, changedRow, "Status");
+                      //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
 
-                  //#endregion ------------------------------------------------------------------------------------------
+                        //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
 
+                        var statusCellValue = cellValue(changedTableColumns, changedTableRows, changedRow, "Status");
 
+                      //#endregion ------------------------------------------------------------------------------------------
 
-                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
 
-                    var listOfCompletedTables = [];
 
-                    allTables.items.forEach(function (table) { //for each table in the workbook...
-                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                        listOfCompletedTables.push(table.name); //push the name of that table into an array
-                      };
-                    });
+                      //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
 
-                    //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
-                    var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
+                        var listOfCompletedTables = [];
 
-                  //#endregion ------------------------------------------------------------------------------------------
+                        allTables.items.forEach(function (table) { //for each table in the workbook...
+                          if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                            listOfCompletedTables.push(table.name); //push the name of that table into an array
+                          };
+                        });
 
+                        //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
+                        var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
 
+                      //#endregion ------------------------------------------------------------------------------------------
 
-                  //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
 
-                    var completedTable;
 
-                    worksheetTables.items.forEach(function (table) { //for each table in the changed worksheet...
-                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                        var leTable = table.name; //sets var to name of said completed table
-                        completedTable = worksheetTables.getItem(leTable); //grabs said table's data from the worksheet
-                      };
-                    });
+                      //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
 
-                  //#endregion ------------------------------------------------------------------------------------------
+                        var completedTable;
 
+                        worksheetTables.items.forEach(function (table) { //for each table in the changed worksheet...
+                          if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                            var leTable = table.name; //sets var to name of said completed table
+                            completedTable = worksheetTables.getItem(leTable); //grabs said table's data from the worksheet
+                          };
+                        });
 
+                      //#endregion ------------------------------------------------------------------------------------------
 
-                  //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
 
-                    if (statusCellValue == "Completed" && includesCompletedTables == false) {
 
-                    completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                    myRow.delete(); //Deletes the changed row from the original sheet
-                    console.log("Data was moved to the artist's Completed Projects Table!");
-                    return;
+                      //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
 
-                    };
+                        if (statusCellValue == "Completed" && includesCompletedTables == false) {
 
-                  //#endregion ------------------------------------------------------------------------------------------
+                          completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                          myRow.delete(); //Deletes the changed row from the original sheet
+                          console.log("Data was moved to the artist's Completed Projects Table!");
+                          return;
 
+                        };
 
-                //#endregion ---------------------------------------------------------------------------------------------
+                      //#endregion ------------------------------------------------------------------------------------------
 
 
+                    //#endregion ---------------------------------------------------------------------------------------------
 
 
+                    //#region MOVE DATA TO ARTIST TABLE ------------------------------------------------------------------
 
 
+                        //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------
 
+                          var artistCellValue = cellValue(changedTableColumns, changedTableRows, changedRow, "Artist");
 
+                        //#endregion ------------------------------------------------------------------------------------------
 
-                //#region MOVE DATA TO UNASSIGNED TABLE ------------------------------------------------------------------
 
+                        //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
 
-                  //#region LOCATE ARTIST COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
+                        var listOfNonArtistTables = [];
 
-                    //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+                        allTables.items.forEach(function (table) { //for each table in the workbook...
+                          if (table.name.includes("Completed")) { //|| table.name.includes("Unassigned")) { //if the table name includes the word "Completed" in it...
+                            listOfNonArtistTables.push(table.name); //push the name of that table into an array
+                          };
+                        });
 
-                    var statusCellValue = cellValue(changedTableColumns, changedRow, "Artist");
+                        //returns true if the changedTable is a completed table or the unassigned table from the array previously made, false if it is anything else
+                        var nonArtistTables = listOfNonArtistTables.includes(changedTable.name);
 
-                  //#endregion ------------------------------------------------------------------------------------------
+                      //#endregion ------------------------------------------------------------------------------------------
 
 
+                      //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
 
-                  //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
+                        var isUnassigned;
 
-                    var isUnassigned;
-
-                    if (changedWorksheet.name == "Unassigned Projects") {
-                      isUnassigned = true;
-                    } else {
-                      isUnassigned = false;
-                    };
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                  //#region MOVES DATA TO UNASSIGNED TABLE ----------------------------------------------------------------
-
-                    if (statusCellValue == "Unassigned" && isUnassigned == false) {
-
-                    unassignedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                    myRow.delete(); //Deletes the changed row from the original sheet
-                    console.log("Data was moved to the Unassigned Projects Table!");
-                    return;
-
-                    };
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-
-                //#endregion ---------------------------------------------------------------------------------------------
-
-
-
-
-
-
-                //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
-
-
-                  //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
-
-                    //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
-
-                    var artistCellValue = cellValue(changedTableColumns, changedRow, "Artist");
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                   // var listOfNonArtistTables = [];
-
-                   // allTables.items.forEach(function (table) { //for each table in the workbook...
-                   //   if (table.name.includes("Unassigned" || "Completed")) { //if the table name includes the word "Unassigned" or "Completed" in it...
-                   //     listOfNonArtistTables.push(table.name); //push the name of that table into an array
-                   //   };
-                   // });
-
-                    //returns true if the changedTable is a completed table or is the Unassigned Projects table from the array previously made, false if it is anything else
-                   // var includesNonArtistTables = listOfNonArtistTables.includes(changedTable.name);
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                  //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
-
-                    var completedTable;
-
-                    worksheetTables.items.forEach(function (table) { //for each table in the changed worksheet...
-                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                        var leTable = table.name; //sets var to name of said completed table
-                        completedTable = worksheetTables.getItem(leTable); //grabs said table's data from the worksheet
-                      };
-                    });
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                  //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
-
-                    if (artistCellValue == "Matt") {
-                      destinationTable = mattTable;
-                    } else if (artistCellValue == "Alaina") {
-                      destinationTable = alainaTable;
-                    } else if (artistCellValue == "Berto") {
-                      destinationTable = bertoTable;
-                    } else if (artistCellValue == "Bre B.") {
-                      destinationTable = breBTable;
-                    } else if (artistCellValue == "Christian") {
-                      destinationTable = christianTable;
-                    } else if (artistCellValue == "Emily") {
-                      destinationTable = emilyTable;
-                    } else if (artistCellValue == "Ian") {
-                      destinationTable = ianTable;
-                    } else if (artistCellValue == "Jeff") {
-                      destinationTable = jeffTable;
-                    } else if (artistCellValue == "Josh") {
-                      destinationTable = joshTable;
-                    } else if (artistCellValue == "Kristen") {
-                      destinationTable = kristenTable;
-                    } else if (artistCellValue == "Robin") {
-                      destinationTable = robinTable;
-                    } else if (artistCellValue == "Luke") {
-                      destinationTable = lukeTable;
-                    } else if (artistCellValue == "Lisa") {
-                      destinationTable = lisaTable;
-                    } else if (artistCellValue == "Luis") {
-                      destinationTable = luisTable;
-                    } else if (artistCellValue == "Peter") {
-                      destinationTable = peterTable;
-                    } else if (artistCellValue == "Rita") {
-                      destinationTable = ritaTable;
-                    } else if (artistCellValue == "Ethan") {
-                      destinationTable = ethanTable;
-                    } else if (artistCellValue == "Bre Z.") {
-                      destinationTable = breZTable;
-                    } else if (artistCellValue == "Joe") {
-                      destinationTable = joeTable;
-                    } else if (artistCellValue == "Jordan") {
-                      destinationTable = jordanTable;
-                    } else if (artistCellValue == "Hazel-Rah") {
-                      destinationTable = hazelTable;
-                    } else if (artistCellValue == "Todd") {
-                      destinationTable = toddTable;
-                    } else {
-                      console.log("No artist was assigned or updated, so no data was moved.")
-                    }
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-                  moveData(destinationTable, myRow, artistCellValue);
-
-
-                //#endregion ---------------------------------------------------------------------------------------------
-
-
-                function moveData(destinationTable, myRow) {
-                  destinationTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                  myRow.delete(); //Deletes the changed row from the original sheet
-                  console.log("Data was moved to the " + artistCellValue + "'s Completed Projects Table!");
-                };
-            
-
-
-                  //#region MOVE DATA BETWEEN TABLES ---------------------------------------------------------------------
-
-                    if (changedColumn == artistColumn) { //if updated data was in the Artist column, run the following code
-
-                      if (details.valueAfter == "Unassigned") {
-                        unassignedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Unassigned Projects Table!");
-                        return;
-                      } else if (details.valueAfter == "Matt") {
-                        mattTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Matt Table!");
-                        return;
-                      } else if (details.valueAfter == "Alaina") {
-                        alainaTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Alaina Table!");
-                        return;            
-                      } else if (details.valueAfter == "Berto") {
-                        bertoTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Berto Table!");
-                        return;
-                      } else if (details.valueAfter == "Bre B.") {
-                        breBTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Bre B. Table!");
-                        return;
-                      } else if (details.valueAfter == "Christian") {
-                        christianTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Christian Table!");
-                        return;
-                      } else if (details.valueAfter == "Emily") {
-                        emilyTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Emily Table!");
-                        return;
-                      } else if (details.valueAfter == "Ian") {
-                        ianTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Ian Table!");
-                        return;
-                      } else if (details.valueAfter == "Jeff") {
-                        jeffTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Jeff Table!");
-                        return;
-                      } else if (details.valueAfter == "Josh") {
-                        joshTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Josh Table!");
-                        return;
-                      } else if (details.valueAfter == "Kristen") {
-                        kristenTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Kristen Table!");
-                        return;
-                      } else if (details.valueAfter == "Robin") {
-                        robinTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Robin Table!");
-                        return;
-                      } else if (details.valueAfter == "Luke") {
-                        lukeTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Luke Table!");
-                        return;
-                      } else if (details.valueAfter == "Lisa") {
-                        lisaTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Lisa Table!");
-                        return;
-                      } else if (details.valueAfter == "Luis") {
-                        luisTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Luis Table!");
-                        return;
-                      } else if (details.valueAfter == "Peter") {
-                        peterTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Peter Table!");
-                        return;
-                      } else if (details.valueAfter == "Rita") {
-                        ritaTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Rita Table!");
-                        return;
-                      } else if (details.valueAfter == "Ethan") {
-                        ethanTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Ethan Table!");
-                        return;
-                      } else if (details.valueAfter == "Bre Z.") {
-                        breZTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Bre Z. Table!");
-                        return;
-                      } else if (details.valueAfter == "Joe") {
-                        joeTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Joe Table!");
-                        return;
-                      } else if (details.valueAfter == "Jordan") {
-                        jordanTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Jordan Table!");
-                        return;
-                      } else if (details.valueAfter == "Hazel-Rah") {
-                        hazelTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Hazel-Rah Table!");
-                        return;
-                      } else if (details.valueAfter == "Todd") {
-                        toddTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                        myRow.delete(); //Deletes the changed row from the original sheet
-                        console.log("Data was moved to the Todd Table!");
-                        return;
-                      } else {
-                        console.log("Looks like there wasn't an Artist change this time. No data was moved...");
-                      } return;
-                    } else {
-                      //console.log("The artist column was not updated, so nothing was moved...");
-                      return;
-                    };
-
-                  //#endregion ----------------------------------------------------------------------------------------------------
-
-
-
-                
-
-                  
-                } else {
+                        if (changedWorksheet.name == "Unassigned Projects") {
+                          isUnassigned = true;
+                        } else {
+                          isUnassigned = false;
+                        };
+
+                      //#endregion ------------------------------------------------------------------------------------------
+
+
+                        //#region ASSIGNS THE DESTINATION TABLE VALUE ---------------------------------------------------------
+
+                          if (nonArtistTables == false) {
+                            if (artistCellValue == "Unassigned" && isUnassigned == false) {
+                              destinationTable = unassignedTable;
+                            } else if (artistCellValue == "Matt") {
+                              destinationTable = mattTable;
+                            } else if (artistCellValue == "Alaina") {
+                              destinationTable = alainaTable;
+                            } else if (artistCellValue == "Berto") {
+                              destinationTable = bertoTable;
+                            } else if (artistCellValue == "Bre B.") {
+                              destinationTable = breBTable;
+                            } else if (artistCellValue == "Christian") {
+                              destinationTable = christianTable;
+                            } else if (artistCellValue == "Emily") {
+                              destinationTable = emilyTable;
+                            } else if (artistCellValue == "Ian") {
+                              destinationTable = ianTable;
+                            } else if (artistCellValue == "Jeff") {
+                              destinationTable = jeffTable;
+                            } else if (artistCellValue == "Josh") {
+                              destinationTable = joshTable;
+                            } else if (artistCellValue == "Kristen") {
+                              destinationTable = kristenTable;
+                            } else if (artistCellValue == "Robin") {
+                              destinationTable = robinTable;
+                            } else if (artistCellValue == "Luke") {
+                              destinationTable = lukeTable;
+                            } else if (artistCellValue == "Lisa") {
+                              destinationTable = lisaTable;
+                            } else if (artistCellValue == "Luis") {
+                              destinationTable = luisTable;
+                            } else if (artistCellValue == "Peter") {
+                              destinationTable = peterTable;
+                            } else if (artistCellValue == "Rita") {
+                              destinationTable = ritaTable;
+                            } else if (artistCellValue == "Ethan") {
+                              destinationTable = ethanTable;
+                            } else if (artistCellValue == "Bre Z.") {
+                              destinationTable = breZTable;
+                            } else if (artistCellValue == "Joe") {
+                              destinationTable = joeTable;
+                            } else if (artistCellValue == "Jordan") {
+                              destinationTable = jordanTable;
+                            } else if (artistCellValue == "Hazel-Rah") {
+                              destinationTable = hazelTable;
+                            } else if (artistCellValue == "Todd") {
+                              destinationTable = toddTable;
+                            } else {
+                              destinationTable = "null"
+                            };
+                          };
+
+                          var hwat = destinationTable;
+
+                        //#endregion ------------------------------------------------------------------------------------------
+
+                        
+                        //#region MOVES DATA TO DESTINATION TABLE ----------------------------------------------------------------
+
+                          if (destinationTable !== "null") {
+                            moveData(destinationTable, myRow, artistCellValue);
+                          } else {
+                            console.log("No artist was assigned or updated, so no data was moved.")
+                            return;
+                          };
+
+                        //#endregion ------------------------------------------------------------------------------------------
+
+
+
+                      //#endregion -----------------------------------------------------------------------------------------------
+
+                  };
+
+                //#endregion ----------------------------------------------------------------------------------------------
+
+              } else {
                   console.log("Adjustments were made to the validation sheet, therefore the date variables and move functions were not triggered");
                 };
-                // context.sync();
 
-              //#endregion ------------------------------------------------------------------------------------------------
+            //#endregion ----------------------------------------------------------------------------------------------------
 
-              //#region ERROR HANDLING -------------------------------------------------------------------------------------
 
-                }).catch(function (error) {
-                  console.log('Error: ' + error);
-                  if (error instanceof OfficeExtension.Error) {
-                    console.log('Debug info: ' + JSON.stringify(error.debugInfo));
-                  }
-                  //console.log("Promise Rejected");
-                });
-                console.log(startTurnAroundTime.values);
+          //#endregion ------------------------------------------------------------------------------------------------
 
-              //#endregion ------------------------------------------------------------------------------------------------
+          //#region ERROR HANDLING -------------------------------------------------------------------------------------
 
-          //#endregion -----------------------------------------------------------------------------------------------
+            }).catch(function (error) {
+              console.log('Error: ' + error);
+              if (error instanceof OfficeExtension.Error) {
+                console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+              }
+              //console.log("Promise Rejected");
+            });
+
+          //#endregion ------------------------------------------------------------------------------------------------
 
         }; 
 
@@ -2124,14 +1965,14 @@ Office.onReady((info) => {
    * @param {String} columnName the name of the column to locate in the table
    * @returns the value of the cell where the specified column and changedRow intersect
    */
-    function cellValue(tableColumns, changedRow, columnName) {
+    function cellValue(tableColumns, changedTableRows, changedRow, columnName) {
 
-    var statusColumn = findColumnPosition(tableColumns, columnName);
+      var columnPosition = findColumnPosition(tableColumns, columnName); //returns the array index number of the column that matche4s the name of the columnName variable
 
-    var changedTableRowValues = changedTableRows.items[changedRow].values;
-    var changedRowStatusColumnValue = changedTableRowValues[0][statusColumn];
+      var changedTableRowValues = changedTableRows.items[changedRow].values; //loads the values of the changed row in the changed table
+      var changedRowColumnValue = changedTableRowValues[0][columnPosition]; //loads the value of the cell in the columnName column and changedRow
 
-    return changedRowStatusColumnValue;
+      return changedRowColumnValue;
 
   };
 
@@ -2141,7 +1982,7 @@ Office.onReady((info) => {
   //#region FIND COLUMN POSITION -----------------------------------------------------------------------
   /**
    * Finds the array index number of the column that matches the name of the columnName variable
-   * @param {Array} changedTableColumns a collection of all the columns in a tab;e in an array of objects
+   * @param {Array} changedTableColumns a collection of all the columns in a table in an array of objects
    * @param {String} columnName the name of the column to locate in the table
    * @returns Number
    */
@@ -2161,6 +2002,22 @@ Office.onReady((info) => {
   };
 
   //#endregion -------------------------------------------------------------------------------------------
+
+
+  //#region MOVE DATA FUNCTION -----------------------------------------------------------------------------
+
+    /**
+     * moves the changed row's data to the destionation table
+     * @param {Object} destinationTable the table that the data is being moved to
+     * @param {Array} myRow the data, values, and attributes of the changed row
+     */
+      function moveData(destinationTable, myRow, artistCellValue) {
+      destinationTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+      myRow.delete(); //Deletes the changed row from the original sheet
+      console.log("Data was moved to " + artistCellValue + "'s Projects Table!");
+    };
+
+  //#endregion ---------------------------------------------------------------------------------------------
 
 
   //#region START ADJUSTMENT HOURS -----------------------------------------------------------------------------------
@@ -2292,7 +2149,7 @@ Office.onReady((info) => {
       //console.log(startTurnAroundTime[x][y]);
 
       var startHours = startTurnAroundTime[x][y]; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
-      console.log(startHours);
+      //console.log(startHours);
 
       return startHours;
 
@@ -3097,141 +2954,7 @@ Office.onReady((info) => {
       console.error(error);
     }
   }
-//#endregion ---------------------------------------------------------------------------------------------------
-
-//#endregion -----------------------------------------------------------------------------------------------------
-
-/*
-//#region CALCULATE TURN AROUND TIME -----------------------------------------------------------------------------------
-    /**
-     * Finds the value of Project Type and Product in the changed row and returns a number of hours for the Art Turn Around Time
-     * @param {Array} rowValues loads the values of the changed row
-     * @param {Object} artTurnAroundTime a variable containing objects that represent all the given values for art working time based on project type and product, pulled from the validation sheet
-     * @returns Number
-     */   
-
-    /*
-     function turnAround(rowValues, turnAroundTime, productColumnNumber, projectTypeColumnNumber) { //loads these variables from another function to use in this function
-
-      var productInput = rowValues[0][productColumnNumber]; //assigns to productInput the cell value in the changed row and the Product column (a nested array of values)
-      var x;
-
-      if (productInput == "Menu") {
-        x = "menu";
-      } else if (productInput == "MenuXL") {
-        x = "menuXL";
-      } else if (productInput == "Small Menu") {
-        x = "smallMenu";
-      } else if (productInput == "Brochure") {
-        x = "brochure";
-      } else if (productInput == "BrochureXL") {
-        x = "brochureXL";
-      } else if (productInput == "Small Brochure") {
-        x = "smallBrochure";
-      } else if (productInput == "Postcard") {
-        x = "postcard";
-      } else if (productInput == "Jumbo Postcard") {
-        x = "jumboPostcard";
-      } else if (productInput == "Colossal Postcard") {
-        x = "colossalPostcard";
-      } else if (productInput == "Scratch-Off Postcard") {
-        x = "scratchoffPostcard";
-      } else if (productInput == "Jumbo Scratch-Off Postcard") {
-        x = "jumboScratchoffPostcard";
-      } else if (productInput == "Peel-A-Box Postcard") {
-        x = "peelBoxPostcard";
-      } else if (productInput == "Magnet") {
-        x = "magnet";
-      } else if (productInput == "Folded Magnet") {
-        x = "foldedMagnet";
-      } else if (productInput == "2SBT") {
-        x = "twoSBT";
-      } else if (productInput == "Box Topper") {
-        x = "boxTopper";
-      } else if (productInput == "Flyer") {
-        x = "flyer";
-      } else if (productInput == "Door Hanger") {
-        x = "doorHanger";
-      } else if (productInput == "Small Plastic") {
-        x = "smallPlastic";
-      } else if (productInput == "Medium Plastic") {
-        x = "mediumPlastic";
-      } else if (productInput == "Large Plastic") {
-        x = "largePlastic";
-      } else if (productInput == "Coupon Booklet") {
-        x = "couponBooklet";
-      } else if (productInput == "Envelope Mailer") {
-        x = "envelopeMailer";
-      } else if (productInput == "Birthday Postcard") {
-        x = "birthdayPostcard";
-      } else if (productInput == "New Mover") {
-        x = "newMover";
-      } else if (productInput == "Plastic New Mover") {
-        x = "plasticNewMover";
-      } else if (productInput == "Birthday Plastic") {
-        x = "birthdayPlastic";
-      } else if (productInput == "Wide Format") {
-        x = "wideFormat";
-      } else if (productInput == "Window Clings") {
-        x = "windowClings";
-      } else if (productInput == "Business Cards") {
-        x = "businessCards";
-      } else if (productInput == "Artwork Only") {
-        x = "artworkOnly";
-      } else if (productInput == "Logo Creation") {
-        x = "logoCreation";
-      } else if (productInput == "Logo Recreation") {
-        x = "logoRecreation";
-      } else if (productInput == "Legal Letter") {
-        x = "legalLetter";
-      } else if (productInput == "Letter") {
-        x = "letter";
-      } else if (productInput == "Map Creation") {
-        x = "mapCreation";
-      } else if (productInput == "MenuXXL") {
-        x = "menuXXL";
-      } else if (productInput == "Bi-Fold Menu") {
-        x = "biFoldMenu";
-      } else if (productInput == "Media Kit") {
-        x = "mediaKit";
-      } else if (productInput == "POP Banner") {
-        x = "popBanner";
-      } else {
-        x = "";
-      };
-
-      var projectTypeInput = rowValues[0][projectTypeColumnNumber]; //assigns projectTypeInput the cell value in the changed row and the Project Type column (a nested array of values)
-
-      var y;
-
-      if (projectTypeInput == "Brand New Build") {
-        y = "brandNewBuild";
-      } else if (projectTypeInput == "Brand New Build from Other Product Natives") {
-        y = "brandNewBuildFromNatives";
-      } else if (projectTypeInput == "Brand New Build From Template") {
-        y = "brandNewBuildFromTemplate";
-      } else if (projectTypeInput == "Changes to Exisiting Natives") {
-        y = "changesToExistingNatives";
-      } else if (projectTypeInput == "Specification Check") {
-        y = "specCheck";
-      } else if (projectTypeInput == "WeTransfer Upload to MS") {
-        y = "weTransferUpload";
-      } else if (projectTypeInput == "Special Request") {
-        y = "specialRequest";
-      } else if (projectTypeInput == "Other") {
-        y = "other";
-      } else {
-        y = "";
-      }; 
-
-      var returnedTurnAroundTime = turnAroundTime[x][y]; //uses info from product and project type columns to retrun the proper value from the startTurnAroundTime variable
-        // console.log(startHours);
-
-      return returnedTurnAroundTime;
-
-    };
-  
   //#endregion ---------------------------------------------------------------------------------------------------
 
-  */
+//#endregion -----------------------------------------------------------------------------------------------------
 
