@@ -1087,638 +1087,632 @@ Office.onReady((info) => {
 
     await Excel.run(async (context) => {      
 
-      //#region EVENT VARIABLES -----------------------------------------------------------------------------------
+      //#region DECLARING VARIABLES -------------------------------------------------------------------------------
 
-        var details = eventArgs.details; //Loads the values before and after the event
-        var address = eventArgs.address; //Loads the cell's address where the event took place
-        var changeType = eventArgs.changeType;
-        //var strange = eventArgs.getRange();
-        var allWorksheets = context.workbook.worksheets;
-        allWorksheets.load("items/name");
-        var allTables = context.workbook.tables;
-        allTables.load("items/name");
-        var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
-        var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
-        var worksheetTables = changedWorksheet.tables.load("items/name");
+        //#region EVENT VARIABLES -----------------------------------------------------------------------------------
 
-        var changedTable = context.workbook.tables.getItem(eventArgs.tableId).load("name"); //Returns tableId of the table where the event occured
-        var changedColumns = changedTable.columns
-        changedColumns.load("items/name");
-        var changedTableRows = changedTable.rows;
-        changedTableRows.load("items");
-        var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
-        //var changedColumn = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
-        var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
-        //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
-        var changedRowSheetLevel = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
-        var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+          //#region WORKSHEET LEVEL VARIABLES -----------------------------------------------------------------------
 
-        var startOfTable = changedTable.getRange().load("columnIndex");
+            //#region EVENT ARGS --------------------------------------------------------------------------------------
 
-        var changedAddress = changedWorksheet.getRange(address).load("columnIndex");
-        var changedAddress = changedWorksheet.getRange(address).load("rowIndex");
+              var details = eventArgs.details; //Loads the values before and after the event
+              var address = eventArgs.address; //Loads the cell's address where the event took place
+              var changeType = eventArgs.changeType;
+              var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
+              var oldChangedRow = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
+              var changedColumnLetter = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
 
+            //#endregion ----------------------------------------------------------------------------------------------
 
-       // var addedAddress = "J" + (changedRow + 2); //takes the row that was updated and locates the address from the Added column.
+            var allWorksheets = context.workbook.worksheets;
+            allWorksheets.load("items/name");
+            //var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
+            var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
+
+            //#region TABLE LEVEL VARIABLES ---------------------------------------------------------------------------
+
+            var allTables = context.workbook.tables;
+            allTables.load("items/name");
+            var worksheetTables = changedWorksheet.tables.load("items/name");
+            var changedTable = changedWorksheet.tables.getItem(eventArgs.tableId).load("name"); //Returns tableId of the table where the event occured
+            var startOfTable = changedTable.getRange().load("columnIndex");
+
+            //#region TABLE VERSIONS OF MOST WORKSHEET LEVEL VARIABLES (LEGACY) -------------------------------------
+
+              //var changedColumns = changedTable.columns
+              //changedColumns.load("items/name");
+              //var changedTableRows = changedTable.rows;
+              //changedTableRows.load("items");
+              //var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
+              //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
+              //var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+
+            //#endregion --------------------------------------------------------------------------------------------
+
+          //#endregion ----------------------------------------------------------------------------------------------
+
+            //#region LOAD CHANGED COLUMN AND ROW INDEX NUMBERS -------------------------------------------------
+
+              var changedAddress = changedWorksheet.getRange(address);
+              changedAddress.load("columnIndex");
+              changedAddress.load("rowIndex");
+              var changedRow = changedAddress.getEntireRow();
+              var changedColumnPoop = changedAddress.getEntireColumn();
+              var myRow = changedTable.rows.getItemAt(changedRow).load("$all"); //loads the values of the changed row in the table where the event was fired 
+              var myColumn = changedTable.columns.getItemAt(changedColumnPoop).load("$all")
+
+            //#endregion ----------------------------------------------------------------------------------------
+
+          //#endregion ----------------------------------------------------------------------------------------------
+
+    
+
+        //#endregion ------------------------------------------------------------------------------------------------
+
+        //#region SPECIFIC TABLE VARIABLES --------------------------------------------------------------------------
+
+          //#region UNASSIGNED PROJECTS VARIABLES ------------------------------------------------------------
+            var unassignedTable = context.workbook.tables.getItem("UnassignedProjects");
+          //#endregion --------------------------------------------------------------------------
+
+          //#region MATT VARIABLES --------------------------------------------------------
+            var mattTable = context.workbook.tables.getItem("MattProjects");
+          //#endregion --------------------------------------------------------------------------
+
+          //#region ALAINA VARIABLES ------------------------------------------------------
+            var alainaTable = context.workbook.tables.getItem("AlainaProjects");
+          //#endregion --------------------------------------------------------------------------
+
+          //#region BERTO VARIABLES ------------------------------------------------------
+            var bertoTable = context.workbook.tables.getItem("BertoProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region BRE B. VARIABLES ------------------------------------------------------
+            var breBTable = context.workbook.tables.getItem("BreBProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region CHRISTIAN VARIABLES ------------------------------------------------------
+            var christianTable = context.workbook.tables.getItem("ChristianProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region EMILY VARIABLES ------------------------------------------------------
+            var emilyTable = context.workbook.tables.getItem("EmilyProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region IAN VARIABLES ------------------------------------------------------
+            var ianTable = context.workbook.tables.getItem("IanProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region JEFF VARIABLES ------------------------------------------------------
+            var jeffTable = context.workbook.tables.getItem("JeffProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region JOSH VARIABLES ------------------------------------------------------
+            var joshTable = context.workbook.tables.getItem("JoshProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region KRISTEN VARIABLES ------------------------------------------------------
+            var kristenTable = context.workbook.tables.getItem("KristenProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region ROBIN VARIABLES ------------------------------------------------------
+            var robinTable = context.workbook.tables.getItem("RobinProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region LUKE VARIABLES ------------------------------------------------------
+            var lukeTable = context.workbook.tables.getItem("LukeProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region LISA VARIABLES ------------------------------------------------------
+            var lisaTable = context.workbook.tables.getItem("LisaProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region LUIS VARIABLES ------------------------------------------------------
+            var luisTable = context.workbook.tables.getItem("LuisProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region PETER VARIABLES ------------------------------------------------------
+            var peterTable = context.workbook.tables.getItem("PeterProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region RITA VARIABLES ------------------------------------------------------
+            var ritaTable = context.workbook.tables.getItem("RitaProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region ETHAN VARIABLES ------------------------------------------------------
+            var ethanTable = context.workbook.tables.getItem("EthanProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region BRE Z. VARIABLES ------------------------------------------------------
+            var breZTable = context.workbook.tables.getItem("BreZProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region JOE VARIABLES ------------------------------------------------------
+            var joeTable = context.workbook.tables.getItem("JoeProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region JORDAN VARIABLES ------------------------------------------------------
+            var jordanTable = context.workbook.tables.getItem("JordanProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region HAZEL-RAH VARIABLES ------------------------------------------------------
+            var hazelTable = context.workbook.tables.getItem("HazelProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region TODD VARIABLES ------------------------------------------------------
+            var toddTable = context.workbook.tables.getItem("ToddProjects");
+          //#endregion ---------------------------------------------------------------------------
+
+          //#region VALIDATION VARIABLES ------------------------------------------------------
+
+            var validationSheet = context.workbook.worksheets.getItem("Validation");
+
+            //#region PICK UP TURN AROUND TIME TABLE VARIABLES -------------------------------------
+              var pickupTurnaroundTimeTable = context.workbook.tables.getItem("PickupTurnaroundTime");
+              var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows;
+              pickupTurnaroundTimeTableRows.load("items");
+            //#endregion ---------------------------------------------------------------------------
+
+            //#region ART TURN AROUND TIME TABLE VARIABLES -----------------------------------------
+              var artTurnaroundTimeTable = context.workbook.tables.getItem("ArtTurnaroundTime");
+              var artTurnaroundTimeTableRows = artTurnaroundTimeTable.rows;
+              artTurnaroundTimeTableRows.load("items");
+            //#endregion ---------------------------------------------------------------------------
+
+            //#region CREATIVE REVIEW PROCESS TABLE VARIABLES --------------------------------------
+              var creativeProofTable = context.workbook.tables.getItem("CreativeProofAdjust");
+              var creativeProofTableRows = creativeProofTable.rows;
+              creativeProofTableRows.load("items");
+            //#endregion ---------------------------------------------------------------------------
+
+            //#region PRODUCT TABLE VARIABLES (CUT MAYBE?) -----------------------------------------
+              var productTable = context.workbook.tables.getItem("ProductTable");
+              var productTableHoursColumn = productTable.columns.getItem("Product Hours");
+              productTableHoursColumn.load("name");
+              var productTableRows = productTable.rows
+              productTableRows.load("items");
+            //#endregion --------------------------------------------------------------------------
+            
+          //#endregion ----------------------------------------------------------------------------
+
+        //#endregion ------------------------------------------------------------------------------------------------
+
+        //#region LEGACY VARIABLES I MIGHT NEED LATER? --------------------------------------------------------------
+
+        // var addedAddress = "J" + (changedRow + 2); //takes the row that was updated and locates the address from the Added column.
         //var addedRange = sheet.getRange(addedAddress);
         //addedRange.load("values");
 
-       // var startAddress = "U" + (changedRow + 2);
+        // var startAddress = "U" + (changedRow + 2);
         //var startRange = sheet.getRange(startAddress);
         //startRange.load("values");
 
         //var workAddress = "V" + (changedRow + 2);
         //var workRange = sheet.getRange(workAddress);
-       // workRange.load("values");
+        // workRange.load("values");
 
         //var changedRowAddress = "A" + (changedRow + 2) + ":" + "V" + (changedRow + 2);
         //var changedRange = sheet.getRange(changedRowAddress);
 
-        var pickupTurnaroundTimeTable = context.workbook.tables.getItem("PickupTurnaroundTime");
-        var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows;
-        pickupTurnaroundTimeTableRows.load("items");
+      //#endregion -------------------------------------------------------------------------------------------------
 
-        var artTurnaroundTimeTable = context.workbook.tables.getItem("ArtTurnaroundTime");
-        var artTurnaroundTimeTableRows = artTurnaroundTimeTable.rows;
-        artTurnaroundTimeTableRows.load("items");
+        await context.sync().then(function () { //loads variable values
 
-        var creativeProofTable = context.workbook.tables.getItem("CreativeProofAdjust");
-        var creativeProofTableRows = creativeProofTable.rows;
-        creativeProofTableRows.load("items");
+        //#region LOADING VARIABLES AFTER CONTEXT.SYNC() ------------------------------------------------------------
 
-        var productTable = context.workbook.tables.getItem("ProductTable");
-        var productTableHoursColumn = productTable.columns.getItem("Product Hours");
-        productTableHoursColumn.load("name");
-        var productTableRows = productTable.rows
-        productTableRows.load("items");
+            var fartman = myRow.$all;
+            var het = myColumn.$all;
 
-      //#endregion ------------------------------------------------------------------------------------------------
+            var changedRow = changedAddress.rowIndex; //index # of the changed row (ws level)
 
+            var changedColumn = changedAddress.columnIndex; //index # of the changed column (ws level)
+            
+            var rowValues = myRow.values; //values of the changed row
 
-      //#region SPECIFIC TABLE VARIABLES --------------------------------------------------------------------------
+            //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
 
-        //#region UNASSIGNED PROJECTS VARIABLES ------------------------------------------------------------
-          var unassignedSheet = context.workbook.worksheets.getItem("Unassigned Projects");
-          var unassignedTable = unassignedSheet.tables.getItem("UnassignedProjects");
-        //#endregion --------------------------------------------------------------------------
+            var tableStart = startOfTable.columnIndex; //column index # for the first column of the table
 
-        //#region MATT VARIABLES --------------------------------------------------------
-          var mattSheet = context.workbook.worksheets.getItem("Matt");
-          var mattTable = mattSheet.tables.getItem("MattProjects");
-        //#endregion --------------------------------------------------------------------------
+            changedColumn = changedColumn - tableStart; //matches the ws level column index with the table level column index
 
-        //#region ALAINA VARIABLES ------------------------------------------------------
-          var alainaSheet = context.workbook.worksheets.getItem("Alaina");
-          var alainaTable = alainaSheet.tables.getItem("AlainaProjects");
-        //#endregion --------------------------------------------------------------------------
+        //#endregion ------------------------------------------------------------------------------------------------
 
-        //#region BERTO VARIABLES ------------------------------------------------------
-          var bertoSheet = context.workbook.worksheets.getItem("Berto");
-          var bertoTable = bertoSheet.tables.getItem("BertoProjects");
-        //#endregion ---------------------------------------------------------------------------
+      //#endregion ----------------------------------------------------------------------------------------------------
 
-        //#region BRE B. VARIABLES ------------------------------------------------------
-          var breBSheet = context.workbook.worksheets.getItem("Bre B.");
-          var breBTable = breBSheet.tables.getItem("BreBProjects");
-        //#endregion ---------------------------------------------------------------------------
+      /*
 
-        //#region CHRISTIAN VARIABLES ------------------------------------------------------
-          var christianSheet = context.workbook.worksheets.getItem("Christian");
-          var christianTable = christianSheet.tables.getItem("ChristianProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region EMILY VARIABLES ------------------------------------------------------
-          var emilySheet = context.workbook.worksheets.getItem("Emily");
-          var emilyTable = emilySheet.tables.getItem("EmilyProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region IAN VARIABLES ------------------------------------------------------
-          var ianSheet = context.workbook.worksheets.getItem("Ian");
-          var ianTable = ianSheet.tables.getItem("IanProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region JEFF VARIABLES ------------------------------------------------------
-          var jeffSheet = context.workbook.worksheets.getItem("Jeff");
-          var jeffTable = jeffSheet.tables.getItem("JeffProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region JOSH VARIABLES ------------------------------------------------------
-          var joshSheet = context.workbook.worksheets.getItem("Josh");
-          var joshTable = joshSheet.tables.getItem("JoshProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region KRISTEN VARIABLES ------------------------------------------------------
-          var kristenSheet = context.workbook.worksheets.getItem("Kristen");
-          var kristenTable = kristenSheet.tables.getItem("KristenProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region ROBIN VARIABLES ------------------------------------------------------
-          var robinSheet = context.workbook.worksheets.getItem("Robin");
-          var robinTable = robinSheet.tables.getItem("RobinProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region LUKE VARIABLES ------------------------------------------------------
-          var lukeSheet = context.workbook.worksheets.getItem("Luke");
-          var lukeTable = lukeSheet.tables.getItem("LukeProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region LISA VARIABLES ------------------------------------------------------
-          var lisaSheet = context.workbook.worksheets.getItem("Lisa");
-          var lisaTable = lisaSheet.tables.getItem("LisaProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region LUIS VARIABLES ------------------------------------------------------
-          var luisSheet = context.workbook.worksheets.getItem("Luis");
-          var luisTable = luisSheet.tables.getItem("LuisProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region PETER VARIABLES ------------------------------------------------------
-          var peterSheet = context.workbook.worksheets.getItem("Peter");
-          var peterTable = peterSheet.tables.getItem("PeterProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region RITA VARIABLES ------------------------------------------------------
-          var ritaSheet = context.workbook.worksheets.getItem("Rita");
-          var ritaTable = ritaSheet.tables.getItem("RitaProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region ETHAN VARIABLES ------------------------------------------------------
-          var ethanSheet = context.workbook.worksheets.getItem("Ethan");
-          var ethanTable = ethanSheet.tables.getItem("EthanProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region BRE Z. VARIABLES ------------------------------------------------------
-          var breZSheet = context.workbook.worksheets.getItem("Bre Z.");
-          var breZTable = breZSheet.tables.getItem("BreZProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region JOE VARIABLES ------------------------------------------------------
-          var joeSheet = context.workbook.worksheets.getItem("Joe");
-          var joeTable = joeSheet.tables.getItem("JoeProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region JORDAN VARIABLES ------------------------------------------------------
-          var jordanSheet = context.workbook.worksheets.getItem("Jordan");
-          var jordanTable = jordanSheet.tables.getItem("JordanProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region HAZEL-RAH VARIABLES ------------------------------------------------------
-          var hazelSheet = context.workbook.worksheets.getItem("Hazel-Rah");
-          var hazelTable = hazelSheet.tables.getItem("HazelProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region TODD VARIABLES ------------------------------------------------------
-          var toddSheet = context.workbook.worksheets.getItem("Todd");
-          var toddTable = toddSheet.tables.getItem("ToddProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-        //#region VALIDATION VARIABLES ------------------------------------------------------
-          var validationSheet = context.workbook.worksheets.getItem("Validation");
-          var toddTable = toddSheet.tables.getItem("ToddProjects");
-        //#endregion ---------------------------------------------------------------------------
-
-      //#endregion ------------------------------------------------------------------------------------------------
-
-
-      await context.sync().then(function () { //loads variable values
-
-
+      //#region ASSIGN VALUES TO CODE FROM EXCEL ----------------------------------------------------------------
 
         //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
 
-        var i = 0;
-        for (var key of Object.keys(startTurnAroundTime)) { //loops through startTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
-          var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values; //returns values of first level object based on positon i (so if i=0, this is the menu objects. If i=1, this is menuXL objects, etc.)
-          //console.log(pickupTurnaroundTimeValues[0][1]);
-          startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [i] sub-object the value in the first data cell in the table 
-          startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [i] sub-object the value in the second data cell in the table 
-          startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3]; //you get the point...
-          startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
-          startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
-          startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
-          startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
-          startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
-          i++; //i increases so that this continues to loop through all the products, until the key gets to the end
-        };
-
-        //console.log(startTurnAroundTime);
-
-      //#endregion --------------------------------------------------------------------------------------------
-
-
-      //#region ASSIGN ART TURNAROUND TIME VALUES -------------------------------------------------------------
-
-        var j = 0;
-        for (var key of Object.keys(artTurnAroundTime)) { //loops through artTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
-          var artTurnaroundTimeValues = artTurnaroundTimeTableRows.items[j].values; //returns values of first level object based on positon j (so if j=0, this is the menu objects. If j=1, this is menuXL objects, etc.)
-          //console.log(artTurnaroundTimeValues[0][1]);
-          artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [j] sub-object the value in the first data cell in the table 
-          artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [j] sub-object the value in the second data cell in the table
-          artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3]; //you get it, right?
-          artTurnAroundTime[key].changesToExisitingNatives = artTurnaroundTimeValues[0][4];
-          artTurnAroundTime[key].specCheck = artTurnaroundTimeValues[0][5];
-          artTurnAroundTime[key].weTransferUpload = artTurnaroundTimeValues[0][6];
-          artTurnAroundTime[key].specialRequest = artTurnaroundTimeValues[0][7];
-          artTurnAroundTime[key].other = artTurnaroundTimeValues[0][8];
-          j++; //j increases so that this continues to loop through all the products, until the key gets to the end
-        };
-
-        //console.log(artTurnAroundTime);
-
-      //#endregion --------------------------------------------------------------------------------------------
-
-
-      //#region ASSIGN CREATIVE REVIEW TIME VALUES ------------------------------------------------------------
-
-        var k = 0;
-        for (var key of Object.keys(creativeReviewTime)) { //loops through creativeReviewTime's keys (first level objects, so menu, menuXL, postcard, etc.)
-          var creativeReviewTimeValues = creativeProofTableRows.items[k].values; //returns values of first level object based on positon k (so if k=0, this is the menu objects. If k=1, this is menuXL objects, etc.)
-          //console.log(creativeReviewTimeValues[0][1]);
-          creativeReviewTime[key] = creativeReviewTimeValues[0][1]; //assigns the property of [k] sub-object the value in the first data cell in the table 
-          k++; //k increases so that this continues to loop through all the products, until the key gets to the end
-        };
-
-        //console.log(creativeReviewTime);
-
-      //#endregion --------------------------------------------------------------------------------------------
-
-
-
-        //#region ON ROW INSERTED ----------------------------------------------------------------------------------- 
-          
-          if (changeType == "RowInserted") {
-
-            //#region LOAD VARIABLES AND DO FUNCTIONS ---------------------------------------------------------------
-
-              //await context.sync().then(function () { //loads variable values
-
-                var changedTableColumnsToo = changedColumns.items;
-                var changedRowNew = changedAddress.rowIndex;
-                var addedRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Added");
-                var startRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Start Override");
-                var workRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Work Override");
-
-
-
-                //var addedRangeValues = addedRange.values[0][0]; //loads cell values in the Added column
-                //var startRangeValues = startRange.values[0][0]; //loads cell values in the Start Override column
-                //var workRangeValues = workRange.values[0][0]; //loads cell values in the Work Override column
-
-                //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
-
-                  if (addedRangeValues == "") {
-                    var newRange = currentDate(sheet, changedRowSheetLevel, changedTableColumnsToo, changedWorksheet);
-                    //return newRange;
-                  } else {
-                  console.log("Inserted row already had an Added date, so the current time was not assigned");
-                  };
-
-                //#endregion ---------------------------------------------------------------------------------------
-
-                //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
-
-                  if (startRangeValues == "") {
-                    startRangeValues = [["0"]];
-                    //return startRangeValues;
-                  };
-
-                  if (workRangeValues == "") {
-                    workRangeValues = [["0"]];
-                    //return workRangeValues;
-                  };
-
-                //#endregion ---------------------------------------------------------------------------------------
-
-                //#region ERROR HANDLING -----------------------------------------------------------------------------
-
-                };//.catch(function (error) {
-                  //console.log('Error: ' + error);
-                  //if (error instanceof OfficeExtension.Error) {
-                  //    console.log('Debug info: ' + JSON.stringify(error.debugInfo));
-                  //};
-                  //console.log("Promise Rejected");
-                //});
-
-              //#endregion -----------------------------------------------------------------------------------------
-
-            //#endregion -------------------------------------------------------------------------------------------------
-
-        //#endregion --------------------------------------------------------------------------------------------------
-        
-
-
-        //#region ON RANGE EDITED ------------------------------------------------------------------------------------
-
-          if (changeType == "RangeEdited" && eventArgs.details !== undefined ) {
-            
-            //#region ESCAPES ON TABLE CHANGED FUNCTION IF VALUES ARE UNCHANGED --------------------------------------
-
-              // If values are the same as before, ignore the moved-to table's on change event        
-              if (eventArgs.details.valueAfter == eventArgs.details.valueBefore) {
-                //console.log("No values have changed. Exiting move data event...")
-                return;
+              var i = 0;
+              for (var key of Object.keys(startTurnAroundTime)) { //loops through startTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+                var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values; //returns values of first level object based on positon i (so if i=0, this is the menu objects. If i=1, this is menuXL objects, etc.)
+                //console.log(pickupTurnaroundTimeValues[0][1]);
+                startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [i] sub-object the value in the first data cell in the table 
+                startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [i] sub-object the value in the second data cell in the table 
+                startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3]; //you get the point...
+                startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
+                startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
+                startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
+                startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
+                startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
+                i++; //i increases so that this continues to loop through all the products, until the key gets to the end
               };
 
-            //#endregion --------------------------------------------------------------------------------------------
+              //console.log(startTurnAroundTime);
+
+        //#endregion --------------------------------------------------------------------------------------------
+
+        //#region ASSIGN ART TURNAROUND TIME VALUES -------------------------------------------------------------
+
+              var j = 0;
+              for (var key of Object.keys(artTurnAroundTime)) { //loops through artTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+                var artTurnaroundTimeValues = artTurnaroundTimeTableRows.items[j].values; //returns values of first level object based on positon j (so if j=0, this is the menu objects. If j=1, this is menuXL objects, etc.)
+                //console.log(artTurnaroundTimeValues[0][1]);
+                artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [j] sub-object the value in the first data cell in the table 
+                artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [j] sub-object the value in the second data cell in the table
+                artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3]; //you get it, right?
+                artTurnAroundTime[key].changesToExisitingNatives = artTurnaroundTimeValues[0][4];
+                artTurnAroundTime[key].specCheck = artTurnaroundTimeValues[0][5];
+                artTurnAroundTime[key].weTransferUpload = artTurnaroundTimeValues[0][6];
+                artTurnAroundTime[key].specialRequest = artTurnaroundTimeValues[0][7];
+                artTurnAroundTime[key].other = artTurnaroundTimeValues[0][8];
+                j++; //j increases so that this continues to loop through all the products, until the key gets to the end
+              };
+
+              //console.log(artTurnAroundTime);
+
+        //#endregion --------------------------------------------------------------------------------------------
+
+        //#region ASSIGN CREATIVE REVIEW TIME VALUES ------------------------------------------------------------
+
+              var k = 0;
+              for (var key of Object.keys(creativeReviewTime)) { //loops through creativeReviewTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+                var creativeReviewTimeValues = creativeProofTableRows.items[k].values; //returns values of first level object based on positon k (so if k=0, this is the menu objects. If k=1, this is menuXL objects, etc.)
+                //console.log(creativeReviewTimeValues[0][1]);
+                creativeReviewTime[key] = creativeReviewTimeValues[0][1]; //assigns the property of [k] sub-object the value in the first data cell in the table 
+                k++; //k increases so that this continues to loop through all the products, until the key gets to the end
+              };
+
+              //console.log(creativeReviewTime);
+
+        //#endregion --------------------------------------------------------------------------------------------
+
+      //#endregion ----------------------------------------------------------------------------------------------
+
+      //#region ON CHANGED EVENT, DO... ---------------------------------------------------------------------------
+
+        //#region ON ROW INSERTED ----------------------------------------------------------------------------------- 
+                
+                if (changeType == "RowInserted") {
+
+                  //#region LOAD VARIABLES AND DO FUNCTIONS ---------------------------------------------------------------
+
+                      var changedTableColumnsToo = changedColumns.items;
+                      var addedRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Added");
+                      var startRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Start Override");
+                      var workRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Work Override");
+
+                      //var addedRangeValues = addedRange.values[0][0]; //loads cell values in the Added column
+                      //var startRangeValues = startRange.values[0][0]; //loads cell values in the Start Override column
+                      //var workRangeValues = workRange.values[0][0]; //loads cell values in the Work Override column
+
+                      //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
+
+                        if (addedRangeValues == "") {
+                          var newRange = currentDate(sheet, changedRow, changedTableColumnsToo, changedWorksheet);
+                          //return newRange;
+                        } else {
+                        console.log("Inserted row already had an Added date, so the current time was not assigned");
+                        };
+
+                      //#endregion ---------------------------------------------------------------------------------------
+
+                      //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
+
+                        if (startRangeValues == "") {
+                          startRangeValues = [["0"]];
+                          //return startRangeValues;
+                        };
+
+                        if (workRangeValues == "") {
+                          workRangeValues = [["0"]];
+                          //return workRangeValues;
+                        };
+
+                      //#endregion ---------------------------------------------------------------------------------------
+
+                      //#region ERROR HANDLING -----------------------------------------------------------------------------
+
+                      };//.catch(function (error) {
+                        //console.log('Error: ' + error);
+                        //if (error instanceof OfficeExtension.Error) {
+                        //    console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+                        //};
+                        //console.log("Promise Rejected");
+                      //});
+
+                    //#endregion -----------------------------------------------------------------------------------------
+
+                  //#endregion -------------------------------------------------------------------------------------------------
+
+        //#endregion --------------------------------------------------------------------------------------------------
               
-            //#region LOAD VARIABLES AND DO FUNCTIONS ----------------------------------------------------------------
+        //#region ON RANGE EDITED ------------------------------------------------------------------------------------
 
-              //await context.sync().then(function () { //loads variable values
-            
-
-                //#region LOAD & ASSIGN TABLE VALUES --------------------------------------------------------------------
-
-                  var rowValues = myRow.values;
-
-                  var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
-
-                  var newChangedColumn = changedAddress.columnIndex;
-
-                  var tableStart = startOfTable.columnIndex;
-
-                  newChangedColumn = newChangedColumn - tableStart;
-
-                  //var newChangedRow = changedAddress.rowIndex;
-
-
-                  //var cheeseMan = findColumnPosition
-
-                  var art = changedRow;
-
-
-                  var projectTypeColumn = findColumnPosition(changedTableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
-                  var productColumn = findColumnPosition(changedTableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
-                  var addedColumn = findColumnPosition(changedTableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
-                  var artistColumn = findColumnPosition(changedTableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
-                  var startOverrideColumn = findColumnPosition(changedTableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
-                  var workOverrideColumn = findColumnPosition(changedTableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
-
-
-
-
-
-
-
-
-
-                  
-
-                //#endregion ----------------------------------------------------------------------------------------------
-                      
+              if (changeType == "RangeEdited" && eventArgs.details !== undefined ) {
                 
-                //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
+                //#region ESCAPES ON TABLE CHANGED FUNCTION IF VALUES ARE UNCHANGED --------------------------------------
 
-                  changedRange.format.font.name = "Calibri";
-                  changedRange.format.font.size = 12;
-                  changedRange.format.font.color = "#000000";
-
-              //#endregion --------------------------------------------------------------------------------------------
-                
-
-              //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
-
-                if (sheet.id !== validationSheet.id) {
-
-                  //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
-
-                    if (newChangedColumn == projectTypeColumn || newChangedColumn == productColumn || newChangedColumn == addedColumn || newChangedColumn == startOverrideColumn || newChangedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
-
-                      var startAdjustmentHours = startHoursNumber(rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
-                    
-                      var artAdjustmentHours = workHoursNumber(rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
-                    
-                      var artAdjustForCreativeReview = addCreativeReview(artAdjustmentHours, creativeReviewTime, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
-                
-                      var myDate = receivedAdjust(rowValues, changedRow); //grabs values from Added column and converts into date object in EST.
-                    
-                      var override = startPreAdjust(rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
-                    
-                      var startedPickedUpBy = startedBy(changedRow, sheet, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
-                
-                      var workOverride = workPrePreAdjust(rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
-                  
-                      var proofToClient = toClient(changedRow, sheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
-
-                      console.log("Turn Around time variables were updated!");
-
-                      return;
-                  
+                  // If values are the same as before, ignore the moved-to table's on change event        
+                  if (eventArgs.details.valueAfter == eventArgs.details.valueBefore) {
+                    //console.log("No values have changed. Exiting move data event...")
+                    return;
                   };
 
-                //#endregion ------------------------------------------------------------------------------------------
+                //#endregion --------------------------------------------------------------------------------------------
+                  
+                //#region LOAD VARIABLES AND DO FUNCTIONS ----------------------------------------------------------------
+                
+                  //#region LOAD & ASSIGN TABLE VALUES --------------------------------------------------------------------
 
+                    var rowValues = myRow.values;
 
-                  //#region MOVE DATA BETWEEN SHEETS ------------------------------------------------------------------------ 
+                    var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
 
-                    if (newChangedColumn == artistColumn) {
+                    var newChangedColumn = changedAddress.columnIndex;
 
-                      //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
+                    var tableStart = startOfTable.columnIndex;
 
+                    newChangedColumn = newChangedColumn - tableStart;
 
-                        //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
+                    var art = changedRow;
 
-                          //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
-
-                          var statusCellValue = cellValue(changedTableColumns, changedTableRows, changedRow, "Status");
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                        //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                          var listOfCompletedTables = [];
-
-                          allTables.items.forEach(function (table) { //for each table in the workbook...
-                            if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                              listOfCompletedTables.push(table.name); //push the name of that table into an array
-                            };
-                          });
-
-                          //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
-                          var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                        //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
-
-                          var completedTable;
-
-                          worksheetTables.items.forEach(function (table) { //for each table in the changed worksheet...
-                            if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                              var leTable = table.name; //sets var to name of said completed table
-                              completedTable = worksheetTables.getItem(leTable); //grabs said table's data from the worksheet
-                            };
-                          });
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                        //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
-
-                          if (statusCellValue == "Completed" && includesCompletedTables == false) {
-
-                            completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-                            myRow.delete(); //Deletes the changed row from the original sheet
-                            console.log("Data was moved to the artist's Completed Projects Table!");
-                            return;
-
-                          };
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-
-                      //#endregion ---------------------------------------------------------------------------------------------
-
-
-                      //#region MOVE DATA TO ARTIST TABLE ------------------------------------------------------------------
-
-
-                          //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------
-
-                            var artistCellValue = cellValue(changedTableColumns, changedTableRows, changedRow, "Artist");
-
-                          //#endregion ------------------------------------------------------------------------------------------
-
-
-                          //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                          var listOfNonArtistTables = [];
-
-                          allTables.items.forEach(function (table) { //for each table in the workbook...
-                            if (table.name.includes("Completed")) { //|| table.name.includes("Unassigned")) { //if the table name includes the word "Completed" in it...
-                              listOfNonArtistTables.push(table.name); //push the name of that table into an array
-                            };
-                          });
-
-                          //returns true if the changedTable is a completed table or the unassigned table from the array previously made, false if it is anything else
-                          var nonArtistTables = listOfNonArtistTables.includes(changedTable.name);
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-
-                        //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
-
-                          var isUnassigned;
-
-                          if (changedWorksheet.name == "Unassigned Projects") {
-                            isUnassigned = true;
-                          } else {
-                            isUnassigned = false;
-                          };
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-
-                          //#region ASSIGNS THE DESTINATION TABLE VALUE ---------------------------------------------------------
-
-                            if (nonArtistTables == false) {
-                              if (artistCellValue == "Unassigned" && isUnassigned == false) {
-                                destinationTable = unassignedTable;
-                              } else if (artistCellValue == "Matt") {
-                                destinationTable = mattTable;
-                              } else if (artistCellValue == "Alaina") {
-                                destinationTable = alainaTable;
-                              } else if (artistCellValue == "Berto") {
-                                destinationTable = bertoTable;
-                              } else if (artistCellValue == "Bre B.") {
-                                destinationTable = breBTable;
-                              } else if (artistCellValue == "Christian") {
-                                destinationTable = christianTable;
-                              } else if (artistCellValue == "Emily") {
-                                destinationTable = emilyTable;
-                              } else if (artistCellValue == "Ian") {
-                                destinationTable = ianTable;
-                              } else if (artistCellValue == "Jeff") {
-                                destinationTable = jeffTable;
-                              } else if (artistCellValue == "Josh") {
-                                destinationTable = joshTable;
-                              } else if (artistCellValue == "Kristen") {
-                                destinationTable = kristenTable;
-                              } else if (artistCellValue == "Robin") {
-                                destinationTable = robinTable;
-                              } else if (artistCellValue == "Luke") {
-                                destinationTable = lukeTable;
-                              } else if (artistCellValue == "Lisa") {
-                                destinationTable = lisaTable;
-                              } else if (artistCellValue == "Luis") {
-                                destinationTable = luisTable;
-                              } else if (artistCellValue == "Peter") {
-                                destinationTable = peterTable;
-                              } else if (artistCellValue == "Rita") {
-                                destinationTable = ritaTable;
-                              } else if (artistCellValue == "Ethan") {
-                                destinationTable = ethanTable;
-                              } else if (artistCellValue == "Bre Z.") {
-                                destinationTable = breZTable;
-                              } else if (artistCellValue == "Joe") {
-                                destinationTable = joeTable;
-                              } else if (artistCellValue == "Jordan") {
-                                destinationTable = jordanTable;
-                              } else if (artistCellValue == "Hazel-Rah") {
-                                destinationTable = hazelTable;
-                              } else if (artistCellValue == "Todd") {
-                                destinationTable = toddTable;
-                              } else {
-                                destinationTable = "null"
-                              };
-                            };
-
-                            //var hwat = destinationTable;
-
-                          //#endregion ------------------------------------------------------------------------------------------
-
-                          
-                          //#region MOVES DATA TO DESTINATION TABLE ----------------------------------------------------------------
-
-                            if (destinationTable !== "null") {
-                              moveData(destinationTable, myRow, artistCellValue);
-                            } else {
-                              console.log("No artist was assigned or updated, so no data was moved.")
-                              return;
-                            };
-
-                          //#endregion ------------------------------------------------------------------------------------------
-
-
-
-                        //#endregion -----------------------------------------------------------------------------------------------
-
-                    };
+                    var projectTypeColumn = findColumnPosition(changedTableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
+                    var productColumn = findColumnPosition(changedTableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
+                    var addedColumn = findColumnPosition(changedTableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
+                    var artistColumn = findColumnPosition(changedTableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
+                    var startOverrideColumn = findColumnPosition(changedTableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
+                    var workOverrideColumn = findColumnPosition(changedTableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
 
                   //#endregion ----------------------------------------------------------------------------------------------
+                        
+                  //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
 
-                } else {
-                    console.log("Adjustments were made to the validation sheet, therefore the date variables and move functions were not triggered");
-                  };
+                    changedRange.format.font.name = "Calibri";
+                    changedRange.format.font.size = 12;
+                    changedRange.format.font.color = "#000000";
 
-              //#endregion ----------------------------------------------------------------------------------------------------
+                  //#endregion --------------------------------------------------------------------------------------------
+                  
+                  //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... -------------------------------------------------
 
+                      if (sheet.id !== validationSheet.id) {
 
-            //#endregion ------------------------------------------------------------------------------------------------
+                        //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
 
-            //#region ERROR HANDLING -------------------------------------------------------------------------------------
+                          if (newChangedColumn == projectTypeColumn || newChangedColumn == productColumn || newChangedColumn == addedColumn || newChangedColumn == startOverrideColumn || newChangedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
 
-              };//).catch(function (error) {
-                //console.log('Error: ' + error);
-                //if (error instanceof OfficeExtension.Error) {
-                //  console.log('Debug info: ' + JSON.stringify(error.debugInfo));
-                //}
-                //console.log("Promise Rejected");
-              //});
+                            var startAdjustmentHours = startHoursNumber(rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
+                          
+                            var artAdjustmentHours = workHoursNumber(rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
+                          
+                            var artAdjustForCreativeReview = addCreativeReview(artAdjustmentHours, creativeReviewTime, rowValues); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
+                      
+                            var myDate = receivedAdjust(rowValues, changedRow); //grabs values from Added column and converts into date object in EST.
+                          
+                            var override = startPreAdjust(rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
+                          
+                            var startedPickedUpBy = startedBy(changedRow, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
+                      
+                            var workOverride = workPrePreAdjust(rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
+                        
+                            var proofToClient = toClient(changedRow, sheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
 
-            //#endregion ------------------------------------------------------------------------------------------------
+                            console.log("Turn Around time variables were updated!");
 
-          }); 
+                            return;
+                        
+                          };
 
-        //#endregion ---------------------------------------------------------------------------------------------------
+                        //#endregion ------------------------------------------------------------------------------------------
+
+                        //#region MOVE DATA BETWEEN SHEETS ------------------------------------------------------------------------ 
+
+                          if (newChangedColumn == artistColumn) {
+
+                            //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
+
+                              //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
+
+                                //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+
+                                var statusCellValue = cellValue(changedTableColumns, changedTableRows, changedRow, "Status");
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                              //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
+
+                                var listOfCompletedTables = [];
+
+                                allTables.items.forEach(function (table) { //for each table in the workbook...
+                                  if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                                    listOfCompletedTables.push(table.name); //push the name of that table into an array
+                                  };
+                                });
+
+                                //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
+                                var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                              //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
+
+                                var completedTable;
+
+                                worksheetTables.items.forEach(function (table) { //for each table in the changed worksheet...
+                                  if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                                    var leTable = table.name; //sets var to name of said completed table
+                                    completedTable = worksheetTables.getItem(leTable); //grabs said table's data from the worksheet
+                                  };
+                                });
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                              //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
+
+                                if (statusCellValue == "Completed" && includesCompletedTables == false) {
+
+                                  completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                                  myRow.delete(); //Deletes the changed row from the original sheet
+                                  console.log("Data was moved to the artist's Completed Projects Table!");
+                                  return;
+
+                                };
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                            //#endregion ---------------------------------------------------------------------------------------------
+
+                            //#region MOVE DATA TO ARTIST TABLE ------------------------------------------------------------------
+
+                              //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------
+
+                                var artistCellValue = cellValue(changedTableColumns, changedTableRows, changedRow, "Artist");
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                              //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
+
+                                  var listOfNonArtistTables = [];
+
+                                  allTables.items.forEach(function (table) { //for each table in the workbook...
+                                    if (table.name.includes("Completed")) { //|| table.name.includes("Unassigned")) { //if the table name includes the word "Completed" in it...
+                                      listOfNonArtistTables.push(table.name); //push the name of that table into an array
+                                    };
+                                  });
+
+                                  //returns true if the changedTable is a completed table or the unassigned table from the array previously made, false if it is anything else
+                                  var nonArtistTables = listOfNonArtistTables.includes(changedTable.name);
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                              //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
+
+                                var isUnassigned;
+
+                                if (changedWorksheet.name == "Unassigned Projects") {
+                                  isUnassigned = true;
+                                } else {
+                                  isUnassigned = false;
+                                };
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                              //#region ASSIGNS THE DESTINATION TABLE VALUE ---------------------------------------------------------
+
+                                if (nonArtistTables == false) {
+                                  if (artistCellValue == "Unassigned" && isUnassigned == false) {
+                                    destinationTable = unassignedTable;
+                                  } else if (artistCellValue == "Matt") {
+                                    destinationTable = mattTable;
+                                  } else if (artistCellValue == "Alaina") {
+                                    destinationTable = alainaTable;
+                                  } else if (artistCellValue == "Berto") {
+                                    destinationTable = bertoTable;
+                                  } else if (artistCellValue == "Bre B.") {
+                                    destinationTable = breBTable;
+                                  } else if (artistCellValue == "Christian") {
+                                    destinationTable = christianTable;
+                                  } else if (artistCellValue == "Emily") {
+                                    destinationTable = emilyTable;
+                                  } else if (artistCellValue == "Ian") {
+                                    destinationTable = ianTable;
+                                  } else if (artistCellValue == "Jeff") {
+                                    destinationTable = jeffTable;
+                                  } else if (artistCellValue == "Josh") {
+                                    destinationTable = joshTable;
+                                  } else if (artistCellValue == "Kristen") {
+                                    destinationTable = kristenTable;
+                                  } else if (artistCellValue == "Robin") {
+                                    destinationTable = robinTable;
+                                  } else if (artistCellValue == "Luke") {
+                                    destinationTable = lukeTable;
+                                  } else if (artistCellValue == "Lisa") {
+                                    destinationTable = lisaTable;
+                                  } else if (artistCellValue == "Luis") {
+                                    destinationTable = luisTable;
+                                  } else if (artistCellValue == "Peter") {
+                                    destinationTable = peterTable;
+                                  } else if (artistCellValue == "Rita") {
+                                    destinationTable = ritaTable;
+                                  } else if (artistCellValue == "Ethan") {
+                                    destinationTable = ethanTable;
+                                  } else if (artistCellValue == "Bre Z.") {
+                                    destinationTable = breZTable;
+                                  } else if (artistCellValue == "Joe") {
+                                    destinationTable = joeTable;
+                                  } else if (artistCellValue == "Jordan") {
+                                    destinationTable = jordanTable;
+                                  } else if (artistCellValue == "Hazel-Rah") {
+                                    destinationTable = hazelTable;
+                                  } else if (artistCellValue == "Todd") {
+                                    destinationTable = toddTable;
+                                  } else {
+                                    destinationTable = "null"
+                                  };
+                                };
+
+                                //var hwat = destinationTable;
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                              //#region MOVES DATA TO DESTINATION TABLE ----------------------------------------------------------------
+
+                                if (destinationTable !== "null") {
+                                  moveData(destinationTable, myRow, artistCellValue);
+                                } else {
+                                  console.log("No artist was assigned or updated, so no data was moved.")
+                                  return;
+                                };
+
+                              //#endregion ------------------------------------------------------------------------------------------
+
+                            //#endregion -----------------------------------------------------------------------------------------------
+
+                          };
+
+                        //#endregion ----------------------------------------------------------------------------------------------
+
+                      } else {
+                        console.log("Adjustments were made to the validation sheet, therefore the date variables and move functions were not triggered");
+                      };
+
+                    //#endregion ----------------------------------------------------------------------------------------------------
+
+                //#endregion ----------------------------------------------------------------------------------------------
+
+              };
+
+        //#endregion ------------------------------------------------------------------------------------------------
+
+      //#endregion -------------------------------------------------------------------------------------------------
+
+      //#region ERROR HANDLING -------------------------------------------------------------------------------------
+
+        }).catch(function (error) {
+          console.log('Error: ' + error);
+          if (error instanceof OfficeExtension.Error) {
+            console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+          }
+          console.log("Promise Rejected");
+        });
+
+      //#endregion ------------------------------------------------------------------------------------------------
 
     });
   };
-
 
 //#endregion ------------------------------------------------------------------------------------------------------
 
@@ -1821,15 +1815,15 @@ Office.onReady((info) => {
 
     /**
      * Inputs the current date & time into the Added column of the changed row
-     * @param {Number} changedRowSheetLevel The number of the changed row (on a worksheet level)
+     * @param {Number} changedRow The number of the changed row (on a worksheet level)
      * @param {Array} changedTableColumns An array of all the columns in the changedTable
      * @param {Object} worksheet the changed worksheet
      * @returns Array
      */
-    function currentDate(changedRowSheetLevel, changedTableColumns, worksheet) {
+    function currentDate(changedRow, changedTableColumns, worksheet) {
 
       var theColumnPosition = findColumnPosition(changedTableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
-      var theAddress = worksheet.getCell(changedRowSheetLevel, theColumnPosition);
+      var theAddress = worksheet.getCell(changedRow, theColumnPosition);
 
       var now = new Date();
       var toSerial = JSDateToExcelDate(now);
@@ -2031,9 +2025,9 @@ Office.onReady((info) => {
      * @param {Array} myRow the data, values, and attributes of the changed row
      */
       function moveData(destinationTable, myRow, artistCellValue) {
-      destinationTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
-      myRow.delete(); //Deletes the changed row from the original sheet
-      console.log("Data was moved to " + artistCellValue + "'s Projects Table!");
+        destinationTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+        myRow.delete(); //Deletes the changed row from the original sheet
+        console.log("Data was moved to " + artistCellValue + "'s Projects Table!");
     };
 
   //#endregion ---------------------------------------------------------------------------------------------
@@ -2224,10 +2218,10 @@ Office.onReady((info) => {
        * @param {Date} override date adjusted for office hours
        * @returns date
        */
-      function startedBy(changedRow, sheet, changedTableColumns, worksheet, changedRowSheetLevel, override) { //loads these variables from another function to use in this function
+      function startedBy(changedRow, changedTableColumns, worksheet, changedRow, override) { //loads these variables from another function to use in this function
 
         var theColumnPosition = findColumnPosition(changedTableColumns, "Picked Up / Started By"); //returns the array index number of the column that matches the name of the columnName variable
-        var theAddress = worksheet.getCell(changedRowSheetLevel, theColumnPosition);
+        var theAddress = worksheet.getCell(changedRow, theColumnPosition);
         //var address = "M" + (changedRow + 2); //takes the row that was updated and locates the address from the Picked Up / Started By column.
        // var range = sheet.getRange(address); //assigns the cell from the address variable to range
       
@@ -2979,4 +2973,5 @@ Office.onReady((info) => {
   //#endregion ---------------------------------------------------------------------------------------------------
 
 //#endregion -----------------------------------------------------------------------------------------------------
+        
 
