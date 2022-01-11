@@ -1099,63 +1099,42 @@ Office.onReady((info) => {
 
         //#region EVENT VARIABLES -----------------------------------------------------------------------------------
 
-          //#region WORKSHEET LEVEL VARIABLES -----------------------------------------------------------------------
+          //#region EVENT ARGS --------------------------------------------------------------------------------------
 
-            //#region EVENT ARGS --------------------------------------------------------------------------------------
-
-              var details = eventArgs.details; //Loads the values before and after the event
-              var address = eventArgs.address; //Loads the cell's address where the event took place
-              var changeType = eventArgs.changeType;
-              var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
-              var oldChangedRow = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
-              var changedColumnLetter = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
-
-            //#endregion ----------------------------------------------------------------------------------------------
-
-            var allWorksheets = context.workbook.worksheets;
-            allWorksheets.load("items/name");
-            //var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
-            var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
-
+            var details = eventArgs.details; //Loads the values before and after the event
+            var address = eventArgs.address; //Loads the cell's address where the event took place
+            var changeType = eventArgs.changeType;
+            var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
+            
           //#endregion ----------------------------------------------------------------------------------------------
 
-
-          //#region TABLE LEVEL VARIABLES ---------------------------------------------------------------------------
-
-            var allTables = context.workbook.tables;
-            allTables.load("items/name");
-            var worksheetTables = changedWorksheet.tables.load("items/name");
-            var thisTable = changedWorksheet.tables.getItem(eventArgs.tableId);
-            var changedTable = thisTable.load("name"); //Returns tableId of the table where the event occured
-            var startOfTable = changedTable.getRange().load("columnIndex");
-
-          //#region TABLE VERSIONS OF MOST WORKSHEET LEVEL VARIABLES (LEGACY) -------------------------------------
-
-            //var changedColumns = changedTable.columns
-            //changedColumns.load("items/name");
-            //var changedTableRows = changedTable.rows;
-            //changedTableRows.load("items");
-            var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
-            //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
-            //var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
-
-          //#endregion --------------------------------------------------------------------------------------------
-
-        //#endregion ----------------------------------------------------------------------------------------------
-
-          //#region LOAD CHANGED COLUMN AND ROW INDEX NUMBERS -------------------------------------------------
-
+          //#region WORKSHEET LEVEL VARIABLES -----------------------------------------------------------------------
+          
+            var allWorksheets = context.workbook.worksheets; //loads of the workbook's worksheets
+            allWorksheets.load("items/name");
+            //var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
+            var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name"); //gets the changed worksheet
+            var worksheetTables = changedWorksheet.tables.load("items/name"); //loads all of the changedWorksheet's tables
+            var changedRowWorksheet = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
+            var changedColumnLetter = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
             var changedAddress = changedWorksheet.getRange(address);
             changedAddress.load("columnIndex");
             changedAddress.load("rowIndex");
 
-            var changedRowPoop = changedAddress.getEntireRow().load("values");
-            var changedColumnPoop = changedAddress.getEntireColumn().load("values");
-            var myRow = thisTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
-            // var myColumn = changedTable.columns.getItemAt(changedColumnPoop).load("values");
-            // var row = ctx.workbook.tables.getItem(tableName).rows.getItemAt(2);
+          //#endregion ----------------------------------------------------------------------------------------------
 
-          //#endregion ----------------------------------------------------------------------------------------
+          //#region TABLE LEVEL VARIABLES ---------------------------------------------------------------------------
+
+            var allTables = context.workbook.tables; //loads all of the workbook's tables
+            allTables.load("items/name");
+            var changedTable = changedWorksheet.tables.getItem(eventArgs.tableId).load("name"); //gets the changed table
+            var changedTableRows = changedTable.rows; //a collection of all of the changed table's rows
+            var changedTableColumns = changedTable.columns; //a collection of all of the changed table's columns
+            var startOfTable = changedTable.getRange().load("columnIndex"); //loads the column index of the beginning of the changedTable
+            var changedRowTable = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
+            var myRow = changedTableRows.getItemAt(changedRowTable).load("values"); //loads the values of the changed row in the table where the event was fired 
+
+          //#endregion ----------------------------------------------------------------------------------------------
 
         //#endregion ------------------------------------------------------------------------------------------------
 
@@ -1249,35 +1228,20 @@ Office.onReady((info) => {
 
         //#region LOADING VARIABLES AFTER CONTEXT.SYNC() ------------------------------------------------------------
 
-            var best = changedAddress.columnIndex;
+          var changedRow = changedAddress.rowIndex; //index # of the changed row (ws level)
 
-            var chest = changedAddress.rowIndex;
+          var changedColumn = changedAddress.columnIndex; //index # of the changed column (ws level)
+          
+          var rowValues = myRow.values; //values of the changed row
 
-            var lest = changedRowPoop.values;
-            
-            var fest = changedColumnPoop.values;
+          //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
 
-            var test = myRow.values;
-            //var testTest = myColumn.$all;
+          var tableStart = startOfTable.columnIndex; //column index # for the first column of the table
 
-            var changedRow = changedAddress.rowIndex; //index # of the changed row (ws level)
+          changedColumn = changedColumn - tableStart; //matches the ws level column index with the table level column index
 
-            var changedColumn = changedAddress.columnIndex; //index # of the changed column (ws level)
-            
-            var rowValues = myRow.values; //values of the changed row
+        //#endregion ----------------------------------------------------------------------------------------------------
 
-            //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
-
-            var tableStart = startOfTable.columnIndex; //column index # for the first column of the table
-
-            changedColumn = changedColumn - tableStart; //matches the ws level column index with the table level column index
-
-
-      //#endregion ----------------------------------------------------------------------------------------------------
-
-
-
-      
 
       //#region ASSIGN VALUES TO CODE FROM EXCEL ----------------------------------------------------------------
 
@@ -1347,8 +1311,8 @@ Office.onReady((info) => {
 
                   //#region LOAD VARIABLES AND DO FUNCTIONS ---------------------------------------------------------------
 
-                      var changedTableColumnsToo = changedColumns.items;
-                      var addedRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Added");
+                      //var changedTableColumnsToo = changedColumns.items;
+                      var addedRangeValues = cellValue(changedTableColumns, changedTableRows, changedRow, "Added");
                       var startRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Start Override");
                       var workRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Work Override");
 
@@ -1667,10 +1631,18 @@ Office.onReady((info) => {
           console.log("Promise Rejected");
         });
 
-      //#endregion ------------------------------------------------------------------------------------------------
 
+    }).catch(function (error) {
+      console.log('Error: ' + error);
+      if (error instanceof OfficeExtension.Error) {
+        console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+      }
+      console.log("Promise Rejected");
     });
   };
+
+  //#endregion ------------------------------------------------------------------------------------------------
+
 
 //#endregion ------------------------------------------------------------------------------------------------------
 
