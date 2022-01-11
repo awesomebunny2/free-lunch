@@ -1129,7 +1129,11 @@ Office.onReady((info) => {
             allTables.load("items/name");
             var changedTable = changedWorksheet.tables.getItem(eventArgs.tableId).load("name"); //gets the changed table
             var startOfTable = changedTable.getRange().load("columnIndex"); //loads the column index of the beginning of the changedTable
-            var changedTableColumns = changedTable.columns.load("items");
+            var changedTableColumns = changedTable.columns
+            changedTableColumns.load("items/name");
+            var changedTableRows = changedTable.rows;
+            changedTableRows.load("items");
+            //var changedTableColumns = changedTable.columns.load("items");
             var changedRowTable = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
             var myRow = changedTable.rows.getItemAt(changedRowTable).load("values"); //loads the values of the changed row in the table where the event was fired 
 
