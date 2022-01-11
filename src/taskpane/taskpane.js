@@ -1128,11 +1128,10 @@ Office.onReady((info) => {
             var allTables = context.workbook.tables; //loads all of the workbook's tables
             allTables.load("items/name");
             var changedTable = changedWorksheet.tables.getItem(eventArgs.tableId).load("name"); //gets the changed table
-            var changedTableRows = changedTable.rows; //a collection of all of the changed table's rows
-            var changedTableColumns = changedTable.columns; //a collection of all of the changed table's columns
             var startOfTable = changedTable.getRange().load("columnIndex"); //loads the column index of the beginning of the changedTable
+            var changedTableColumns = changedTable.columns.load("items");
             var changedRowTable = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
-            var myRow = changedTableRows.getItemAt(changedRowTable).load("values"); //loads the values of the changed row in the table where the event was fired 
+            var myRow = changedTable.rows.getItemAt(changedRowTable).load("values"); //loads the values of the changed row in the table where the event was fired 
 
           //#endregion ----------------------------------------------------------------------------------------------
 
@@ -1228,6 +1227,10 @@ Office.onReady((info) => {
 
         //#region LOADING VARIABLES AFTER CONTEXT.SYNC() ------------------------------------------------------------
 
+          var heck = changedTableColumns.items; //a collection of all of the changed table's columns
+
+          var changedTableRows = changedTable.rows; //a collection of all of the changed table's rows
+
           var changedRow = changedAddress.rowIndex; //index # of the changed row (ws level)
 
           var changedColumn = changedAddress.columnIndex; //index # of the changed column (ws level)
@@ -1312,7 +1315,7 @@ Office.onReady((info) => {
                   //#region LOAD VARIABLES AND DO FUNCTIONS ---------------------------------------------------------------
 
                       //var changedTableColumnsToo = changedColumns.items;
-                      var addedRangeValues = cellValue(changedTableColumns, changedTableRows, changedRow, "Added");
+                      var addedRangeValues = cellValue(changedTableColumns, rowValues, "Added");
                       var startRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Start Override");
                       var workRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Work Override");
 
@@ -1903,19 +1906,28 @@ Office.onReady((info) => {
 
   /**
    * Returns the value of the cell where the specified column and the changedRow intersect
-   * @param {Array} tableColumns a collection of all the columns in a table in an array of objects
-   * @param {Number} changedRow the row number of the changed value
+   * @param {Array} changedTableColumns a collection of all the columns in a table in an array of objects
+   * @param {Array} rowValues a collection of the values in the changed row
    * @param {String} columnName the name of the column to locate in the table
    * @returns the value of the cell where the specified column and changedRow intersect
    */
-    function cellValue(tableColumns, changedTableRows, changedRow, columnName) {
+    function cellValue(changedTableColumns, rowValues, columnName) {
 
-      var columnPosition = findColumnPosition(tableColumns, columnName); //returns the array index number of the column that matche4s the name of the columnName variable
+      var columnPosition = findColumnPosition(changedTableColumns, columnName); //returns the array index number of the column that matches the name of the columnName variable
 
-      var changedTableRowValues = changedTableRows.items[changedRow].values; //loads the values of the changed row in the changed table
-      var changedRowColumnValue = changedTableRowValues[0][columnPosition]; //loads the value of the cell in the columnName column and changedRow
+      //var changedTableRowValues = changedTableRows.items[changedRowTable].values; //loads the values of the changed row in the changed table
+      var changedRowColumnValue = rowValues[0][columnPosition]; //loads the value of the cell in the columnName column and changedRow
 
       return changedRowColumnValue;
+
+      /*function cellValue(changedTableColumns, changedTableRows, changedRowTable, columnName) {
+
+        var columnPosition = findColumnPosition(changedTableColumns, columnName); //returns the array index number of the column that matches the name of the columnName variable
+  
+        var changedTableRowValues = changedTableRows.items[changedRowTable].values; //loads the values of the changed row in the changed table
+        var changedRowColumnValue = changedTableRowValues[0][columnPosition]; //loads the value of the cell in the columnName column and changedRow
+  
+        return changedRowColumnValue;*/
 
   };
 
