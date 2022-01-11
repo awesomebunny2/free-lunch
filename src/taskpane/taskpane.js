@@ -1231,7 +1231,7 @@ Office.onReady((info) => {
 
         //#region LOADING VARIABLES AFTER CONTEXT.SYNC() ------------------------------------------------------------
 
-          var heck = changedTableColumns.items; //a collection of all of the changed table's columns
+          var fart = changedTableColumns.items; //a collection of all of the changed table's columns
 
           var changedTableRows = changedTable.rows; //a collection of all of the changed table's rows
 
