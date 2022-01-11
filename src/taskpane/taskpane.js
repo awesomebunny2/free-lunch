@@ -1110,7 +1110,7 @@ Office.onReady((info) => {
         //var changedColumn = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
         var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
         //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
-        var changedRowSheetLevel = Number(regexStr[1]) -1; //this variable should be used when making calculations with the changed row variable on a worksheet level
+        var changedRowSheetLevel = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
         var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
 
         var startOfTable = changedTable.getRange().load("columnIndex");
