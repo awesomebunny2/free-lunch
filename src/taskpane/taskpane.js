@@ -1083,9 +1083,15 @@ Office.onReady((info) => {
 //#region MOVING AND UPDATING DATA --------------------------------------------------------------------------------
 
   async function onTableChanged(eventArgs) { //This function will be using event arguments to collect data from the workbook
-  // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
+    // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
+    
+    console.log(eventArgs);
+    if (eventArgs.changeType == "RowInserted") {
+      console.log("Rejected the RowInserted event");
+      return;
+    }
 
-    await Excel.run(async (context) => {      
+    await Excel.run(async (context) => {
 
       //#region DECLARING VARIABLES -------------------------------------------------------------------------------
 
@@ -1109,46 +1115,51 @@ Office.onReady((info) => {
             //var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
             var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
 
-            //#region TABLE LEVEL VARIABLES ---------------------------------------------------------------------------
+          //#endregion ----------------------------------------------------------------------------------------------
+
+
+          //#region TABLE LEVEL VARIABLES ---------------------------------------------------------------------------
 
             var allTables = context.workbook.tables;
             allTables.load("items/name");
             var worksheetTables = changedWorksheet.tables.load("items/name");
-            var changedTable = changedWorksheet.tables.getItem(eventArgs.tableId).load("name"); //Returns tableId of the table where the event occured
+            var thisTable = changedWorksheet.tables.getItem(eventArgs.tableId);
+            var changedTable = thisTable.load("name"); //Returns tableId of the table where the event occured
             var startOfTable = changedTable.getRange().load("columnIndex");
 
-            //#region TABLE VERSIONS OF MOST WORKSHEET LEVEL VARIABLES (LEGACY) -------------------------------------
+          //#region TABLE VERSIONS OF MOST WORKSHEET LEVEL VARIABLES (LEGACY) -------------------------------------
 
-              //var changedColumns = changedTable.columns
-              //changedColumns.load("items/name");
-              //var changedTableRows = changedTable.rows;
-              //changedTableRows.load("items");
-              //var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
-              //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
-              //var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+            //var changedColumns = changedTable.columns
+            //changedColumns.load("items/name");
+            //var changedTableRows = changedTable.rows;
+            //changedTableRows.load("items");
+            var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
+            //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
+            //var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
 
-            //#endregion --------------------------------------------------------------------------------------------
+          //#endregion --------------------------------------------------------------------------------------------
 
-          //#endregion ----------------------------------------------------------------------------------------------
+        //#endregion ----------------------------------------------------------------------------------------------
 
-            //#region LOAD CHANGED COLUMN AND ROW INDEX NUMBERS -------------------------------------------------
+          //#region LOAD CHANGED COLUMN AND ROW INDEX NUMBERS -------------------------------------------------
 
-              var changedAddress = changedWorksheet.getRange(address);
-              changedAddress.load("columnIndex");
-              changedAddress.load("rowIndex");
-              var changedRow = changedAddress.getEntireRow();
-              var changedColumnPoop = changedAddress.getEntireColumn();
-              var myRow = changedTable.rows.getItemAt(changedRow).load("$all"); //loads the values of the changed row in the table where the event was fired 
-              var myColumn = changedTable.columns.getItemAt(changedColumnPoop).load("$all")
+            var changedAddress = changedWorksheet.getRange(address);
+            changedAddress.load("columnIndex");
+            changedAddress.load("rowIndex");
 
-            //#endregion ----------------------------------------------------------------------------------------
-
-          //#endregion ----------------------------------------------------------------------------------------------
-
-    
+            //var changedRow = changedAddress.getEntireRow();
+            //var changedColumnPoop = changedAddress.getEntireColumn();
+            var myRow = thisTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+            // var myColumn = changedTable.columns.getItemAt(changedColumnPoop).load("values");
+            // var row = ctx.workbook.tables.getItem(tableName).rows.getItemAt(2);
+/*
+ 
+*/
+          //#endregion ----------------------------------------------------------------------------------------
 
         //#endregion ------------------------------------------------------------------------------------------------
 
+        /*
         //#region SPECIFIC TABLE VARIABLES --------------------------------------------------------------------------
 
           //#region UNASSIGNED PROJECTS VARIABLES ------------------------------------------------------------
@@ -1276,6 +1287,8 @@ Office.onReady((info) => {
           //#endregion ----------------------------------------------------------------------------
 
         //#endregion ------------------------------------------------------------------------------------------------
+        */
+        
 
         //#region LEGACY VARIABLES I MIGHT NEED LATER? --------------------------------------------------------------
 
@@ -1294,14 +1307,17 @@ Office.onReady((info) => {
         //var changedRowAddress = "A" + (changedRow + 2) + ":" + "V" + (changedRow + 2);
         //var changedRange = sheet.getRange(changedRowAddress);
 
+        //#endregion -------------------------------------------------------------------------------------------------
+
       //#endregion -------------------------------------------------------------------------------------------------
+
 
         await context.sync().then(function () { //loads variable values
 
         //#region LOADING VARIABLES AFTER CONTEXT.SYNC() ------------------------------------------------------------
 
-            var fartman = myRow.$all;
-            var het = myColumn.$all;
+            var test = myRow.values;
+            //var testTest = myColumn.$all;
 
             var changedRow = changedAddress.rowIndex; //index # of the changed row (ws level)
 
@@ -1315,11 +1331,12 @@ Office.onReady((info) => {
 
             changedColumn = changedColumn - tableStart; //matches the ws level column index with the table level column index
 
-        //#endregion ------------------------------------------------------------------------------------------------
 
       //#endregion ----------------------------------------------------------------------------------------------------
 
-      /*
+
+
+      
 
       //#region ASSIGN VALUES TO CODE FROM EXCEL ----------------------------------------------------------------
 
@@ -1504,7 +1521,7 @@ Office.onReady((info) => {
                           
                             var override = startPreAdjust(rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
                           
-                            var startedPickedUpBy = startedBy(changedRow, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
+                            var startedPickedUpBy = startedBy(changedTableColumns, worksheet, changedRow, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
                       
                             var workOverride = workPrePreAdjust(rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
                         
@@ -2218,7 +2235,7 @@ Office.onReady((info) => {
        * @param {Date} override date adjusted for office hours
        * @returns date
        */
-      function startedBy(changedRow, changedTableColumns, worksheet, changedRow, override) { //loads these variables from another function to use in this function
+      function startedBy(changedTableColumns, worksheet, changedRow, override) { //loads these variables from another function to use in this function
 
         var theColumnPosition = findColumnPosition(changedTableColumns, "Picked Up / Started By"); //returns the array index number of the column that matches the name of the columnName variable
         var theAddress = worksheet.getCell(changedRow, theColumnPosition);
