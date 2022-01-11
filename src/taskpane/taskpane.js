@@ -1085,11 +1085,13 @@ Office.onReady((info) => {
   async function onTableChanged(eventArgs) { //This function will be using event arguments to collect data from the workbook
     // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
     
+    /*
     console.log(eventArgs);
     if (eventArgs.changeType == "RowInserted") {
       console.log("Rejected the RowInserted event");
       return;
     }
+    */
 
     await Excel.run(async (context) => {
 
@@ -1147,112 +1149,64 @@ Office.onReady((info) => {
             changedAddress.load("columnIndex");
             changedAddress.load("rowIndex");
 
-            //var changedRow = changedAddress.getEntireRow();
-            //var changedColumnPoop = changedAddress.getEntireColumn();
+            var changedRowPoop = changedAddress.getEntireRow().load("values");
+            var changedColumnPoop = changedAddress.getEntireColumn().load("values");
             var myRow = thisTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
             // var myColumn = changedTable.columns.getItemAt(changedColumnPoop).load("values");
             // var row = ctx.workbook.tables.getItem(tableName).rows.getItemAt(2);
-/*
- 
-*/
+
           //#endregion ----------------------------------------------------------------------------------------
 
         //#endregion ------------------------------------------------------------------------------------------------
 
-        /*
+        
         //#region SPECIFIC TABLE VARIABLES --------------------------------------------------------------------------
 
-          //#region UNASSIGNED PROJECTS VARIABLES ------------------------------------------------------------
             var unassignedTable = context.workbook.tables.getItem("UnassignedProjects");
-          //#endregion --------------------------------------------------------------------------
 
-          //#region MATT VARIABLES --------------------------------------------------------
             var mattTable = context.workbook.tables.getItem("MattProjects");
-          //#endregion --------------------------------------------------------------------------
 
-          //#region ALAINA VARIABLES ------------------------------------------------------
             var alainaTable = context.workbook.tables.getItem("AlainaProjects");
-          //#endregion --------------------------------------------------------------------------
 
-          //#region BERTO VARIABLES ------------------------------------------------------
             var bertoTable = context.workbook.tables.getItem("BertoProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region BRE B. VARIABLES ------------------------------------------------------
             var breBTable = context.workbook.tables.getItem("BreBProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region CHRISTIAN VARIABLES ------------------------------------------------------
             var christianTable = context.workbook.tables.getItem("ChristianProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region EMILY VARIABLES ------------------------------------------------------
             var emilyTable = context.workbook.tables.getItem("EmilyProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region IAN VARIABLES ------------------------------------------------------
             var ianTable = context.workbook.tables.getItem("IanProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region JEFF VARIABLES ------------------------------------------------------
             var jeffTable = context.workbook.tables.getItem("JeffProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region JOSH VARIABLES ------------------------------------------------------
             var joshTable = context.workbook.tables.getItem("JoshProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region KRISTEN VARIABLES ------------------------------------------------------
             var kristenTable = context.workbook.tables.getItem("KristenProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region ROBIN VARIABLES ------------------------------------------------------
             var robinTable = context.workbook.tables.getItem("RobinProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region LUKE VARIABLES ------------------------------------------------------
             var lukeTable = context.workbook.tables.getItem("LukeProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region LISA VARIABLES ------------------------------------------------------
             var lisaTable = context.workbook.tables.getItem("LisaProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region LUIS VARIABLES ------------------------------------------------------
             var luisTable = context.workbook.tables.getItem("LuisProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region PETER VARIABLES ------------------------------------------------------
             var peterTable = context.workbook.tables.getItem("PeterProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region RITA VARIABLES ------------------------------------------------------
             var ritaTable = context.workbook.tables.getItem("RitaProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region ETHAN VARIABLES ------------------------------------------------------
             var ethanTable = context.workbook.tables.getItem("EthanProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region BRE Z. VARIABLES ------------------------------------------------------
             var breZTable = context.workbook.tables.getItem("BreZProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region JOE VARIABLES ------------------------------------------------------
             var joeTable = context.workbook.tables.getItem("JoeProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region JORDAN VARIABLES ------------------------------------------------------
             var jordanTable = context.workbook.tables.getItem("JordanProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region HAZEL-RAH VARIABLES ------------------------------------------------------
             var hazelTable = context.workbook.tables.getItem("HazelProjects");
-          //#endregion ---------------------------------------------------------------------------
 
-          //#region TODD VARIABLES ------------------------------------------------------
             var toddTable = context.workbook.tables.getItem("ToddProjects");
-          //#endregion ---------------------------------------------------------------------------
 
           //#region VALIDATION VARIABLES ------------------------------------------------------
 
@@ -1287,34 +1241,21 @@ Office.onReady((info) => {
           //#endregion ----------------------------------------------------------------------------
 
         //#endregion ------------------------------------------------------------------------------------------------
-        */
         
-
-        //#region LEGACY VARIABLES I MIGHT NEED LATER? --------------------------------------------------------------
-
-        // var addedAddress = "J" + (changedRow + 2); //takes the row that was updated and locates the address from the Added column.
-        //var addedRange = sheet.getRange(addedAddress);
-        //addedRange.load("values");
-
-        // var startAddress = "U" + (changedRow + 2);
-        //var startRange = sheet.getRange(startAddress);
-        //startRange.load("values");
-
-        //var workAddress = "V" + (changedRow + 2);
-        //var workRange = sheet.getRange(workAddress);
-        // workRange.load("values");
-
-        //var changedRowAddress = "A" + (changedRow + 2) + ":" + "V" + (changedRow + 2);
-        //var changedRange = sheet.getRange(changedRowAddress);
-
-        //#endregion -------------------------------------------------------------------------------------------------
-
       //#endregion -------------------------------------------------------------------------------------------------
 
 
         await context.sync().then(function () { //loads variable values
 
         //#region LOADING VARIABLES AFTER CONTEXT.SYNC() ------------------------------------------------------------
+
+            var best = changedAddress.columnIndex;
+
+            var chest = changedAddress.rowIndex;
+
+            var lest = changedRowPoop.values;
+            
+            var fest = changedColumnPoop.values;
 
             var test = myRow.values;
             //var testTest = myColumn.$all;
