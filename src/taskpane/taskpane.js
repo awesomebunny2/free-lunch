@@ -1089,42 +1089,47 @@ Office.onReady((info) => {
 
       //#region EVENT VARIABLES -----------------------------------------------------------------------------------
 
-        var details = eventArgs.details; //Loads the values before and after the event
-        var address = eventArgs.address; //Loads the cell's address where the event took place
-        var changeType = eventArgs.changeType;
-        //var strange = eventArgs.getRange();
-        var allWorksheets = context.workbook.worksheets;
-        allWorksheets.load("items/name");
-        var allTables = context.workbook.tables;
-        allTables.load("items/name");
-        var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
-        var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
-        var worksheetTables = changedWorksheet.tables.load("items/name");
+        //#region EVENT ARGS --------------------------------------------------------------------------------------
 
-        var changedTable = context.workbook.tables.getItem(eventArgs.tableId).load("name"); //Returns tableId of the table where the event occured
-        var changedColumns = changedTable.columns
-        changedColumns.load("items/name");
-        var changedTableRows = changedTable.rows;
-        changedTableRows.load("items");
-        var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
-        //var changedColumn = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
-        var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
-        //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
-        var changedRowSheetLevel = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
-        var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+          var details = eventArgs.details; //Loads the values before and after the event
+          var address = eventArgs.address; //Loads the cell's address where the event took place
+          var changeType = eventArgs.changeType;
+          var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
 
-        var startOfTable = changedTable.getRange().load("columnIndex");
+        //#endregion ----------------------------------------------------------------------------------------------
 
-        var changedAddress = changedWorksheet.getRange(address).load("columnIndex");
-        var changedAddress = changedWorksheet.getRange(address).load("rowIndex");
+        //#region WORKSHEET LEVEL VARIABLES -----------------------------------------------------------------------
 
+          var allWorksheets = context.workbook.worksheets;
+          allWorksheets.load("items/name");
+          //var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
+          var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
+          var worksheetTables = changedWorksheet.tables.load("items/name");
+          var changedRowSheetLevel = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
+          var changedColumnLetter = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
+          var changedAddress = changedWorksheet.getRange(address);
+          changedAddress.load("columnIndex");
+          changedAddress.load("rowIndex");
 
-      
+        //#endregion ----------------------------------------------------------------------------------------------
 
-      
+        //#region TABLE LEVEL VARIABLES ---------------------------------------------------------------------------
+
+          var allTables = context.workbook.tables;
+          allTables.load("items/name");
+          var changedTable = context.workbook.tables.getItem(eventArgs.tableId).load("name"); //Returns tableId of the table where the event occured
+          var startOfTable = changedTable.getRange().load("columnIndex");
+          var changedTableColumns = changedTable.columns
+          changedTableColumns.load("items/name");
+          var changedTableRows = changedTable.rows;
+          changedTableRows.load("items");
+          var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
+          //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
+          var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+
+        //#endregion ----------------------------------------------------------------------------------------------
 
       //#endregion ------------------------------------------------------------------------------------------------
-
 
       //#region SPECIFIC TABLE VARIABLES --------------------------------------------------------------------------
 
@@ -1208,15 +1213,42 @@ Office.onReady((info) => {
 
       //#endregion -------------------------------------------------------------------------------------------------
 
-
-  //#endregion ------------------------------------------------------------------------------------------------
-
-
       await context.sync().then(function () { //loads variable values
 
+        //#region LOADED VARIABLES -------------------------------------------------------------------------------
+
+          //#region WORKSHEET LEVEL COLUMN AND ROW INDEX NUMBERS -------------------------------------------------
+
+            var changedColumnIndexOG = changedAddress.columnIndex;
+            var changedRowIndex = changedAddress.rowIndex;
+
+          //#endregion -------------------------------------------------------------------------------------------  
+        
+
+          //#region TABLE ITEMS AND VALUES -----------------------------------------------------------------------
+
+            var tableColumns = changedTableColumns.items;
+            var tableRows = changedTableRows.items;
+            var changedRowTableIndex = changedRowIndex + 1; //adjusts index number for table level (+1 to skip header row)
+            var rowValues = myRow.values;
+            var newRowValues = tableRows[changedRowTableIndex].values;
+
+          //#endregion -------------------------------------------------------------------------------------------
+
+        
+          //#region ADJUST COLUMN INDEX TO WORK ON A TABLE LEVEL -------------------------------------------------
+
+            var tableStart = startOfTable.columnIndex;
+            var changedColumnIndex = changedColumnIndexOG - tableStart;
+
+          //#endregion -------------------------------------------------------------------------------------------
+
+        //#endregion ---------------------------------------------------------------------------------------------
 
 
-        //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
+        //#region ASSIGN VALUES TO CODE FROM EXCEL --------------------------------------------------------------
+
+          //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
 
         var i = 0;
         for (var key of Object.keys(startTurnAroundTime)) { //loops through startTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
@@ -1237,8 +1269,7 @@ Office.onReady((info) => {
 
       //#endregion --------------------------------------------------------------------------------------------
 
-
-      //#region ASSIGN ART TURNAROUND TIME VALUES -------------------------------------------------------------
+          //#region ASSIGN ART TURNAROUND TIME VALUES -------------------------------------------------------------
 
         var j = 0;
         for (var key of Object.keys(artTurnAroundTime)) { //loops through artTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
@@ -1259,8 +1290,7 @@ Office.onReady((info) => {
 
       //#endregion --------------------------------------------------------------------------------------------
 
-
-      //#region ASSIGN CREATIVE REVIEW TIME VALUES ------------------------------------------------------------
+          //#region ASSIGN CREATIVE REVIEW TIME VALUES ------------------------------------------------------------
 
         var k = 0;
         for (var key of Object.keys(creativeReviewTime)) { //loops through creativeReviewTime's keys (first level objects, so menu, menuXL, postcard, etc.)
@@ -1274,6 +1304,8 @@ Office.onReady((info) => {
 
       //#endregion --------------------------------------------------------------------------------------------
 
+        //#endregion --------------------------------------------------------------------------------------------
+
 
 
         //#region ON ROW INSERTED ----------------------------------------------------------------------------------- 
@@ -1282,13 +1314,9 @@ Office.onReady((info) => {
 
             //#region LOAD VARIABLES AND DO FUNCTIONS ---------------------------------------------------------------
 
-              //await context.sync().then(function () { //loads variable values
-
-                var changedTableColumnsToo = changedColumns.items;
-                var changedRowNew = changedAddress.rowIndex;
-                var addedRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Added");
-                var startRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Start Override");
-                var workRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Work Override");
+                var addedRangeValues = cellValue(tableColumns, tableRows, changedRow, "Added");
+                var startRangeValues = cellValue(tableColumns, changedTableRows, changedRow, "Start Override");
+                var workRangeValues = cellValue(tableColumns, changedTableRows, changedRow, "Work Override");
 
 
 
@@ -1299,7 +1327,7 @@ Office.onReady((info) => {
                 //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
 
                   if (addedRangeValues == "") {
-                    var newRange = currentDate(changedRowSheetLevel, changedTableColumnsToo, changedWorksheet);
+                    var newRange = currentDate(changedRowSheetLevel, tableColumns, changedWorksheet);
                     //return newRange;
                   } else {
                   console.log("Inserted row already had an Added date, so the current time was not assigned");
