@@ -1388,7 +1388,7 @@ Office.onReady((info) => {
                 
               //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
 
-                if (sheet.id !== validationSheet.id) {
+                if (sheet.id !== validationSheet.id) { //jjj
 
                   //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
 
