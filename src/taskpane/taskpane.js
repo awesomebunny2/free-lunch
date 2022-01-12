@@ -1312,58 +1312,40 @@ Office.onReady((info) => {
           
           if (changeType == "RowInserted") {
 
-            //#region LOAD VARIABLES AND DO FUNCTIONS ---------------------------------------------------------------
+            //#region LOAD COLUMN VALUES ---------------------------------------------------------------------------
 
-                var addedRangeValues = cellValue(tableColumns, rowValues, "Added");
-                var startRangeValues = cellValue(tableColumns, rowValues, "Start Override");
-                var workRangeValues = cellValue(tableColumns, rowValues, "Work Override");
+              var addedRangeValues = cellValue(tableColumns, rowValues, "Added");
+              var startRangeValues = cellValue(tableColumns, rowValues, "Start Override");
+              var workRangeValues = cellValue(tableColumns, rowValues, "Work Override");
 
+            //#endregion ------------------------------------------------------------------------------------------
 
+              //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
 
-                //var addedRangeValues = addedRange.values[0][0]; //loads cell values in the Added column
-                //var startRangeValues = startRange.values[0][0]; //loads cell values in the Start Override column
-                //var workRangeValues = workRange.values[0][0]; //loads cell values in the Work Override column
+                if (addedRangeValues == "") {
+                  var newRange = currentDate(tableColumns, changedRowIndex, tableStart, changedWorksheet);
+                  //return newRange;
+                } else {
+                console.log("Inserted row already had an Added date, so the current time was not assigned");
+                };
 
-                //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
+              //#endregion ---------------------------------------------------------------------------------------
 
-                  if (addedRangeValues == "") {
-                    var newRange = currentDate(tableColumns, changedRowIndex, tableStart, changedWorksheet);
-                    //return newRange;
-                  } else {
-                  console.log("Inserted row already had an Added date, so the current time was not assigned");
-                  };
+              //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
 
-                //#endregion ---------------------------------------------------------------------------------------
+                if (startRangeValues == "") {
+                  var startRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
+                  startRangeAddress.values = [[0]];
+                };
 
-                //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
+                if (workRangeValues == "") {
+                  var workRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
+                  workRangeAddress.values = [[0]];
+                };
 
-                  if (startRangeValues == "") {
-                    var startRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
-                    startRangeAddress.values = [[0]];
-                    //return startRangeValues;
-                  };
+              //#endregion ---------------------------------------------------------------------------------------
 
-                  if (workRangeValues == "") {
-                    var workRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
-                    workRangeAddress.values = [[0]];
-                    //return workRangeValues;
-                  };
-
-                //#endregion ---------------------------------------------------------------------------------------
-
-                //#region ERROR HANDLING -----------------------------------------------------------------------------
-
-                };//.catch(function (error) {
-                  //console.log('Error: ' + error);
-                  //if (error instanceof OfficeExtension.Error) {
-                  //    console.log('Debug info: ' + JSON.stringify(error.debugInfo));
-                  //};
-                  //console.log("Promise Rejected");
-                //});
-
-              //#endregion -----------------------------------------------------------------------------------------
-
-            //#endregion -------------------------------------------------------------------------------------------------
+          };
 
         //#endregion --------------------------------------------------------------------------------------------------
         
