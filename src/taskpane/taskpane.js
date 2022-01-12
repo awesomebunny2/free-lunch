@@ -1250,20 +1250,20 @@ Office.onReady((info) => {
 
           //#region ASSIGN START TURNAROUND TIME VALUES ----------------------------------------------------------
 
-        var i = 0;
-        for (var key of Object.keys(startTurnAroundTime)) { //loops through startTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
-          var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values; //returns values of first level object based on positon i (so if i=0, this is the menu objects. If i=1, this is menuXL objects, etc.)
-          //console.log(pickupTurnaroundTimeValues[0][1]);
-          startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [i] sub-object the value in the first data cell in the table 
-          startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [i] sub-object the value in the second data cell in the table 
-          startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3]; //you get the point...
-          startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
-          startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
-          startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
-          startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
-          startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
-          i++; //i increases so that this continues to loop through all the products, until the key gets to the end
-        };
+            var i = 0;
+            for (var key of Object.keys(startTurnAroundTime)) { //loops through startTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+              var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values; //returns values of first level object based on positon i (so if i=0, this is the menu objects. If i=1, this is menuXL objects, etc.)
+              //console.log(pickupTurnaroundTimeValues[0][1]);
+              startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [i] sub-object the value in the first data cell in the table 
+              startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [i] sub-object the value in the second data cell in the table 
+              startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3]; //you get the point...
+              startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
+              startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
+              startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
+              startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
+              startTurnAroundTime[key].other = pickupTurnaroundTimeValues[0][8];
+              i++; //i increases so that this continues to loop through all the products, until the key gets to the end
+            };
 
         //console.log(startTurnAroundTime);
 
@@ -1271,20 +1271,20 @@ Office.onReady((info) => {
 
           //#region ASSIGN ART TURNAROUND TIME VALUES -------------------------------------------------------------
 
-        var j = 0;
-        for (var key of Object.keys(artTurnAroundTime)) { //loops through artTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
-          var artTurnaroundTimeValues = artTurnaroundTimeTableRows.items[j].values; //returns values of first level object based on positon j (so if j=0, this is the menu objects. If j=1, this is menuXL objects, etc.)
-          //console.log(artTurnaroundTimeValues[0][1]);
-          artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [j] sub-object the value in the first data cell in the table 
-          artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [j] sub-object the value in the second data cell in the table
-          artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3]; //you get it, right?
-          artTurnAroundTime[key].changesToExisitingNatives = artTurnaroundTimeValues[0][4];
-          artTurnAroundTime[key].specCheck = artTurnaroundTimeValues[0][5];
-          artTurnAroundTime[key].weTransferUpload = artTurnaroundTimeValues[0][6];
-          artTurnAroundTime[key].specialRequest = artTurnaroundTimeValues[0][7];
-          artTurnAroundTime[key].other = artTurnaroundTimeValues[0][8];
-          j++; //j increases so that this continues to loop through all the products, until the key gets to the end
-        };
+            var j = 0;
+            for (var key of Object.keys(artTurnAroundTime)) { //loops through artTurnAroundTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+              var artTurnaroundTimeValues = artTurnaroundTimeTableRows.items[j].values; //returns values of first level object based on positon j (so if j=0, this is the menu objects. If j=1, this is menuXL objects, etc.)
+              //console.log(artTurnaroundTimeValues[0][1]);
+              artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [j] sub-object the value in the first data cell in the table 
+              artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [j] sub-object the value in the second data cell in the table
+              artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3]; //you get it, right?
+              artTurnAroundTime[key].changesToExisitingNatives = artTurnaroundTimeValues[0][4];
+              artTurnAroundTime[key].specCheck = artTurnaroundTimeValues[0][5];
+              artTurnAroundTime[key].weTransferUpload = artTurnaroundTimeValues[0][6];
+              artTurnAroundTime[key].specialRequest = artTurnaroundTimeValues[0][7];
+              artTurnAroundTime[key].other = artTurnaroundTimeValues[0][8];
+              j++; //j increases so that this continues to loop through all the products, until the key gets to the end
+            };
 
         //console.log(artTurnAroundTime);
 
@@ -1292,13 +1292,13 @@ Office.onReady((info) => {
 
           //#region ASSIGN CREATIVE REVIEW TIME VALUES ------------------------------------------------------------
 
-        var k = 0;
-        for (var key of Object.keys(creativeReviewTime)) { //loops through creativeReviewTime's keys (first level objects, so menu, menuXL, postcard, etc.)
-          var creativeReviewTimeValues = creativeProofTableRows.items[k].values; //returns values of first level object based on positon k (so if k=0, this is the menu objects. If k=1, this is menuXL objects, etc.)
-          //console.log(creativeReviewTimeValues[0][1]);
-          creativeReviewTime[key] = creativeReviewTimeValues[0][1]; //assigns the property of [k] sub-object the value in the first data cell in the table 
-          k++; //k increases so that this continues to loop through all the products, until the key gets to the end
-        };
+            var k = 0;
+            for (var key of Object.keys(creativeReviewTime)) { //loops through creativeReviewTime's keys (first level objects, so menu, menuXL, postcard, etc.)
+              var creativeReviewTimeValues = creativeProofTableRows.items[k].values; //returns values of first level object based on positon k (so if k=0, this is the menu objects. If k=1, this is menuXL objects, etc.)
+              //console.log(creativeReviewTimeValues[0][1]);
+              creativeReviewTime[key] = creativeReviewTimeValues[0][1]; //assigns the property of [k] sub-object the value in the first data cell in the table 
+              k++; //k increases so that this continues to loop through all the products, until the key gets to the end
+            };
 
         //console.log(creativeReviewTime);
 
@@ -1338,12 +1338,14 @@ Office.onReady((info) => {
                 //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
 
                   if (startRangeValues == "") {
-                    startRangeValues = [["0"]];
+                    var startRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
+                    startRangeAddress.values = [[0]];
                     //return startRangeValues;
                   };
 
                   if (workRangeValues == "") {
-                    workRangeValues = [["0"]];
+                    var workRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
+                    workRangeAddress.values = [[0]];
                     //return workRangeValues;
                   };
 
@@ -1781,6 +1783,29 @@ Office.onReady((info) => {
 //#region AUTOFILL FUNCTIONS -------------------------------------------------------------------------------------
 
 
+
+  //#region GET CELL ADDRESS -------------------------------------------------------------------------------------
+
+    /**
+     * Returns the address of cell in the changedRow and columnName column for use in writing variables to cells
+     * @param {Array} tableColumns An array of all the columns in the changedTable
+     * @param {Number} changedRowIndex The index number of the changed row on a worksheet level
+     * @param {String} columnName The name of the column to locate in the table
+     * @param {Number} tableStart The column index where the table begins
+     * @param {Object} worksheet The changed worksheet
+     * @returns Range
+     */
+    function cellAddress(tableColumns, changedRowIndex, tableStart, worksheet, columnName) {
+
+      var theColumnPosition = findColumnPosition(tableColumns, columnName); //returns the array index number of the column that matches the name of the columnName variable
+      theColumnPosition = theColumnPosition + tableStart; //adjusts the column position to work on a worksheet level (in case there are multiple tables in a sheet)
+      var theAddress = worksheet.getCell(changedRowIndex, theColumnPosition); //gets the range of the cell located at the given row and column positions
+      return theAddress;
+
+    };
+
+  //#endregion ----------------------------------------------------------------------------------------------------
+
   //#region CURRENT DATE & TIME IN ADDED COLUMN -------------------------------------------------------------------
 
     /**
@@ -1792,9 +1817,7 @@ Office.onReady((info) => {
      */
     function currentDate(tableColumns, changedRowIndex, tableStart, worksheet) {
 
-      var theColumnPosition = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
-      theColumnPosition = theColumnPosition + tableStart; //adjusts the column position to work on a worksheet level (in case there are multiple tables in a sheet)
-      var theAddress = worksheet.getCell(changedRowIndex, theColumnPosition);
+      var theAddress = cellAddress(tableColumns, changedRowIndex, tableStart, worksheet, "Added");
 
       var now = new Date();
       var toSerial = JSDateToExcelDate(now);
@@ -1805,139 +1828,6 @@ Office.onReady((info) => {
     };
 
   //#endregion ----------------------------------------------------------------------------------------------------
-
-
-  //#region ASSIGN PROJECT TYPE VALUES FROM VALIDATION SHEET TO CODED VARIABLES -------------------------------------
-    /**
-     * Loads values from the Picked-Up / Started By Turn Around Time Table in Validation and assigns these values to the associated variable to be used in the code
-     * @param {Array} pickupTurnaroundTimeTableRows An array of all the rows in the Picked-Up / Started By Turn Around Time table
-     * @param {Number} i The number of the row that values will be assigned to
-     */
-    function assignPickupTurnaroundTimeValues(pickupTurnaroundTimeTableRows, i) {
-      var pickupTurnaroundTimeValues = pickupTurnaroundTimeTableRows.items[i].values;
-      console.log(pickupTurnaroundTimeValues[0].every([]));
-        //console.log(pickupTurnaroundTimeValues);
-          if (i == 0) {
-            startTurnAroundTime.menu = pickupTurnaroundTimeValues[0][1, 2, 3, 4, 5, 6, 7, 8];
-            //need to make a variable for startTurnAroundTime that is an array of all products, with each product having an array of 8 numbers
-          } else if (i == 1) {
-            startTurnAroundTime.menuXL = pickupTurnaroundTimeValues[1][1, 2, 3, 4, 5, 6, 7, 8];
-            // newBuildOtherNatives = pickupTurnaroundTimeValues[0][1];
-          } else if (i == 2) {
-            newBuildFromTemplate = pickupTurnaroundTimeValues[0][1];
-          } else if (i == 3) {
-            changesToExistingNatives = pickupTurnaroundTimeValues[0][1];
-          } else if (i == 4) {
-            specCheck = pickupTurnaroundTimeValues[0][1];
-          } else if (i == 5) {
-            weTransferUpload = pickupTurnaroundTimeValues[0][1];
-          } else if (i == 6) {
-            specialRequest = pickupTurnaroundTimeValues[0][1];
-          } else if (i == 7) {
-            otherProjectType = pickupTurnaroundTimeValues[0][1];
-          };
-    };
-      //console.log("The updated projectType values are: " + brandNewBuild + ", " + newBuildOtherNatives + ", " + newBuildFromTemplate + ", " + changesToExistingNatives + ", " + specCheck + ", " + weTransferUpload + ", " + specialRequest + ", " + otherProjectType)
-
-  //#endregion --------------------------------------------------------------------------------------------------------
-        
-
-  //#region ASSIGN PRODUCT VALUES FROM VALIDATION SHEET TO CODED VARIABLES --------------------------------------------
-    /**
-     * Loads values from the Product Table in Validation and assigns these values to the associated variable to be used in the code
-     * @param {Array} productTableRows An array of all the rows in the Product table
-     * @param {Number*} i The number of the row that values will be assigned to
-     */
-    function assignProductValues(productTableRows, i) {     
-    var productValues = productTableRows.items[i].values;
-      if (i == 0) {
-        menu = productValues[0][1];
-      } else if (i == 1) {
-        menuXL = productValues[0][1];
-      } else if (i == 2) {
-        smallMenu = productValues[0][1];
-      } else if (i == 3) {
-        brochure = productValues[0][1];
-      } else if (i == 4) {
-        brochureXL = productValues[0][1];
-      } else if (i == 5) {
-        smallBrochure = productValues[0][1];
-      } else if (i == 6) {
-        postcard = productValues[0][1];
-      } else if (i == 7) {
-        jumboPostcard = productValues[0][1];
-      } else if (i == 8) {
-        colossalPostcard = productValues[0][1];
-      } else if (i == 9) {
-        scratchoffPostcard = productValues[0][1];
-      } else if (i == 10) {
-        jumboScratchoffPostcard = productValues[0][1];
-      } else if (i == 11) {
-        peelBoxPostcard = productValues[0][1];
-      } else if (i == 12) {
-        magnet = productValues[0][1];
-      } else if (i == 13) {
-        foldedMagnet = productValues[0][1];
-      } else if (i == 14) {
-        twoSBT = productValues[0][1];
-      } else if (i == 15) {
-        boxTopper = productValues[0][1];
-      } else if (i == 16) {
-        flyer = productValues[0][1];
-      } else if (i == 17) {
-        doorHanger = productValues[0][1];
-      } else if (i == 18) {
-        smallPlastic = productValues[0][1];
-      } else if (i == 19) {
-        mediumPlastic = productValues[0][1];
-      } else if (i == 20) {
-        largePlastic = productValues[0][1];
-      } else if (i == 21) {
-        couponBooklet = productValues[0][1];
-      } else if (i == 22) {
-        envelopeMailer = productValues[0][1];
-      } else if (i == 23) {
-        birthdayPostcard = productValues[0][1];
-      } else if (i == 24) {
-        newMover = productValues[0][1];
-      } else if (i == 25) {
-        plasticNewMover = productValues[0][1];
-      } else if (i == 26) {
-        birthdayPlastic = productValues[0][1];
-      } else if (i == 27) {
-        wideFormat = productValues[0][1];
-      } else if (i == 28) {
-        windowClings = productValues[0][1];
-      } else if (i == 29) {
-        businessCards = productValues[0][1];
-      } else if (i == 30) {
-        artworkOnly = productValues[0][1];
-      } else if (i == 31) {
-        logoCreation = productValues[0][1];
-      } else if (i == 32) {
-        logoRecreation = productValues[0][1];
-      } else if (i == 33) {
-        legalLetter = productValues[0][1];
-      } else if (i == 34) {
-        letter = productValues[0][1];
-      } else if (i == 35) {
-        mapCreation = productValues[0][1];
-      } else if (i == 36) {
-        menuXXL = productValues[0][1];
-      } else if (i == 37) {
-        biFoldMenu = productValues[0][1];
-      } else if (i == 38) {
-        mediaKit = productValues[0][1];
-      } else if (i == 39) {
-        popBanner = productValues[0][1];
-      } else if (i == 40) {
-        otherProduct = productValues[0][1];
-      };
-  };
-  //console.log("The updated data for 2SBT is: " + twoSBT);
-  //console.log("The updated date for Other is: " + otherProduct);
-
-//#endregion ----------------------------------------------------------------------------------------------------
 
 
   //#region RETRIVE CELL VALUE -------------------------------------------------------------------------
