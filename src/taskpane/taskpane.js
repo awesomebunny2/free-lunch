@@ -1125,7 +1125,7 @@ Office.onReady((info) => {
           changedTableRows.load("items");
           var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
           //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
-          var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
+          //var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
           var tableRange = changedTable.getRange();
 
         //#endregion ----------------------------------------------------------------------------------------------
@@ -1231,6 +1231,7 @@ Office.onReady((info) => {
             var tableColumns = changedTableColumns.items;
             var tableRows = changedTableRows.items;
             var changedRowTableIndex = changedRowIndex - 1; //adjusts index number for table level (-1 to skip header row)
+            var myRow = changedTableRows.getItemAt(changedRowTableIndex); //loads the changed row in the changed table as an object
             //var oldRowValues = myRow.values;
             var rowValues = tableRows[changedRowTableIndex].values; //loads the values of the changed row in the changed table
 
@@ -1336,12 +1337,12 @@ Office.onReady((info) => {
 
                 if (startRangeValues == "") {
                   var startRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
-                  startRangeAddress.values = [[0]];
+                  startRangeAddress.values = [["0"]];
                 };
 
                 if (workRangeValues == "") {
                   var workRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
-                  workRangeAddress.values = [[0]];
+                  workRangeAddress.values = [["0"]];
                 };
 
               //#endregion ---------------------------------------------------------------------------------------
@@ -1373,6 +1374,7 @@ Office.onReady((info) => {
                 var projectTypeColumn = findColumnPosition(tableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
                 var productColumn = findColumnPosition(tableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
                 var addedColumn = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
+                var statusColumn = findColumnPosition(tableColumns, "Status"); //returns the array index number of the column that matches the name of the columnName variable
                 var artistColumn = findColumnPosition(tableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
                 var startOverrideColumn = findColumnPosition(tableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
                 var workOverrideColumn = findColumnPosition(tableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
@@ -1426,16 +1428,14 @@ Office.onReady((info) => {
 
                   //#region MOVE DATA BETWEEN SHEETS ------------------------------------------------------------------------ 
 
-                    if (changedColumnIndex == artistColumn) {
+                    if (changedColumnIndex == artistColumn || changedColumnIndex == statusColumn) {
 
                       //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
 
 
                         //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
 
-                          //var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
-
-                          var statusCellValue = cellValue(tableColumns, changedTableRows, changedRow, "Status");
+                          var statusCellValue = cellValue(tableColumns, rowValues, "Status");
 
                         //#endregion ------------------------------------------------------------------------------------------
 
@@ -1477,7 +1477,7 @@ Office.onReady((info) => {
 
                           if (statusCellValue == "Completed" && includesCompletedTables == false) {
 
-                            completedTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+                            completedTable.rows.add(null, rowValues); //Adds empty row to bottom of the completedTable, then inserts the changed values into this empty row
                             myRow.delete(); //Deletes the changed row from the original sheet
                             console.log("Data was moved to the artist's Completed Projects Table!");
                             return;
@@ -1495,7 +1495,7 @@ Office.onReady((info) => {
 
                           //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------
 
-                            var artistCellValue = cellValue(tableColumns, changedTableRows, changedRow, "Artist");
+                            var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
 
                           //#endregion ------------------------------------------------------------------------------------------
 
@@ -1510,7 +1510,7 @@ Office.onReady((info) => {
                             };
                           });
 
-                          //returns true if the changedTable is a completed table or the unassigned table from the array previously made, false if it is anything else
+                          //returns true if the changedTable is a completed table, false if it is anything else
                           var nonArtistTables = listOfNonArtistTables.includes(changedTable.name);
 
                         //#endregion ------------------------------------------------------------------------------------------
@@ -1591,7 +1591,7 @@ Office.onReady((info) => {
                           //#region MOVES DATA TO DESTINATION TABLE ----------------------------------------------------------------
 
                             if (destinationTable !== "null") {
-                              moveData(destinationTable, myRow, artistCellValue);
+                              moveData(destinationTable, rowValues, myRow, artistCellValue);
                             } else {
                               console.log("No artist was assigned or updated, so no data was moved.")
                               return;
@@ -1842,8 +1842,8 @@ Office.onReady((info) => {
      * @param {Object} destinationTable the table that the data is being moved to
      * @param {Array} myRow the data, values, and attributes of the changed row
      */
-      function moveData(destinationTable, myRow, artistCellValue) {
-      destinationTable.rows.add(null, myRow.values); //Adds empty row to bottom of GreenBasket Table, then inserts the changed values into this empty row
+    function moveData(destinationTable, rowValues, myRow, artistCellValue) {
+      destinationTable.rows.add(null, rowValues); //Adds empty row to bottom of the destinationTable, then inserts the changed values into this empty row
       myRow.delete(); //Deletes the changed row from the original sheet
       console.log("Data was moved to " + artistCellValue + "'s Projects Table!");
     };
