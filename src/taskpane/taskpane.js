@@ -1119,21 +1119,6 @@ Office.onReady((info) => {
         var changedAddress = changedWorksheet.getRange(address).load("rowIndex");
 
 
-       // var addedAddress = "J" + (changedRow + 2); //takes the row that was updated and locates the address from the Added column.
-        //var addedRange = sheet.getRange(addedAddress);
-        //addedRange.load("values");
-
-       // var startAddress = "U" + (changedRow + 2);
-        //var startRange = sheet.getRange(startAddress);
-        //startRange.load("values");
-
-        //var workAddress = "V" + (changedRow + 2);
-        //var workRange = sheet.getRange(workAddress);
-       // workRange.load("values");
-
-        //var changedRowAddress = "A" + (changedRow + 2) + ":" + "V" + (changedRow + 2);
-        //var changedRange = sheet.getRange(changedRowAddress);
-
         var pickupTurnaroundTimeTable = context.workbook.tables.getItem("PickupTurnaroundTime");
         var pickupTurnaroundTimeTableRows = pickupTurnaroundTimeTable.rows;
         pickupTurnaroundTimeTableRows.load("items");
@@ -1352,11 +1337,21 @@ Office.onReady((info) => {
 
               //await context.sync().then(function () { //loads variable values
 
-                var changedTableColumnsToo = changedColumns.items;
-                var changedRowNew = changedAddress.rowIndex;
-                var addedRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Added");
-                var startRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Start Override");
-                var workRangeValues = cellValue(changedTableColumnsToo, changedTableRows, changedRow, "Work Override");
+              var rowValues = myRow.values;
+
+              var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+      
+              var newChangedColumn = changedAddress.columnIndex;
+      
+              var changedRowNew = changedAddress.rowIndex;
+      
+              var tableStart = startOfTable.columnIndex;
+      
+              newChangedColumn = newChangedColumn - tableStart;
+
+                var addedRangeValues = cellValue(changedTableColumns, changedTableRows, changedRow, "Added");
+                var startRangeValues = cellValue(changedTableColumns, changedTableRows, changedRow, "Start Override");
+                var workRangeValues = cellValue(changedTableColumns, changedTableRows, changedRow, "Work Override");
 
 
 
@@ -1367,7 +1362,7 @@ Office.onReady((info) => {
                 //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
 
                   if (addedRangeValues == "") {
-                    var newRange = currentDate(sheet, changedRowSheetLevel, changedTableColumnsToo, changedWorksheet);
+                    var newRange = currentDate(changedRowSheetLevel, changedTableColumns, changedWorksheet);
                     //return newRange;
                   } else {
                   console.log("Inserted row already had an Added date, so the current time was not assigned");
@@ -1428,22 +1423,22 @@ Office.onReady((info) => {
 
                 //#region LOAD & ASSIGN TABLE VALUES --------------------------------------------------------------------
 
-                  var rowValues = myRow.values;
+                 // var rowValues = myRow.values;
 
-                  var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
+                 // var changedTableColumns = changedColumns.items; //a collection of all the columns in the changedTable in the form of an array
 
-                  var newChangedColumn = changedAddress.columnIndex;
+                  //var newChangedColumn = changedAddress.columnIndex;
 
-                  var tableStart = startOfTable.columnIndex;
+                  //var tableStart = startOfTable.columnIndex;
 
-                  newChangedColumn = newChangedColumn - tableStart;
+                  //newChangedColumn = newChangedColumn - tableStart;
 
                   //var newChangedRow = changedAddress.rowIndex;
 
 
                   //var cheeseMan = findColumnPosition
 
-                  var art = changedRow;
+                  //var art = changedRow;
 
 
                   var projectTypeColumn = findColumnPosition(changedTableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
@@ -1826,10 +1821,10 @@ Office.onReady((info) => {
      * @param {Object} worksheet the changed worksheet
      * @returns Array
      */
-    function currentDate(changedRowSheetLevel, changedTableColumns, worksheet) {
+    function currentDate(changedRowSheetLevel, changedTableColumns, changedWorksheet) {
 
       var theColumnPosition = findColumnPosition(changedTableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
-      var theAddress = worksheet.getCell(changedRowSheetLevel, theColumnPosition);
+      var theAddress = changedWorksheet.getCell(changedRowSheetLevel, theColumnPosition);
 
       var now = new Date();
       var toSerial = JSDateToExcelDate(now);
