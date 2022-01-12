@@ -1366,64 +1366,33 @@ Office.onReady((info) => {
             //#endregion --------------------------------------------------------------------------------------------
               
             //#region LOAD VARIABLES AND DO FUNCTIONS ----------------------------------------------------------------
+   
+              //#region LOAD COLUMN INDEXES -----------------------------------------------------------------------------
 
-              //await context.sync().then(function () { //loads variable values
-            
+                var projectTypeColumn = findColumnPosition(tableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
+                var productColumn = findColumnPosition(tableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
+                var addedColumn = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
+                var artistColumn = findColumnPosition(tableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
+                var startOverrideColumn = findColumnPosition(tableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
+                var workOverrideColumn = findColumnPosition(tableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
 
-                //#region LOAD & ASSIGN TABLE VALUES --------------------------------------------------------------------
-
-                  var rowValues = myRow.values;
-
-                  var newChangedColumn = changedAddress.columnIndex;
-
-                  var tableStart = startOfTable.columnIndex;
-
-                  newChangedColumn = newChangedColumn - tableStart;
-
-                  //var newChangedRow = changedAddress.rowIndex;
-
-
-                  //var cheeseMan = findColumnPosition
-
-                  var art = changedRow;
-
-
-                  var projectTypeColumn = findColumnPosition(tableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
-                  var productColumn = findColumnPosition(tableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
-                  var addedColumn = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
-                  var artistColumn = findColumnPosition(tableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
-                  var startOverrideColumn = findColumnPosition(tableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
-                  var workOverrideColumn = findColumnPosition(tableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
-
-
-
-
-
-
-
-
-
-                  
-
-                //#endregion ----------------------------------------------------------------------------------------------
+              //#endregion ----------------------------------------------------------------------------------------------
                       
-                
-                //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
+              //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
 
-                  changedRange.format.font.name = "Calibri";
-                  changedRange.format.font.size = 12;
-                  changedRange.format.font.color = "#000000";
+                changedRange.format.font.name = "Calibri";
+                changedRange.format.font.size = 12;
+                changedRange.format.font.color = "#000000";
 
               //#endregion --------------------------------------------------------------------------------------------
                 
-
               //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
 
                 if (sheet.id !== validationSheet.id) {
 
                   //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
 
-                    if (newChangedColumn == projectTypeColumn || newChangedColumn == productColumn || newChangedColumn == addedColumn || newChangedColumn == startOverrideColumn || newChangedColumn == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
+                    if (changedColumnIndex == projectTypeColumn || changedColumnIndex == productColumn || changedColumnIndex == addedColumn || changedColumnIndex == startOverrideColumn || changedColumnIndex == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
 
                       var startAdjustmentHours = startHoursNumber(rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
                     
@@ -1452,7 +1421,7 @@ Office.onReady((info) => {
 
                   //#region MOVE DATA BETWEEN SHEETS ------------------------------------------------------------------------ 
 
-                    if (newChangedColumn == artistColumn) {
+                    if (changedColumnIndex == artistColumn) {
 
                       //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
 
@@ -1772,9 +1741,9 @@ Office.onReady((info) => {
      * Returns the address of cell in the changedRow and columnName column for use in writing variables to cells
      * @param {Array} tableColumns An array of all the columns in the changedTable
      * @param {Number} changedRowIndex The index number of the changed row on a worksheet level
-     * @param {String} columnName The name of the column to locate in the table
      * @param {Number} tableStart The column index where the table begins
      * @param {Object} worksheet The changed worksheet
+     * @param {String} columnName The name of the column to locate in the table
      * @returns Range
      */
     function cellAddress(tableColumns, changedRowIndex, tableStart, worksheet, columnName) {
@@ -1792,9 +1761,10 @@ Office.onReady((info) => {
 
     /**
      * Inputs the current date & time into the Added column of the changed row
-     * @param {Number} changedRowSheetLevel The number of the changed row (on a worksheet level)
      * @param {Array} tableColumns An array of all the columns in the changedTable
-     * @param {Object} worksheet the changed worksheet
+     * @param {Number} changedRowIndex The number of the changed row (on a worksheet level)
+     * @param {Number} tableStart The column index where the table begins
+     * @param {Object} worksheet The changed worksheet
      * @returns Array
      */
     function currentDate(tableColumns, changedRowIndex, tableStart, worksheet) {
