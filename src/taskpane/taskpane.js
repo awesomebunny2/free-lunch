@@ -1094,7 +1094,7 @@ Office.onReady((info) => {
           var details = eventArgs.details; //Loads the values before and after the event
           var address = eventArgs.address; //Loads the cell's address where the event took place
           var changeType = eventArgs.changeType;
-          var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
+          //var regexStr = address.match(/[a-zA-Z]+|[0-9]+(?:\.[0-9]+|)/g); //Separates the column letter(s) from the row number for the address: presented as a string
 
         //#endregion ----------------------------------------------------------------------------------------------
 
@@ -1105,8 +1105,8 @@ Office.onReady((info) => {
           //var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
           var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
           var worksheetTables = changedWorksheet.tables.load("items/name");
-          var changedRowSheetLevel = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
-          var changedColumnLetter = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
+          //var changedRowSheetLevel = Number(regexStr[1]) - 1; //this variable should be used when making calculations with the changed row variable on a worksheet level (minus 1 to account for the fact that the address ignores the 0 index)
+          //var changedColumnLetter = regexStr[0]; //The first instance of the separated address array, being the column letter(s)
           var changedAddress = changedWorksheet.getRange(address);
           changedAddress.load("columnIndex");
           changedAddress.load("rowIndex");
@@ -1123,7 +1123,7 @@ Office.onReady((info) => {
           changedTableColumns.load("items/name");
           var changedTableRows = changedTable.rows;
           changedTableRows.load("items");
-          var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
+          //var changedRow = Number(regexStr[1]) - 2; //The second instance of the separated address array, being the row, converted into a number and subtracted by 2
           //it is subtracted by 2 in order to be used on a table level, which augments the row number by 2 places due to being 0 indexed and skipping the header row
           //var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
           var tableRange = changedTable.getRange();
@@ -1225,7 +1225,6 @@ Office.onReady((info) => {
 
           //#endregion -------------------------------------------------------------------------------------------  
         
-
           //#region TABLE ITEMS AND VALUES -----------------------------------------------------------------------
 
             var tableColumns = changedTableColumns.items;
@@ -1237,7 +1236,6 @@ Office.onReady((info) => {
 
           //#endregion -------------------------------------------------------------------------------------------
 
-        
           //#region ADJUST COLUMN INDEX TO WORK ON A TABLE LEVEL -------------------------------------------------
 
             var tableStart = startOfTable.columnIndex;
@@ -1246,7 +1244,6 @@ Office.onReady((info) => {
           //#endregion -------------------------------------------------------------------------------------------
 
         //#endregion ---------------------------------------------------------------------------------------------
-
 
         //#region ASSIGN VALUES TO CODE FROM EXCEL --------------------------------------------------------------
 
@@ -1308,8 +1305,6 @@ Office.onReady((info) => {
 
         //#endregion --------------------------------------------------------------------------------------------
 
-
-
         //#region ON ROW INSERTED ----------------------------------------------------------------------------------- 
           
           if (changeType == "RowInserted") {
@@ -1322,6 +1317,8 @@ Office.onReady((info) => {
                 var startRangeValues = cellValue(tableColumns, rowValues, "Start Override");
                 var workRangeValues = cellValue(tableColumns, rowValues, "Work Override");
                 var statusColumnValue = cellValue(tableColumns, rowValues, "Status");
+
+                var statusColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Status");
 
               //#endregion ------------------------------------------------------------------------------------------
 
@@ -1350,10 +1347,6 @@ Office.onReady((info) => {
 
                 //#endregion ---------------------------------------------------------------------------------------
 
-                var statusColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Status");
-
-                
-                
                 //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
 
                   var listOfCompletedTables = [];
@@ -1382,8 +1375,6 @@ Office.onReady((info) => {
 
         //#endregion --------------------------------------------------------------------------------------------------
         
-
-
         //#region ON RANGE EDITED ------------------------------------------------------------------------------------
 
           if (changeType == "RangeEdited" && eventArgs.details !== undefined ) {
@@ -1397,36 +1388,124 @@ Office.onReady((info) => {
               };
 
             //#endregion --------------------------------------------------------------------------------------------
+
+            //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
+
+              if (changedWorksheet.id !== validationSheet.id) {
               
-            //#region LOAD VARIABLES AND DO FUNCTIONS ----------------------------------------------------------------
-   
-              //#region LOAD COLUMN INDEXES -----------------------------------------------------------------------------
+                //#region LOAD VARIABLES -------------------------------------------------------------------------------
+      
+                  //#region LOAD COLUMN INDEXES & CELL VALUES-----------------------------------------------------------------------------
 
-                var projectTypeColumn = findColumnPosition(tableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
-                var productColumn = findColumnPosition(tableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
-                var addedColumn = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
-                var statusColumn = findColumnPosition(tableColumns, "Status"); //returns the array index number of the column that matches the name of the columnName variable
-                var artistColumn = findColumnPosition(tableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
-                var startOverrideColumn = findColumnPosition(tableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
-                var workOverrideColumn = findColumnPosition(tableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
+                    var projectTypeColumn = findColumnPosition(tableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
+                    var productColumn = findColumnPosition(tableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
+                    var addedColumn = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
+                    var statusColumn = findColumnPosition(tableColumns, "Status"); //returns the array index number of the column that matches the name of the columnName variable
+                    var artistColumn = findColumnPosition(tableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
+                    var startOverrideColumn = findColumnPosition(tableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
+                    var workOverrideColumn = findColumnPosition(tableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
 
-              //#endregion ----------------------------------------------------------------------------------------------
-                      
-              //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
+                    var statusCellValue = cellValue(tableColumns, rowValues, "Status");
+                    var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
 
-                //changedAddress.format.font.name = "Calibri";
-                //changedAddress.format.font.size = 12;
-                //changedAddress.format.font.color = "#000000";
+                  //#endregion ----------------------------------------------------------------------------------------------
 
-                tableRange.format.font.name = "Calibri";
-                tableRange.format.font.size = 12;
-                tableRange.format.font.color = "#000000";
+                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
 
-              //#endregion --------------------------------------------------------------------------------------------
-                
-              //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
+                    var listOfCompletedTables = [];
 
-                if (changedWorksheet.id !== validationSheet.id) {
+                    allTables.items.forEach(function (table) { //for each table in the workbook...
+                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                        listOfCompletedTables.push(table.name); //push the name of that table into an array
+                      };
+                    });
+
+                    //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
+                    var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+                  //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
+
+                    var isUnassigned;
+
+                    if (changedWorksheet.name == "Unassigned Projects") {
+                      isUnassigned = true;
+                    } else {
+                      isUnassigned = false;
+                    };
+
+                  //#endregion ------------------------------------------------------------------------------------------
+
+                  //#region ASSIGNS THE DESTINATION TABLE VALUE ---------------------------------------------------------
+
+                    if (artistCellValue == "Unassigned" && isUnassigned == false) {
+                      destinationTable = unassignedTable;
+                    } else if (artistCellValue == "Matt") {
+                      destinationTable = mattTable;
+                    } else if (artistCellValue == "Alaina") {
+                      destinationTable = alainaTable;
+                    } else if (artistCellValue == "Berto") {
+                      destinationTable = bertoTable;
+                    } else if (artistCellValue == "Bre B.") {
+                      destinationTable = breBTable;
+                    } else if (artistCellValue == "Christian") {
+                      destinationTable = christianTable;
+                    } else if (artistCellValue == "Emily") {
+                      destinationTable = emilyTable;
+                    } else if (artistCellValue == "Ian") {
+                      destinationTable = ianTable;
+                    } else if (artistCellValue == "Jeff") {
+                      destinationTable = jeffTable;
+                    } else if (artistCellValue == "Josh") {
+                      destinationTable = joshTable;
+                    } else if (artistCellValue == "Kristen") {
+                      destinationTable = kristenTable;
+                    } else if (artistCellValue == "Robin") {
+                      destinationTable = robinTable;
+                    } else if (artistCellValue == "Luke") {
+                      destinationTable = lukeTable;
+                    } else if (artistCellValue == "Lisa") {
+                      destinationTable = lisaTable;
+                    } else if (artistCellValue == "Luis") {
+                      destinationTable = luisTable;
+                    } else if (artistCellValue == "Peter") {
+                      destinationTable = peterTable;
+                    } else if (artistCellValue == "Rita") {
+                      destinationTable = ritaTable;
+                    } else if (artistCellValue == "Ethan") {
+                      destinationTable = ethanTable;
+                    } else if (artistCellValue == "Bre Z.") {
+                      destinationTable = breZTable;
+                    } else if (artistCellValue == "Joe") {
+                      destinationTable = joeTable;
+                    } else if (artistCellValue == "Jordan") {
+                      destinationTable = jordanTable;
+                    } else if (artistCellValue == "Hazel-Rah") {
+                      destinationTable = hazelTable;
+                    } else if (artistCellValue == "Todd") {
+                      destinationTable = toddTable;
+                    } else {
+                      destinationTable = "null"
+                    };
+
+                  //#endregion ----------------------------------------------------------------------------------------------
+
+                //#endregion ----------------------------------------------------------------------------------------------
+                          
+                //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
+
+                  //changedAddress.format.font.name = "Calibri";
+                  //changedAddress.format.font.size = 12;
+                  //changedAddress.format.font.color = "#000000";
+
+                  tableRange.format.font.name = "Calibri";
+                  tableRange.format.font.size = 12;
+                  tableRange.format.font.color = "#000000";
+
+                //#endregion --------------------------------------------------------------------------------------------
+                    
+                //#region DO FUNCTIONS ----------------------------------------------------------------------------------
 
                   //#region ADJUSTING TURN AROUND TIME --------------------------------------------------------------------
 
@@ -1452,37 +1531,15 @@ Office.onReady((info) => {
 
                       return;
                   
-                  };
+                    };
 
-                //#endregion ------------------------------------------------------------------------------------------
-
+                  //#endregion ------------------------------------------------------------------------------------------
 
                   //#region MOVE DATA BETWEEN SHEETS ------------------------------------------------------------------------ 
 
-                    if (changedColumnIndex == statusColumn) {
+                    //#region MOVE DATA BASED ON STATUS COLUMN ------------------------------------------------------------------
 
-                      //#region MOVE DATA TO COMPLETED TABLE ------------------------------------------------------------------
-
-                        //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------------------------------
-
-                          var statusCellValue = cellValue(tableColumns, rowValues, "Status");
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-                        //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                          var listOfCompletedTables = [];
-
-                          allTables.items.forEach(function (table) { //for each table in the workbook...
-                            if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                              listOfCompletedTables.push(table.name); //push the name of that table into an array
-                            };
-                          });
-
-                          //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
-                          var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
-
-                        //#endregion ------------------------------------------------------------------------------------------
+                      if (changedColumnIndex == statusColumn) {
 
                         //#region FINDS THE COMPLETED TABLE IN CHANGED WORKSHEET ----------------------------------------------
 
@@ -1499,168 +1556,68 @@ Office.onReady((info) => {
 
                         //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
 
-                          if (statusCellValue == "Completed" && includesCompletedTables == false) {
-
+                          if (statusCellValue == "Completed" && includesCompletedTables == false) { //if status column = "Completed" & the changedTable is not a Completed table, move data to changedWorksheet's completed table
                             completedTable.rows.add(null, rowValues); //Adds empty row to bottom of the completedTable, then inserts the changed values into this empty row
                             myRow.delete(); //Deletes the changed row from the original sheet
                             console.log("Data was moved to the artist's Completed Projects Table!");
                             return;
-
-                          };
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-                      //#endregion ---------------------------------------------------------------------------------------------
-
-                    };
-
-                    if (changedColumnIndex == artistColumn) {
-
-                      //#region MOVE DATA TO ARTIST TABLE ------------------------------------------------------------------
-
-                        //#region LOCATE STATUS COLUMN AND VALUE IN CHANGED TABLE ---------------------------------------------
-
-                          var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-                        //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                        var listOfNonArtistTables = [];
-
-                        allTables.items.forEach(function (table) { //for each table in the workbook...
-                          if (table.name.includes("Completed")) { //|| table.name.includes("Unassigned")) { //if the table name includes the word "Completed" in it...
-                            listOfNonArtistTables.push(table.name); //push the name of that table into an array
-                          };
-                        });
-
-                        //returns true if the changedTable is a completed table, false if it is anything else
-                        var nonArtistTables = listOfNonArtistTables.includes(changedTable.name);
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-                        //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
-
-                          var isUnassigned;
-
-                          if (changedWorksheet.name == "Unassigned Projects") {
-                            isUnassigned = true;
-                          } else {
-                            isUnassigned = false;
-                          };
-
-                        //#endregion ------------------------------------------------------------------------------------------
-
-                        //#region ASSIGNS THE DESTINATION TABLE VALUE ---------------------------------------------------------
-
-                          if (nonArtistTables == false) {
-                            if (artistCellValue == "Unassigned" && isUnassigned == false) {
-                              destinationTable = unassignedTable;
-                            } else if (artistCellValue == "Matt") {
-                              destinationTable = mattTable;
-                            } else if (artistCellValue == "Alaina") {
-                              destinationTable = alainaTable;
-                            } else if (artistCellValue == "Berto") {
-                              destinationTable = bertoTable;
-                            } else if (artistCellValue == "Bre B.") {
-                              destinationTable = breBTable;
-                            } else if (artistCellValue == "Christian") {
-                              destinationTable = christianTable;
-                            } else if (artistCellValue == "Emily") {
-                              destinationTable = emilyTable;
-                            } else if (artistCellValue == "Ian") {
-                              destinationTable = ianTable;
-                            } else if (artistCellValue == "Jeff") {
-                              destinationTable = jeffTable;
-                            } else if (artistCellValue == "Josh") {
-                              destinationTable = joshTable;
-                            } else if (artistCellValue == "Kristen") {
-                              destinationTable = kristenTable;
-                            } else if (artistCellValue == "Robin") {
-                              destinationTable = robinTable;
-                            } else if (artistCellValue == "Luke") {
-                              destinationTable = lukeTable;
-                            } else if (artistCellValue == "Lisa") {
-                              destinationTable = lisaTable;
-                            } else if (artistCellValue == "Luis") {
-                              destinationTable = luisTable;
-                            } else if (artistCellValue == "Peter") {
-                              destinationTable = peterTable;
-                            } else if (artistCellValue == "Rita") {
-                              destinationTable = ritaTable;
-                            } else if (artistCellValue == "Ethan") {
-                              destinationTable = ethanTable;
-                            } else if (artistCellValue == "Bre Z.") {
-                              destinationTable = breZTable;
-                            } else if (artistCellValue == "Joe") {
-                              destinationTable = joeTable;
-                            } else if (artistCellValue == "Jordan") {
-                              destinationTable = jordanTable;
-                            } else if (artistCellValue == "Hazel-Rah") {
-                              destinationTable = hazelTable;
-                            } else if (artistCellValue == "Todd") {
-                              destinationTable = toddTable;
-                            } else {
-                              destinationTable = "null"
+                          } else if (statusCellValue !== "Completed" && includesCompletedTables == true) { //if status column does not = "Completed" & the changedTable is a Completed table, move data back to the artist's table
+                            if (destinationTable !== "null") {
+                              moveData(destinationTable, rowValues, myRow, artistCellValue);
                             };
-                          };
-
-                          var hwat = destinationTable;
+                          }
 
                         //#endregion ------------------------------------------------------------------------------------------
+
+                      };
+
+                    //#endregion ---------------------------------------------------------------------------------------------
+
+                    //#region MOVE DATA BASED ON ARTIST COLUMN ------------------------------------------------------------------
+
+                      if (changedColumnIndex == artistColumn) {
 
                         //#region MOVES DATA TO DESTINATION TABLE ----------------------------------------------------------------
 
-                          if (destinationTable !== "null") {
-                            moveData(destinationTable, rowValues, myRow, artistCellValue);
-                            //setStatus(destinationTable, unassignedTable, tableColumns, changedRowIndex, tableStart, changedWorksheet);
-                          } else {
-                            console.log("No artist was assigned or updated, so no data was moved.")
-                            return;
+                          if (includesCompletedTables == false) {
+                            if (destinationTable !== "null") {
+                              moveData(destinationTable, rowValues, myRow, artistCellValue);
+                              //setStatus(destinationTable, unassignedTable, tableColumns, changedRowIndex, tableStart, changedWorksheet);
+                            } else {
+                              console.log("No artist was assigned or updated, so no data was moved.")
+                              return;
+                            };
                           };
 
                         //#endregion ------------------------------------------------------------------------------------------
 
-                      //#endregion -----------------------------------------------------------------------------------------------
+                      };
 
-                    };
+                    //#endregion -----------------------------------------------------------------------------------------------
 
                   //#endregion ----------------------------------------------------------------------------------------------
+                
+                //#endregion ----------------------------------------------------------------------------------------------
 
-                } else {
-                    console.log("Adjustments were made to the validation sheet, therefore the date variables and move functions were not triggered");
-                  };
+              } else {
+                  console.log("Adjustments were made to the validation sheet, therefore the date variables and move functions were not triggered");
+              };
 
-              //#endregion ----------------------------------------------------------------------------------------------------
+            //#endregion ----------------------------------------------------------------------------------------------------
 
+          };
 
-            //#endregion ------------------------------------------------------------------------------------------------
+        //#endregion --------------------------------------------------------------------------------------------------------
 
-            //#region ERROR HANDLING -------------------------------------------------------------------------------------
-
-              };//).catch(function (error) {
-                //console.log('Error: ' + error);
-                //if (error instanceof OfficeExtension.Error) {
-                //  console.log('Debug info: ' + JSON.stringify(error.debugInfo));
-                //}
-                //console.log("Promise Rejected");
-              //});
-
-            //#endregion ------------------------------------------------------------------------------------------------
-
-        //#endregion ---------------------------------------------------------------------------------------------------
-
-          }).catch(function (error) {
-            console.log('Error: ' + error);
-            if (error instanceof OfficeExtension.Error) {
-                console.log('Debug info: ' + JSON.stringify(error.debugInfo));
-            };
-            console.log("Promise Rejected");
-          });
-
+      }).catch(function (error) {
+        console.log('Error: ' + error);
+        if (error instanceof OfficeExtension.Error) {
+            console.log('Debug info: ' + JSON.stringify(error.debugInfo));
+        };
+        console.log("Promise Rejected");
+      });
     });
   };
-
 
 //#endregion ------------------------------------------------------------------------------------------------------
 
