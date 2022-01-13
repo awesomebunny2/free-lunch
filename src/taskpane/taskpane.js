@@ -1592,12 +1592,12 @@ Office.onReady((info) => {
 
                         //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
 
-                          if (statusCellValue == "Completed" && includesCompletedTables == false && isUnassigned == false) { //if status column = "Completed", the changedTable is not a Completed table, & the changedWorksheet is not UnassignedProjects, move data to changedWorksheet's completed table
+                          if ((statusCellValue == "Completed" || statusCellValue == "Cancelled") && includesCompletedTables == false && isUnassigned == false) { //if status column = "Completed" or "Cancelled", the changedTable is not a Completed table, & the changedWorksheet is not UnassignedProjects, move data to changedWorksheet's completed table
                             completedTable.rows.add(null, rowValues); //Adds empty row to bottom of the completedTable, then inserts the changed values into this empty row
                             myRow.delete(); //Deletes the changed row from the original sheet
                             console.log("Data was moved to the artist's Completed Projects Table!");
                             return;
-                          } else if (statusCellValue !== "Completed" && includesCompletedTables == true) { //if status column does not = "Completed" & the changedTable is a Completed table, move data back to the artist's table
+                          } else if (statusCellValue == "Editing" && includesCompletedTables == true) { //if status column = "Editing" & the changedTable is a Completed table, move data back to the artist's table
                             if (destinationTable !== "null") {
                               moveData(destinationTable, rowValues, myRow, artistCellValue);
                             };
