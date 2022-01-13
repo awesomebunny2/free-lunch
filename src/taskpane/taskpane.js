@@ -1134,51 +1134,51 @@ Office.onReady((info) => {
 
       //#region SPECIFIC TABLE VARIABLES --------------------------------------------------------------------------
 
-        var unassignedTable = context.workbook.tables.getItem("UnassignedProjects");
+        var unassignedTable = context.workbook.tables.getItem("UnassignedProjects").load("worksheet");
 
-        var mattTable = context.workbook.tables.getItem("MattProjects");
+        var mattTable = context.workbook.tables.getItem("MattProjects").load("worksheet");
 
-        var alainaTable = context.workbook.tables.getItem("AlainaProjects");
+        var alainaTable = context.workbook.tables.getItem("AlainaProjects").load("worksheet");
 
-        var bertoTable = context.workbook.tables.getItem("BertoProjects");
+        var bertoTable = context.workbook.tables.getItem("BertoProjects").load("worksheet");
 
-        var breBTable = context.workbook.tables.getItem("BreBProjects");
+        var breBTable = context.workbook.tables.getItem("BreBProjects").load("worksheet");
 
-        var christianTable = context.workbook.tables.getItem("ChristianProjects");
+        var christianTable = context.workbook.tables.getItem("ChristianProjects").load("worksheet");
 
-        var emilyTable = context.workbook.tables.getItem("EmilyProjects");
+        var emilyTable = context.workbook.tables.getItem("EmilyProjects").load("worksheet");
 
-        var ianTable = context.workbook.tables.getItem("IanProjects");
+        var ianTable = context.workbook.tables.getItem("IanProjects").load("worksheet");
 
-        var jeffTable = context.workbook.tables.getItem("JeffProjects");
+        var jeffTable = context.workbook.tables.getItem("JeffProjects").load("worksheet");
 
-        var joshTable = context.workbook.tables.getItem("JoshProjects");
+        var joshTable = context.workbook.tables.getItem("JoshProjects").load("worksheet");
 
-        var kristenTable = context.workbook.tables.getItem("KristenProjects");
+        var kristenTable = context.workbook.tables.getItem("KristenProjects").load("worksheet");
 
-        var robinTable = context.workbook.tables.getItem("RobinProjects");
+        var robinTable = context.workbook.tables.getItem("RobinProjects").load("worksheet");
 
-        var lukeTable = context.workbook.tables.getItem("LukeProjects");
+        var lukeTable = context.workbook.tables.getItem("LukeProjects").load("worksheet");
 
-        var lisaTable = context.workbook.tables.getItem("LisaProjects");
+        var lisaTable = context.workbook.tables.getItem("LisaProjects").load("worksheet");
 
-        var luisTable = context.workbook.tables.getItem("LuisProjects");
+        var luisTable = context.workbook.tables.getItem("LuisProjects").load("worksheet");
 
-        var peterTable = context.workbook.tables.getItem("PeterProjects");
+        var peterTable = context.workbook.tables.getItem("PeterProjects").load("worksheet");
 
-        var ritaTable = context.workbook.tables.getItem("RitaProjects");
+        var ritaTable = context.workbook.tables.getItem("RitaProjects").load("worksheet");
 
-        var ethanTable = context.workbook.tables.getItem("EthanProjects");
+        var ethanTable = context.workbook.tables.getItem("EthanProjects").load("worksheet");
 
-        var breZTable = context.workbook.tables.getItem("BreZProjects");
+        var breZTable = context.workbook.tables.getItem("BreZProjects").load("worksheet");
 
-        var joeTable = context.workbook.tables.getItem("JoeProjects");
+        var joeTable = context.workbook.tables.getItem("JoeProjects").load("worksheet");
 
-        var jordanTable = context.workbook.tables.getItem("JordanProjects");
+        var jordanTable = context.workbook.tables.getItem("JordanProjects").load("worksheet");
 
-        var hazelTable = context.workbook.tables.getItem("HazelProjects");
+        var hazelTable = context.workbook.tables.getItem("HazelProjects").load("worksheet");
 
-        var toddTable = context.workbook.tables.getItem("ToddProjects");
+        var toddTable = context.workbook.tables.getItem("ToddProjects").load("worksheet");
 
         //#region VALIDATION VARIABLES ------------------------------------------------------
 
@@ -1215,6 +1215,10 @@ Office.onReady((info) => {
       //#endregion -------------------------------------------------------------------------------------------------
 
       await context.sync().then(function () { //loads variable values
+
+        if (changeType == "RowDeleted") {
+          return;
+        };
 
         //#region LOADED VARIABLES -------------------------------------------------------------------------------
 
@@ -1309,67 +1313,86 @@ Office.onReady((info) => {
           
           if (changeType == "RowInserted") {
 
-            if (changedWorksheet.id !== validationSheet.id) {
+            //#region IF CHANGE WAS NOT MADE TO VALIDATION SHEET... ----------------------------------------------------
 
-              //#region LOAD COLUMN VALUES ---------------------------------------------------------------------------
+              if (changedWorksheet.id !== validationSheet.id) {
 
-                var addedRangeValues = cellValue(tableColumns, rowValues, "Added");
-                var startRangeValues = cellValue(tableColumns, rowValues, "Start Override");
-                var workRangeValues = cellValue(tableColumns, rowValues, "Work Override");
-                var statusColumnValue = cellValue(tableColumns, rowValues, "Status");
+                //#region LOAD VARIABLES ---------------------------------------------------------------------------
 
-                var statusColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Status");
+                  //#region LOADS COLUMN INDEXS & CELL VALUES ------------------------------------------------------
 
-              //#endregion ------------------------------------------------------------------------------------------
+                    var addedRangeValues = cellValue(tableColumns, rowValues, "Added");
+                    var startRangeValues = cellValue(tableColumns, rowValues, "Start Override");
+                    var workRangeValues = cellValue(tableColumns, rowValues, "Work Override");
+                    var statusColumnValue = cellValue(tableColumns, rowValues, "Status");
 
-                //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
+                    var statusColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Status");
 
-                  if (addedRangeValues == "") {
-                    var newRange = currentDate(tableColumns, changedRowIndex, tableStart, changedWorksheet);
-                    //return newRange;
-                  } else {
-                  console.log("Inserted row already had an Added date, so the current time was not assigned");
-                  };
+                  //#endregion -------------------------------------------------------------------------------------
 
-                //#endregion ---------------------------------------------------------------------------------------
+                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
 
-                //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
+                    var listOfCompletedTables = [];
 
-                  if (startRangeValues == "") {
-                    var startRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
-                    startRangeAddress.values = [["0"]];
-                  };
+                    allTables.items.forEach(function (table) { //for each table in the workbook...
+                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                        listOfCompletedTables.push(table.name); //push the name of that table into an array
+                      };
+                    });
 
-                  if (workRangeValues == "") {
-                    var workRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
-                    workRangeAddress.values = [["0"]];
-                  };
+                    //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
+                    var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
 
-                //#endregion ---------------------------------------------------------------------------------------
-
-                //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                  var listOfCompletedTables = [];
-
-                  allTables.items.forEach(function (table) { //for each table in the workbook...
-                    if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                      listOfCompletedTables.push(table.name); //push the name of that table into an array
-                    };
-                  });
-
-                  //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
-                  var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
+                  //#endregion ------------------------------------------------------------------------------------------
 
                 //#endregion ------------------------------------------------------------------------------------------
 
-                if (changedTable.name == "UnassignedProjects") {
-                  statusColumnAddress.values = [["Awaiting Artist"]];
-                } else if (changedTable.name !== "UnassignedProjects" && includesCompletedTables == false) {
-                  statusColumnAddress.values = [["Not Working"]];
-                } else {
-                  console.log("No status column values were defaulted");
-                };
-            };
+                //#region AUTOFILL COLUMN VALUES WHEN DATA IS INSERTED -------------------------------------------------
+
+                  //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
+
+                    if (addedRangeValues == "") {
+                      var newRange = currentDate(tableColumns, changedRowIndex, tableStart, changedWorksheet);
+                      //return newRange;
+                    } else {
+                    console.log("Inserted row already had an Added date, so the current time was not assigned");
+                    };
+
+                  //#endregion ---------------------------------------------------------------------------------------
+
+                  //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
+
+                    if (startRangeValues == "") {
+                      var startRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
+                      startRangeAddress.values = [["0"]];
+                    };
+
+                    if (workRangeValues == "") {
+                      var workRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
+                      workRangeAddress.values = [["0"]];
+                    };
+
+                  //#endregion ---------------------------------------------------------------------------------------
+
+                  //#region AUTOFILL STATUS COLUMN --------------------------------------------------------------------
+              
+                    if (changedTable.name == "UnassignedProjects") {
+                      statusColumnAddress.values = [["Awaiting Artist"]];
+                    } else if (changedTable.name !== "UnassignedProjects" && includesCompletedTables == false) {
+                      //if (statusColumnValue == "Awaiting Artist") {
+                        statusColumnAddress.values = [["Not Working"]];
+                      //};
+                    } else {
+                      console.log("No status column values were defaulted");
+                    };
+                  
+                  //#endregion ----------------------------------------------------------------------------------------
+
+                //#endregion ----------------------------------------------------------------------------------------------
+
+              };
+
+            //#endregion -----------------------------------------------------------------------------------------------
 
           };
 
@@ -1556,7 +1579,7 @@ Office.onReady((info) => {
 
                         //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
 
-                          if (statusCellValue == "Completed" && includesCompletedTables == false) { //if status column = "Completed" & the changedTable is not a Completed table, move data to changedWorksheet's completed table
+                          if (statusCellValue == "Completed" && includesCompletedTables == false && isUnassigned == false) { //if status column = "Completed", the changedTable is not a Completed table, & the changedWorksheet is not UnassignedProjects, move data to changedWorksheet's completed table
                             completedTable.rows.add(null, rowValues); //Adds empty row to bottom of the completedTable, then inserts the changed values into this empty row
                             myRow.delete(); //Deletes the changed row from the original sheet
                             console.log("Data was moved to the artist's Completed Projects Table!");
@@ -1565,7 +1588,7 @@ Office.onReady((info) => {
                             if (destinationTable !== "null") {
                               moveData(destinationTable, rowValues, myRow, artistCellValue);
                             };
-                          }
+                          };
 
                         //#endregion ------------------------------------------------------------------------------------------
 
@@ -1579,15 +1602,17 @@ Office.onReady((info) => {
 
                         //#region MOVES DATA TO DESTINATION TABLE ----------------------------------------------------------------
 
-                          if (includesCompletedTables == false) {
+                          //if (includesCompletedTables == false) {
                             if (destinationTable !== "null") {
-                              moveData(destinationTable, rowValues, myRow, artistCellValue);
-                              //setStatus(destinationTable, unassignedTable, tableColumns, changedRowIndex, tableStart, changedWorksheet);
+                              if (destinationTable.worksheet.id !== changedWorksheet.id) { //if destination table is not in the same worksheet as the changedTable (prevents for unnecessary moving of data across tables in the same worksheet), do the following...
+                                moveData(destinationTable, rowValues, myRow, artistCellValue);
+                                //setStatus(destinationTable, unassignedTable, tableColumns, changedRowIndex, tableStart, changedWorksheet);
+                              };
                             } else {
                               console.log("No artist was assigned or updated, so no data was moved.")
                               return;
                             };
-                          };
+                          //};
 
                         //#endregion ------------------------------------------------------------------------------------------
 
