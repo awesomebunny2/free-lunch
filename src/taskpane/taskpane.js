@@ -42,6 +42,9 @@ Office.onReady((info) => {
     //var startOverrideColumn = "U";
     //var workOverrideColumn = "V";
     var destinationTable;
+    var parentSheet;
+    var parentTable;
+
 
     var brandNewBuild;
     var newBuildOtherNatives;
@@ -1128,6 +1131,13 @@ Office.onReady((info) => {
           //var myRow = changedTable.rows.getItemAt(changedRow).load("values"); //loads the values of the changed row in the table where the event was fired 
           var tableRange = changedTable.getRange();
 
+          if (parentSheet !== undefined) {
+
+            var parentWorksheet = parentSheet.load("name");
+            var parentTableNew = parentTable.load("name");
+
+          };
+
         //#endregion ----------------------------------------------------------------------------------------------
 
       //#endregion ------------------------------------------------------------------------------------------------
@@ -1355,7 +1365,7 @@ Office.onReady((info) => {
                       var newRange = currentDate(tableColumns, changedRowIndex, tableStart, changedWorksheet);
                       //return newRange;
                     } else {
-                    console.log("Inserted row already had an Added date, so the current time was not assigned");
+                    //console.log("Inserted row already had an Added date, so the current time was not assigned");
                     };
 
                   //#endregion ---------------------------------------------------------------------------------------
@@ -1376,14 +1386,14 @@ Office.onReady((info) => {
 
                   //#region AUTOFILL STATUS COLUMN --------------------------------------------------------------------
               
-                    if (changedTable.name == "UnassignedProjects") {
+                    if (changedTable.name == "UnassignedProjects") { //if the table the row was inserted into is "UnassignedProjects", set status column to "Awaiting Artist"
                       statusColumnAddress.values = [["Awaiting Artist"]];
-                    } else if (changedTable.name !== "UnassignedProjects" && includesCompletedTables == false) {
-                      //if (statusColumnValue == "Awaiting Artist") {
+                    } else if (changedTable.name !== "UnassignedProjects" && includesCompletedTables == false) { //if the table the row was inserted into is not "UnassaignedProjects" & is not a Completed table, and...
+                      if (parentWorksheet.name !== changedWorksheet.name) { //if the table the row is inserted into is not in the same sheet as the table the data came from, set status column to "Not Working"
                         statusColumnAddress.values = [["Not Working"]];
-                      //};
+                      };
                     } else {
-                      console.log("No status column values were defaulted");
+                      //console.log("No status column values were defaulted");
                     };
                   
                   //#endregion ----------------------------------------------------------------------------------------
@@ -1430,6 +1440,9 @@ Office.onReady((info) => {
 
                     var statusCellValue = cellValue(tableColumns, rowValues, "Status");
                     var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
+
+                    parentSheet = changedWorksheet;
+                    parentTable = changedTable;
 
                   //#endregion ----------------------------------------------------------------------------------------------
 
