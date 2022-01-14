@@ -1335,8 +1335,14 @@ Office.onReady((info) => {
                     var startRangeValues = cellValue(tableColumns, rowValues, "Start Override");
                     var workRangeValues = cellValue(tableColumns, rowValues, "Work Override");
                     var statusColumnValue = cellValue(tableColumns, rowValues, "Status");
+                    var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
+                    var pickedUpCellValue = cellValue(tableColumns, rowValues, "Picked Up / Started By");
+                    var proofToClientCellValue = cellValue(tableColumns, rowValues, "Proof to Client");
 
                     var statusColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Status");
+                    var artistColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Artist");
+                    var pickedUpColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Picked Up / Started By");
+                    var proofToClientColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Proof to Client");
 
                   //#endregion -------------------------------------------------------------------------------------
 
@@ -1370,6 +1376,15 @@ Office.onReady((info) => {
 
                   //#endregion ---------------------------------------------------------------------------------------
 
+                  //#region AUTOFILL PICKED UP / STARTED BY & PROOF TO CLIENT COLUMNS --------------------------------
+
+                    if (pickedUpCellValue == "" && proofToClientCellValue == "") {
+                      pickedUpColumnAddress.values = [["NO PRODUCT / PROJECT TYPE"]];
+                      proofToClientColumnAddress.values = [["NO PRODUCT / PROJECT TYPE"]];
+                    };
+
+                  //#endregion ---------------------------------------------------------------------------------------
+
                   //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
 
                     if (startRangeValues == "") {
@@ -1388,14 +1403,32 @@ Office.onReady((info) => {
               
                     if (changedTable.name == "UnassignedProjects") { //if the table the row was inserted into is "UnassignedProjects", set status column to "Awaiting Artist"
                       statusColumnAddress.values = [["Awaiting Artist"]];
-                    } else if (changedTable.name !== "UnassignedProjects" && includesCompletedTables == false) { //if the table the row was inserted into is not "UnassaignedProjects" & is not a Completed table, and...
+                    };
+                    
+                    if (changedTable.name !== "UnassignedProjects" && includesCompletedTables == false) { //if the table the row was inserted into is not "UnassaignedProjects" & is not a Completed table, and...
                       if (parentWorksheet.name !== changedWorksheet.name) { //if the table the row is inserted into is not in the same sheet as the table the data came from, set status column to "Not Working"
                         statusColumnAddress.values = [["Not Working"]];
                       };
+                    };
+                      
+                    if (statusColumnValue == "" && includesCompletedTables == true) { //if status column value is empty and the row is inserted in a Completed table, set status column value to "Completed"
+                      statusColumnAddress.values = [["Completed"]];
                     } else {
                       //console.log("No status column values were defaulted");
                     };
+
+                    if (statusColumnValue == "" && includesCompletedTables == false) { //if status column value is empty and the row is not inserted in a Completed Table, set status column value to "Not Working"
+                      statusColumnAddress.values = [["Not Working"]];
+                    };
                   
+                  //#endregion ----------------------------------------------------------------------------------------
+
+                  //#region AUTOFILL ARTIST COLUMN --------------------------------------------------------------------
+
+                    if (artistCellValue == "") {
+                      artistColumnAddress.values = [[changedWorksheet.name]]
+                    };
+
                   //#endregion ----------------------------------------------------------------------------------------
 
                 //#endregion ----------------------------------------------------------------------------------------------
@@ -1440,6 +1473,16 @@ Office.onReady((info) => {
 
                     var statusCellValue = cellValue(tableColumns, rowValues, "Status");
                     var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
+                    var productCellValue = cellValue(tableColumns, rowValues, "Product");
+                    var projectTypeCellValue = cellValue(tableColumns, rowValues, "Project Type");
+                    var pickedUpCellValue = cellValue(tableColumns, rowValues, "Picked Up / Started By");
+                    var proofToClientCellValue = cellValue(tableColumns, rowValues, "Proof to Client");
+                    var printDateCellValue = cellValue(tableColumns, rowValues, "Print Date");
+
+                    var pickedUpColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Picked Up / Started By");
+                    var proofToClientColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Proof to Client");
+                    var productColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Product");
+                    var projectTypeColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Project Type");
 
                     parentSheet = changedWorksheet;
                     parentTable = changedTable;
@@ -1539,6 +1582,17 @@ Office.onReady((info) => {
                   tableRange.format.font.size = 12;
                   tableRange.format.font.color = "#000000";
 
+
+                  var now = new Date();
+
+                  if (printDateCellValue < now) {
+                    //format cellAddress for printDate and group
+                    console.log("it twerked!")
+                  }
+
+
+
+
                 //#endregion --------------------------------------------------------------------------------------------
                     
                 //#region DO FUNCTIONS ----------------------------------------------------------------------------------
@@ -1547,26 +1601,38 @@ Office.onReady((info) => {
 
                     if (changedColumnIndex == projectTypeColumn || changedColumnIndex == productColumn || changedColumnIndex == addedColumn || changedColumnIndex == startOverrideColumn || changedColumnIndex == workOverrideColumn) { //if updated data was in Project Type column, run the lookupStart function
 
-                      var startAdjustmentHours = startHoursNumber(tableColumns, rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
-                    
-                      var artAdjustmentHours = workHoursNumber(tableColumns, rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
-                    
-                      var artAdjustForCreativeReview = addCreativeReview(tableColumns, rowValues, artAdjustmentHours, creativeReviewTime); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
-                
-                      var myDate = receivedAdjust(tableColumns, rowValues); //grabs values from Added column and converts into date object in EST.
-                    
-                      var override = startPreAdjust(tableColumns, rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
-                    
-                      var startedPickedUpBy = startedBy(tableColumns, changedRowIndex, tableStart, changedWorksheet, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
-                
-                      var workOverride = workPrePreAdjust(tableColumns, rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
-                  
-                      var proofToClient = toClient(tableColumns, changedRowIndex, tableStart, changedWorksheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
+                      if (productCellValue == "" || projectTypeCellValue == "") { //prevents turn around time functions from firing if values are missing from the product or project type columns. Also autofills picked up and proof to client cells.
 
-                      console.log("Turn Around time variables were updated!");
+                        pickedUpColumnAddress.values = [["NO PRODUCT / PROJECT TYPE"]];
 
-                      return;
+                        proofToClientColumnAddress.values = [["NO PRODUCT / PROJECT TYPE"]];
+
+                        return;
+
+                      } else {
+
+                        var startAdjustmentHours = startHoursNumber(tableColumns, rowValues, startTurnAroundTime); //adds hours to turn-around time based on Project Type
+                    
+                        var artAdjustmentHours = workHoursNumber(tableColumns, rowValues, artTurnAroundTime); //adds hours based on Product and adds to lookupStart output
+                      
+                        var artAdjustForCreativeReview = addCreativeReview(tableColumns, rowValues, artAdjustmentHours, creativeReviewTime); //takes prelookupWork variable and divides by 3 if lookupStart was equal to 2. Otherwise remains the same.
                   
+                        var myDate = receivedAdjust(tableColumns, rowValues); //grabs values from Added column and converts into date object in EST.
+                      
+                        var override = startPreAdjust(tableColumns, rowValues, startAdjustmentHours, myDate); //adds manual override start hours to adjusted start time. Adjusts for office hours and weekends.
+                      
+                        var startedPickedUpBy = startedBy(tableColumns, changedRowIndex, tableStart, changedWorksheet, override); //Prints the value of override to the Picked Up / Started By column and formats the date in a readible format.
+                  
+                        var workOverride = workPrePreAdjust(tableColumns, rowValues, artAdjustForCreativeReview, override); //Finds the value of Work Override in the changed row and adds it to workHoursAdjust, then adds that new number as hours to startedPickedUpBy. Formats to be within office hours and on a weekday if needed.
+                    
+                        var proofToClient = toClient(tableColumns, changedRowIndex, tableStart, changedWorksheet, workOverride); //Prints the value of workOverride to the Proof to Client column and formats the date in a readible format.
+
+                        console.log("Turn Around time variables were updated!");
+
+                        return;
+                  
+                      };
+
                     };
 
                   //#endregion ------------------------------------------------------------------------------------------
