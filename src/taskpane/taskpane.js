@@ -105,7 +105,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -115,7 +115,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -125,7 +125,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -135,7 +135,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -145,7 +145,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -155,7 +155,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -165,7 +165,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -175,7 +175,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -185,7 +185,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -195,7 +195,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -205,7 +205,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -215,7 +215,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -225,7 +225,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -235,7 +235,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -245,7 +245,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -255,7 +255,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -265,7 +265,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -275,7 +275,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -285,7 +285,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -295,7 +295,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -305,7 +305,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -315,7 +315,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -325,7 +325,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -335,7 +335,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -345,7 +345,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -355,7 +355,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -365,7 +365,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -375,7 +375,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -385,7 +385,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -395,7 +395,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -405,7 +405,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -415,7 +415,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -425,7 +425,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -435,7 +435,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -445,7 +445,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -455,7 +455,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -465,7 +465,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -475,7 +475,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -485,7 +485,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -495,7 +495,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -508,7 +508,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -518,7 +518,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -528,7 +528,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -538,7 +538,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -548,7 +548,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -558,7 +558,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -568,7 +568,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -578,7 +578,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -588,7 +588,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -598,7 +598,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -608,7 +608,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -618,7 +618,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -628,7 +628,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -638,7 +638,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -648,7 +648,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -658,7 +658,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -668,7 +668,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -678,7 +678,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -688,7 +688,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -698,7 +698,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -708,7 +708,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -718,7 +718,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -728,7 +728,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -738,7 +738,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -748,7 +748,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -758,7 +758,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -768,7 +768,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -778,7 +778,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -788,7 +788,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -798,7 +798,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -808,7 +808,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -818,7 +818,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -828,7 +828,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -838,7 +838,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -848,7 +848,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -858,7 +858,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -868,7 +868,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -878,7 +878,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -888,7 +888,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -898,7 +898,7 @@ Office.onReady((info) => {
           brandNewBuild: 0,
           brandNewBuildFromNatives: 0,
           brandNewBuildFromTemplate: 0,
-          changesToExisitingNatives: 0,
+          changesToExistingNatives: 0,
           specCheck: 0,
           weTransferUpload: 0,
           specialRequest: 0,
@@ -1270,7 +1270,7 @@ Office.onReady((info) => {
               startTurnAroundTime[key].brandNewBuild = pickupTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [i] sub-object the value in the first data cell in the table 
               startTurnAroundTime[key].brandNewBuildFromNatives = pickupTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [i] sub-object the value in the second data cell in the table 
               startTurnAroundTime[key].brandNewBuildFromTemplate = pickupTurnaroundTimeValues[0][3]; //you get the point...
-              startTurnAroundTime[key].changesToExisitingNatives = pickupTurnaroundTimeValues[0][4];
+              startTurnAroundTime[key].changesToExistingNatives = pickupTurnaroundTimeValues[0][4];
               startTurnAroundTime[key].specCheck = pickupTurnaroundTimeValues[0][5];
               startTurnAroundTime[key].weTransferUpload = pickupTurnaroundTimeValues[0][6];
               startTurnAroundTime[key].specialRequest = pickupTurnaroundTimeValues[0][7];
@@ -1291,7 +1291,7 @@ Office.onReady((info) => {
               artTurnAroundTime[key].brandNewBuild = artTurnaroundTimeValues[0][1]; //assigns brandNewBuild property of [j] sub-object the value in the first data cell in the table 
               artTurnAroundTime[key].brandNewBuildFromNatives = artTurnaroundTimeValues[0][2]; //assigns brandNewBuildFromNatives property of [j] sub-object the value in the second data cell in the table
               artTurnAroundTime[key].brandNewBuildFromTemplate = artTurnaroundTimeValues[0][3]; //you get it, right?
-              artTurnAroundTime[key].changesToExisitingNatives = artTurnaroundTimeValues[0][4];
+              artTurnAroundTime[key].changesToExistingNatives = artTurnaroundTimeValues[0][4];
               artTurnAroundTime[key].specCheck = artTurnaroundTimeValues[0][5];
               artTurnAroundTime[key].weTransferUpload = artTurnaroundTimeValues[0][6];
               artTurnAroundTime[key].specialRequest = artTurnaroundTimeValues[0][7];
@@ -1417,7 +1417,7 @@ Office.onReady((info) => {
                       //console.log("No status column values were defaulted");
                     };
 
-                    if (statusColumnValue == "" && includesCompletedTables == false) { //if status column value is empty and the row is not inserted in a Completed Table, set status column value to "Not Working"
+                    if (statusColumnValue == "" && includesCompletedTables == false && changedTable.name !== "UnassignedProjects") { //if status column value is empty and the row is not inserted in a Completed Table, set status column value to "Not Working"
                       statusColumnAddress.values = [["Not Working"]];
                     };
                   
@@ -1425,8 +1425,10 @@ Office.onReady((info) => {
 
                   //#region AUTOFILL ARTIST COLUMN --------------------------------------------------------------------
 
-                    if (artistCellValue == "") {
+                    if (artistCellValue == "" && changedWorksheet.name !== "Unassigned Projects") {
                       artistColumnAddress.values = [[changedWorksheet.name]]
+                    } else if (artistCellValue == "" && changedWorksheet.name == "Unassigned Projects") {
+                      artistColumnAddress.values = [["Unassigned"]]
                     };
 
                   //#endregion ----------------------------------------------------------------------------------------
@@ -1478,11 +1480,14 @@ Office.onReady((info) => {
                     var pickedUpCellValue = cellValue(tableColumns, rowValues, "Picked Up / Started By");
                     var proofToClientCellValue = cellValue(tableColumns, rowValues, "Proof to Client");
                     var printDateCellValue = cellValue(tableColumns, rowValues, "Print Date");
+                    var groupCellValue = cellValue(tableColumns, rowValues, "Group");
 
                     var pickedUpColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Picked Up / Started By");
                     var proofToClientColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Proof to Client");
                     var productColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Product");
                     var projectTypeColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Project Type");
+                    var printDateColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Print Date");
+                    var groupColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Group");
 
                     parentSheet = changedWorksheet;
                     parentTable = changedTable;
@@ -1578,17 +1583,104 @@ Office.onReady((info) => {
                   //changedAddress.format.font.size = 12;
                   //changedAddress.format.font.color = "#000000";
 
-                  tableRange.format.font.name = "Calibri";
-                  tableRange.format.font.size = 12;
-                  tableRange.format.font.color = "#000000";
+                  //tableRange.format.font.name = "Calibri";
+                  //tableRange.format.font.size = 12;
+                  //tableRange.format.font.color = "#000000";
 
 
                   var now = new Date();
+                  var justNowDate = now.getDate();
+                  var toSerial = JSDateToExcelDate(now);
 
-                  if (printDateCellValue < now) {
-                    //format cellAddress for printDate and group
-                    console.log("it twerked!")
-                  }
+                  var printDate = Math.trunc(printDateCellValue);
+                  var currentDateAbsolute = Math.trunc(toSerial);
+
+                  //var appendGroup = groupCellValue + "!";
+
+
+                  if ((printDate < currentDateAbsolute) && (printDate !== 0)) { //if current date is after print date
+
+                    printDateColumnAddress.format.fill.color = "4472C4";
+                    printDateColumnAddress.format.font.color = "white";
+                    printDateColumnAddress.format.font.bold = true;
+
+                    groupColumnAddress.format.fill.color = "4472C4";
+                    groupColumnAddress.format.font.color = "white";
+                    groupColumnAddress.format.font.bold = true;
+
+                    //groupColumnAddress.values = [[appendGroup]];
+
+                  } else if (printDate == currentDateAbsolute) { //if current date = print date
+
+                    printDateColumnAddress.format.fill.color = "FF0000";
+                    printDateColumnAddress.format.font.color = "white";
+                    printDateColumnAddress.format.font.bold = true;
+
+                    groupColumnAddress.format.fill.color = "FF0000";
+                    groupColumnAddress.format.font.color = "white";
+                    groupColumnAddress.format.font.bold = true;
+
+                  } else if (((printDate - 1) == currentDateAbsolute)) { //if current date is the day before print date
+
+                    printDateColumnAddress.format.fill.color = "FF8B82";
+                    printDateColumnAddress.format.font.color = "black";
+                    printDateColumnAddress.format.font.bold = false;
+
+                    groupColumnAddress.format.fill.color = "FF8B82";
+                    groupColumnAddress.format.font.color = "black";
+                    groupColumnAddress.format.font.bold = false;
+
+                  } else if (((printDate - 6) <= currentDateAbsolute) && ((printDate - 2) >= currentDateAbsolute)) { //if current date is in the same group lock week as print date (between 7-2 days before)
+
+                    printDateColumnAddress.format.fill.color = "FFC58E";
+                    printDateColumnAddress.format.font.color = "black";
+                    printDateColumnAddress.format.font.bold = false;
+
+                    groupColumnAddress.format.fill.color = "FFC58E";
+                    groupColumnAddress.format.font.color = "black";
+                    groupColumnAddress.format.font.bold = false;
+
+                  } else if (((printDate - 13) <= currentDateAbsolute) && ((printDate - 7) >= currentDateAbsolute)) { //if current date is in the week before group lock week (between 8-14 days before)
+
+                    printDateColumnAddress.format.fill.color = "FFFF00";
+                    printDateColumnAddress.format.font.color = "black";
+                    printDateColumnAddress.format.font.bold = false;
+
+                    groupColumnAddress.format.fill.color = "FFFF00";
+                    groupColumnAddress.format.font.color = "black";
+                    groupColumnAddress.format.font.bold = false;
+
+                  } else if (((printDate - 30) <= currentDateAbsolute) && ((printDate - 14) >= currentDateAbsolute)) { //if current date is within a month of print date (between 15-31 days before)
+
+                    printDateColumnAddress.format.fill.color = "C6E0B4";
+                    printDateColumnAddress.format.font.color = "black";
+                    printDateColumnAddress.format.font.bold = false;
+
+                    groupColumnAddress.format.fill.color = "C6E0B4";
+                    groupColumnAddress.format.font.color = "black";
+                    groupColumnAddress.format.font.bold = false;
+
+                  } else if (printDate == 0) { //if there are no values in the print date cell, revert to normal formatting
+
+                    printDateColumnAddress.format.fill.clear();
+                    printDateColumnAddress.format.font.color = "black";
+                    printDateColumnAddress.format.font.bold = false;
+
+                    groupColumnAddress.format.fill.clear();
+                    groupColumnAddress.format.font.color = "black";
+                    groupColumnAddress.format.font.bold = false;
+
+                  } else { //set cell formatting to normal
+
+                    printDateColumnAddress.format.fill.clear();
+                    printDateColumnAddress.format.font.color = "black";
+                    printDateColumnAddress.format.font.bold = false;
+
+                    groupColumnAddress.format.fill.clear();
+                    groupColumnAddress.format.font.color = "black";
+                    groupColumnAddress.format.font.bold = false;
+
+                  };
 
 
 
@@ -2069,7 +2161,7 @@ Office.onReady((info) => {
         projectType = "brandNewBuildFromNatives";
       } else if (projectTypeInput == "Brand New Build From Template") {
         projectType = "brandNewBuildFromTemplate";
-      } else if (projectTypeInput == "Changes to Exisiting Natives") {
+      } else if (projectTypeInput == "Changes to Existing Natives") {
         projectType = "changesToExistingNatives";
       } else if (projectTypeInput == "Specification Check") {
         projectType = "specCheck";
