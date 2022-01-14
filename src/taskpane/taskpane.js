@@ -1025,17 +1025,18 @@ Office.onReady((info) => {
 
   //#region CHECKBOX SETUP ________________________________________________________________________________________
   /** When the checkbox is CHANGED */
-  $("#set-behavior").on("change", function() {
+  // $("#set-behavior").on("change", function() {
 
-    // Is this set to checked?
-    var checked = $(this).prop("checked");
+  //   // Is this set to checked?
+  //   var checked = $(this).prop("checked");
 
-    if (checked == true) { // Set the startup behavior!
-      Office.addin.setStartupBehavior(Office.StartupBehavior.load); //when document opens, references startup behavioir in manifest, which automatically opens the taskpane
-    } else { // Turn off the startup behavior!
-      Office.addin.setStartupBehavior(Office.StartupBehavior.none); //when document opens, references startup behavioir in manifest, which automatically opens the taskpane
-    }
-  })
+  //   if (checked == true) { // Set the startup behavior!
+  //     Office.addin.setStartupBehavior(Office.StartupBehavior.load); //when document opens, references startup behavioir in manifest, which automatically opens the taskpane
+  //   } else { // Turn off the startup behavior!
+  //     Office.addin.setStartupBehavior(Office.StartupBehavior.none); //when document opens, references startup behavioir in manifest, which automatically opens the taskpane
+  //   }
+  // })
+  /*
   //#endregion ----------------------------------------------------------------------------------------------------
 
 //#endregion -------------------------------------------------------------------------------------------------------
@@ -1045,7 +1046,7 @@ Office.onReady((info) => {
 //#region WATCHING FOR CHANGES ------------------------------------------------------------------------------------
 
   //#region STARTUP BEHAVIOR --------------------------------------------------------------------------------------
-  Office.onReady((info) => {
+
     console.log("Office is ready!")
     // Load on Startup
     // setStartupBehavior is **document level**
@@ -1061,6 +1062,7 @@ Office.onReady((info) => {
       console.log(returned);
     });
     */
+    Office.onReady((info) => {
       if (info.host === Office.HostType.Excel) { //If application is Excel
         document.getElementById("sideload-msg").style.display = "none"; //Don't show side-loading message
         document.getElementById("app-body").style.display = "flex"; //Keep content in taskpane flexible to scaling, I think...
