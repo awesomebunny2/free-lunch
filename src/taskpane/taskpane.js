@@ -1072,6 +1072,8 @@ Office.onReady((info) => {
 
           moveEvent = context.workbook.tables.onChanged.add(onTableChanged);
 
+          console.log("I made it!");
+
           // sortEvent = context.workbook.tables.onChanged.add(sortDate);
 
           return context.sync().then(function() { //Commits changes to document and then returns the console.log
@@ -1091,8 +1093,14 @@ Office.onReady((info) => {
   async function onTableChanged(eventArgs) { //This function will be using event arguments to collect data from the workbook
   // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
     await Excel.run(async (context) => {      
-      console.log("Fired " + pp + " times, here's the changeType:");
-      console.log(eventArgs.details);
+      // console.log("Fired " + pp + " times, here's the changeType:");
+      // console.log(eventArgs.changeType);
+      // console.log("Type of change:");
+      // console.log(eventArgs.type);
+      // console.log("The Address of the change:");
+      // console.log(eventArgs.address);
+      // console.log("Event details:");
+      // console.log(eventArgs.details);
       pp++;
 
 
