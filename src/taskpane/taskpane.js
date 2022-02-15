@@ -1074,7 +1074,7 @@ Office.onReady((info) => {
 
           console.log("I made it!");
 
-          // sortEvent = context.workbook.tables.onChanged.add(sortDate);
+         // sortEvent = context.workbook.tables.onChanged.add(sortDate);
 
           return context.sync().then(function() { //Commits changes to document and then returns the console.log
             // console.log("Event handlers have been successfully registered");
@@ -1093,14 +1093,14 @@ Office.onReady((info) => {
   async function onTableChanged(eventArgs) { //This function will be using event arguments to collect data from the workbook
   // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
     await Excel.run(async (context) => {      
-      // console.log("Fired " + pp + " times, here's the changeType:");
-      // console.log(eventArgs.changeType);
+      console.log("Fired " + pp + " times, here's the changeType:");
+      console.log(eventArgs.changeType);
       // console.log("Type of change:");
       // console.log(eventArgs.type);
-      // console.log("The Address of the change:");
-      // console.log(eventArgs.address);
-      // console.log("Event details:");
-      // console.log(eventArgs.details);
+      console.log("The Address of the change:");
+      console.log(eventArgs.address);
+      console.log("Event details:");
+      console.log(eventArgs.details);
       pp++;
 
 
@@ -1142,6 +1142,7 @@ Office.onReady((info) => {
           var changedTableRows = changedTable.rows;
           changedTableRows.load("items");
           var pickedUpColumnData = changedTable.columns.getItem("Picked Up / Started By").getDataBodyRange().load("values");
+          var proofToClientColumnData = changedTable.columns.getItem("Proof to Client").getDataBodyRange().load("values");
           var priorityColumnData = changedTable.columns.getItem("Priority").getDataBodyRange().load("values");
           
           
@@ -1290,10 +1291,6 @@ Office.onReady((info) => {
 
       await context.sync().then(function () { //loads variable values
 
-        if (changeType == "RowDeleted") {
-          return;
-        };
-
         //#region LOADED VARIABLES -------------------------------------------------------------------------------
 
           //#region WORKSHEET LEVEL COLUMN AND ROW INDEX NUMBERS -------------------------------------------------
@@ -1320,6 +1317,74 @@ Office.onReady((info) => {
             var changedColumnIndex = changedColumnIndexOG - tableStart;
 
           //#endregion -------------------------------------------------------------------------------------------
+
+          //#region LOAD COLUMN INDEXES & CELL VALUES-----------------------------------------------------------------------------
+
+            var projectTypeColumn = findColumnPosition(tableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
+            var productColumn = findColumnPosition(tableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
+            var addedColumn = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
+            var statusColumn = findColumnPosition(tableColumns, "Status"); //returns the array index number of the column that matches the name of the columnName variable
+            var artistColumn = findColumnPosition(tableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
+            var startOverrideColumn = findColumnPosition(tableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
+            var workOverrideColumn = findColumnPosition(tableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
+            var pickedUpColumn = findColumnPosition(tableColumns, "Picked Up / Started By");
+            var proofToClientColumn = findColumnPosition(tableColumns, "Proof to Client");
+            var priorityColumn = findColumnPosition(tableColumns, "Priority");
+
+            var statusCellValue = cellValue(tableColumns, rowValues, "Status");
+            var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
+            var productCellValue = cellValue(tableColumns, rowValues, "Product");
+            var projectTypeCellValue = cellValue(tableColumns, rowValues, "Project Type");
+            var addedCellValue = cellValue(tableColumns, rowValues, "Added");
+            var pickedUpCellValue = cellValue(tableColumns, rowValues, "Picked Up / Started By");
+            var proofToClientCellValue = cellValue(tableColumns, rowValues, "Proof to Client");
+            var printDateCellValue = cellValue(tableColumns, rowValues, "Print Date");
+            var groupCellValue = cellValue(tableColumns, rowValues, "Group");
+            var startCellValue = cellValue(tableColumns, rowValues, "Start Override");
+            var workCellValue = cellValue(tableColumns, rowValues, "Work Override");
+
+            var pickedUpColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Picked Up / Started By");
+            var proofToClientColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Proof to Client");
+            var productColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Product");
+            var projectTypeColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Project Type");
+            var printDateColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Print Date");
+            var groupColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Group");
+            var statusColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Status");
+            var artistColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Artist");
+            var startColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
+            var workColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
+
+            parentSheet = changedWorksheet;
+            parentTable = changedTable;
+
+          //#endregion ----------------------------------------------------------------------------------------------
+
+          //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
+
+            var listOfCompletedTables = [];
+
+            allTables.items.forEach(function (table) { //for each table in the workbook...
+              if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
+                listOfCompletedTables.push(table.name); //push the name of that table into an array
+              };
+            });
+
+            //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
+            var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
+
+          //#endregion ------------------------------------------------------------------------------------------
+
+          //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
+
+            var isUnassigned;
+
+            if (changedWorksheet.name == "Unassigned Projects") {
+              isUnassigned = true;
+            } else {
+              isUnassigned = false;
+            };
+
+          //#endregion ------------------------------------------------------------------------------------------
 
         //#endregion ---------------------------------------------------------------------------------------------
 
@@ -1383,6 +1448,14 @@ Office.onReady((info) => {
 
         //#endregion --------------------------------------------------------------------------------------------
 
+        //#region ON ROW DELETED -------------------------------------------------------------------------------------
+
+          if (changeType == "RowDeleted") {
+            return;
+          };
+
+        //#endregion -------------------------------------------------------------------------------------------------
+
         //#region ON ROW INSERTED ----------------------------------------------------------------------------------- 
           
           if (changeType == "RowInserted") {
@@ -1391,47 +1464,11 @@ Office.onReady((info) => {
 
               if (changedWorksheet.id !== validationSheet.id) {
 
-                //#region LOAD VARIABLES ---------------------------------------------------------------------------
-
-                  //#region LOADS COLUMN INDEXS & CELL VALUES ------------------------------------------------------
-
-                    var addedRangeValues = cellValue(tableColumns, rowValues, "Added");
-                    var startRangeValues = cellValue(tableColumns, rowValues, "Start Override");
-                    var workRangeValues = cellValue(tableColumns, rowValues, "Work Override");
-                    var statusColumnValue = cellValue(tableColumns, rowValues, "Status");
-                    var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
-                    var pickedUpCellValue = cellValue(tableColumns, rowValues, "Picked Up / Started By");
-                    var proofToClientCellValue = cellValue(tableColumns, rowValues, "Proof to Client");
-
-                    var statusColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Status");
-                    var artistColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Artist");
-                    var pickedUpColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Picked Up / Started By");
-                    var proofToClientColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Proof to Client");
-
-                  //#endregion -------------------------------------------------------------------------------------
-
-                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                    var listOfCompletedTables = [];
-
-                    allTables.items.forEach(function (table) { //for each table in the workbook...
-                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                        listOfCompletedTables.push(table.name); //push the name of that table into an array
-                      };
-                    });
-
-                    //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
-                    var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-                //#endregion ------------------------------------------------------------------------------------------
-
                 //#region AUTOFILL COLUMN VALUES WHEN DATA IS INSERTED -------------------------------------------------
 
                   //#region AUTOFILL ADDED COLUMN WITH CURRENT DATE/TIME ---------------------------------------------
 
-                    if (addedRangeValues == "") {
+                    if (addedCellValue == "") {
                       var newRange = currentDate(tableColumns, changedRowIndex, tableStart, changedWorksheet);
                       //return newRange;
                     } else {
@@ -1451,14 +1488,12 @@ Office.onReady((info) => {
 
                   //#region AUTOFILL OVERRIDE COLUMNS WITH 0 IF EMPTY ------------------------------------------------
 
-                    if (startRangeValues == "") {
-                      var startRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
-                      startRangeAddress.values = [["0"]];
+                    if (startCellValue == "") {
+                      startColumnAddress.values = [["0"]];
                     };
 
-                    if (workRangeValues == "") {
-                      var workRangeAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
-                      workRangeAddress.values = [["0"]];
+                    if (workCellValue == "") {
+                      workColumnAddress.values = [["0"]];
                     };
 
                   //#endregion ---------------------------------------------------------------------------------------
@@ -1475,13 +1510,13 @@ Office.onReady((info) => {
                       };
                     };
                       
-                    if (statusColumnValue == "" && includesCompletedTables == true) { //if status column value is empty and the row is inserted in a Completed table, set status column value to "Completed"
+                    if (statusCellValue == "" && includesCompletedTables == true) { //if status column value is empty and the row is inserted in a Completed table, set status column value to "Completed"
                       statusColumnAddress.values = [["Completed"]];
                     } else {
                       //console.log("No status column values were defaulted");
                     };
 
-                    if (statusColumnValue == "" && includesCompletedTables == false && changedTable.name !== "UnassignedProjects") { //if status column value is empty and the row is not inserted in a Completed Table, set status column value to "Not Working"
+                    if (statusCellValue == "" && includesCompletedTables == false && changedTable.name !== "UnassignedProjects") { //if status column value is empty and the row is not inserted in a Completed Table, set status column value to "Not Working"
                       statusColumnAddress.values = [["Not Working"]];
                     };
                   
@@ -1525,146 +1560,81 @@ Office.onReady((info) => {
 
               if (changedWorksheet.id !== validationSheet.id) {
               
-                //#region LOAD VARIABLES -------------------------------------------------------------------------------
-      
-                  //#region LOAD COLUMN INDEXES & CELL VALUES-----------------------------------------------------------------------------
+                //#region ASSIGNS THE DESTINATION TABLE VALUE ---------------------------------------------------------
 
-                    var projectTypeColumn = findColumnPosition(tableColumns, "Project Type"); //returns the array index number of the column that matches the name of the columnName variable
-                    var productColumn = findColumnPosition(tableColumns, "Product"); //returns the array index number of the column that matches the name of the columnName variable
-                    var addedColumn = findColumnPosition(tableColumns, "Added"); //returns the array index number of the column that matches the name of the columnName variable
-                    var statusColumn = findColumnPosition(tableColumns, "Status"); //returns the array index number of the column that matches the name of the columnName variable
-                    var artistColumn = findColumnPosition(tableColumns, "Artist"); //returns the array index number of the column that matches the name of the columnName variable
-                    var startOverrideColumn = findColumnPosition(tableColumns, "Start Override"); //returns the array index number of the column that matches the name of the columnName variable
-                    var workOverrideColumn = findColumnPosition(tableColumns, "Work Override"); //returns the array index number of the column that matches the name of the columnName variable
-                    var pickedUpColumn = findColumnPosition(tableColumns, "Picked Up / Started By");
-                    var proofToClientColumn = findColumnPosition(tableColumns, "Proof to Client");
-
-                    var statusCellValue = cellValue(tableColumns, rowValues, "Status");
-                    var artistCellValue = cellValue(tableColumns, rowValues, "Artist");
-                    var productCellValue = cellValue(tableColumns, rowValues, "Product");
-                    var projectTypeCellValue = cellValue(tableColumns, rowValues, "Project Type");
-                    var addedCellValue = cellValue(tableColumns, rowValues, "Added");
-                    var pickedUpCellValue = cellValue(tableColumns, rowValues, "Picked Up / Started By");
-                    var proofToClientCellValue = cellValue(tableColumns, rowValues, "Proof to Client");
-                    var printDateCellValue = cellValue(tableColumns, rowValues, "Print Date");
-                    var groupCellValue = cellValue(tableColumns, rowValues, "Group");
-
-                    var pickedUpColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Picked Up / Started By");
-                    var proofToClientColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Proof to Client");
-                    var productColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Product");
-                    var projectTypeColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Project Type");
-                    var printDateColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Print Date");
-                    var groupColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Group");
-
-                    parentSheet = changedWorksheet;
-                    parentTable = changedTable;
-
-                  //#endregion ----------------------------------------------------------------------------------------------
-
-                  //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-                    var listOfCompletedTables = [];
-
-                    allTables.items.forEach(function (table) { //for each table in the workbook...
-                      if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-                        listOfCompletedTables.push(table.name); //push the name of that table into an array
-                      };
-                    });
-
-                    //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
-                    var includesCompletedTables = listOfCompletedTables.includes(changedTable.name);
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-                  //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
-
-                    var isUnassigned;
-
-                    if (changedWorksheet.name == "Unassigned Projects") {
-                      isUnassigned = true;
-                    } else {
-                      isUnassigned = false;
-                    };
-
-                  //#endregion ------------------------------------------------------------------------------------------
-
-                  //#region ASSIGNS THE DESTINATION TABLE VALUE ---------------------------------------------------------
-
-                    if (artistCellValue == "Unassigned" && isUnassigned == false) {
-                      destinationTable = unassignedTable;
-                      destinationHeader = unassignedHeader;
-                    } else if (artistCellValue == "Matt") {
-                      destinationTable = mattTable;
-                      destinationHeader = mattHeader;
-                    } else if (artistCellValue == "Alaina") {
-                      destinationTable = alainaTable;
-                      destinationHeader = alainaHeader;
-                    } else if (artistCellValue == "Berto") {
-                      destinationTable = bertoTable;
-                      destinationHeader = bertoHeader;
-                    } else if (artistCellValue == "Bre B.") {
-                      destinationTable = breBTable;
-                      destinationHeader = breBHeader;
-                    } else if (artistCellValue == "Christian") {
-                      destinationTable = christianTable;
-                      destinationHeader = christianHeader;
-                    } else if (artistCellValue == "Emily") {
-                      destinationTable = emilyTable;
-                      destinationHeader = emilyHeader;
-                    } else if (artistCellValue == "Ian") {
-                      destinationTable = ianTable;
-                      destinationHeader = ianHeader;
-                    } else if (artistCellValue == "Jeff") {
-                      destinationTable = jeffTable;
-                      destinationHeader = jeffHeader;
-                    } else if (artistCellValue == "Josh") {
-                      destinationTable = joshTable;
-                      destinationHeader = joshHeader;
-                    } else if (artistCellValue == "Kristen") {
-                      destinationTable = kristenTable;
-                      destinationHeader = kristenHeader;
-                    } else if (artistCellValue == "Robin") {
-                      destinationTable = robinTable;
-                      destinationHeader = robinHeader;
-                    } else if (artistCellValue == "Luke") {
-                      destinationTable = lukeTable;
-                      destinationHeader = lukeHeader;
-                    } else if (artistCellValue == "Lisa") {
-                      destinationTable = lisaTable;
-                      destinationHeader = lisaHeader;
-                    } else if (artistCellValue == "Luis") {
-                      destinationTable = luisTable;
-                      destinationHeader = luisHeader;
-                    } else if (artistCellValue == "Peter") {
-                      destinationTable = peterTable;
-                      destinationHeader = peterHeader;
-                    } else if (artistCellValue == "Rita") {
-                      destinationTable = ritaTable;
-                      destinationHeader = ritaHeader;
-                    } else if (artistCellValue == "Ethan") {
-                      destinationTable = ethanTable;
-                      destinationHeader = ethanHeader;
-                    } else if (artistCellValue == "Bre Z.") {
-                      destinationTable = breZTable;
-                      destinationHeader = breZHeader;
-                    } else if (artistCellValue == "Joe") {
-                      destinationTable = joeTable;
-                      destinationHeader = joeHeader;
-                    } else if (artistCellValue == "Jordan") {
-                      destinationTable = jordanTable;
-                      destinationHeader = jordanHeader;
-                    } else if (artistCellValue == "Hazel-Rah") {
-                      destinationTable = hazelTable;
-                      destinationHeader = hazelHeader;
-                    } else if (artistCellValue == "Todd") {
-                      destinationTable = toddTable;
-                      destinationHeader = toddHeader;
-                    } else {
-                      destinationTable = "null";
-                      destinationHeader = "null";
-                    };
-
-                  //#endregion ----------------------------------------------------------------------------------------------
+                  if (artistCellValue == "Unassigned" && isUnassigned == false) {
+                    destinationTable = unassignedTable;
+                    destinationHeader = unassignedHeader;
+                  } else if (artistCellValue == "Matt") {
+                    destinationTable = mattTable;
+                    destinationHeader = mattHeader;
+                  } else if (artistCellValue == "Alaina") {
+                    destinationTable = alainaTable;
+                    destinationHeader = alainaHeader;
+                  } else if (artistCellValue == "Berto") {
+                    destinationTable = bertoTable;
+                    destinationHeader = bertoHeader;
+                  } else if (artistCellValue == "Bre B.") {
+                    destinationTable = breBTable;
+                    destinationHeader = breBHeader;
+                  } else if (artistCellValue == "Christian") {
+                    destinationTable = christianTable;
+                    destinationHeader = christianHeader;
+                  } else if (artistCellValue == "Emily") {
+                    destinationTable = emilyTable;
+                    destinationHeader = emilyHeader;
+                  } else if (artistCellValue == "Ian") {
+                    destinationTable = ianTable;
+                    destinationHeader = ianHeader;
+                  } else if (artistCellValue == "Jeff") {
+                    destinationTable = jeffTable;
+                    destinationHeader = jeffHeader;
+                  } else if (artistCellValue == "Josh") {
+                    destinationTable = joshTable;
+                    destinationHeader = joshHeader;
+                  } else if (artistCellValue == "Kristen") {
+                    destinationTable = kristenTable;
+                    destinationHeader = kristenHeader;
+                  } else if (artistCellValue == "Robin") {
+                    destinationTable = robinTable;
+                    destinationHeader = robinHeader;
+                  } else if (artistCellValue == "Luke") {
+                    destinationTable = lukeTable;
+                    destinationHeader = lukeHeader;
+                  } else if (artistCellValue == "Lisa") {
+                    destinationTable = lisaTable;
+                    destinationHeader = lisaHeader;
+                  } else if (artistCellValue == "Luis") {
+                    destinationTable = luisTable;
+                    destinationHeader = luisHeader;
+                  } else if (artistCellValue == "Peter") {
+                    destinationTable = peterTable;
+                    destinationHeader = peterHeader;
+                  } else if (artistCellValue == "Rita") {
+                    destinationTable = ritaTable;
+                    destinationHeader = ritaHeader;
+                  } else if (artistCellValue == "Ethan") {
+                    destinationTable = ethanTable;
+                    destinationHeader = ethanHeader;
+                  } else if (artistCellValue == "Bre Z.") {
+                    destinationTable = breZTable;
+                    destinationHeader = breZHeader;
+                  } else if (artistCellValue == "Joe") {
+                    destinationTable = joeTable;
+                    destinationHeader = joeHeader;
+                  } else if (artistCellValue == "Jordan") {
+                    destinationTable = jordanTable;
+                    destinationHeader = jordanHeader;
+                  } else if (artistCellValue == "Hazel-Rah") {
+                    destinationTable = hazelTable;
+                    destinationHeader = hazelHeader;
+                  } else if (artistCellValue == "Todd") {
+                    destinationTable = toddTable;
+                    destinationHeader = toddHeader;
+                  } else {
+                    destinationTable = "null";
+                    destinationHeader = "null";
+                  };
 
                 //#endregion ----------------------------------------------------------------------------------------------
                           
@@ -1822,21 +1792,24 @@ Office.onReady((info) => {
 
                   //#region GENERATE PRIORITY NUMBER ----------------------------------------------------------------------
                   
-                    var pickedUpColumnValues = pickedUpColumnData.values;
-                    var dupPickedUpColumnValues = JSON.parse(JSON.stringify(pickedUpColumnValues));
+                    // if (productCellValue == "" || projectTypeCellValue == "" || addedCellValue == "" || pickedUpCellValue == ("NO PRODUCT / PROJECT TYPE" || "") || proofToClientCellValue == ("NO PRODUCT / PROJECT TYPE" || "")) {
 
-                    var arrayOfValues = [];
-                    pushFromNestedArrayToNewArray(pickedUpColumnValues, arrayOfValues);
+                    //   var priorityAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Priority");
 
-                    var sortedArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
-                    sortedArrayOfValues.sort();
+                    //   priorityAddress.values = [["NA"]];
 
-                    for (var n = 0; n < sortedArrayOfValues.length; n++) {
-                      var index = arrayOfValues.indexOf(sortedArrayOfValues[n]);
-                      dupPickedUpColumnValues[index][0] = (n + 1);
-                    }
+                    //   console.log("dart");
 
-                    priorityColumnData.values = dupPickedUpColumnValues;
+                    //   return;
+                    // };
+
+                    if (changedColumnIndex == pickedUpColumn || changedColumnIndex == proofToClientColumn) {
+
+                      generatePriorityNumber(changedTable, pickedUpColumnData, proofToClientColumnData, priorityColumnData);
+
+                      console.log("priority numbers were assigned");
+                     
+                    };
 
                   //#endregion --------------------------------------------------------------------------------------------
                   
@@ -1927,25 +1900,16 @@ Office.onReady((info) => {
 
                 //#region AUTO SORT ---------------------------------------------------------------------------------------
 
-                  // if (productCellValue !== "" && projectTypeCellValue !== "" && addedCellValue !== "" && pickedUpCellValue !== "" && proofToClientCellValue !== "") {
+                  //if (productCellValue !== "" && projectTypeCellValue !== "" && addedCellValue !== "" && pickedUpCellValue !== ("NO PRODUCT / PROJECT TYPE" || "") && proofToClientCellValue !== ("NO PRODUCT / PROJECT TYPE" || "")) {
 
-                  //   var priorityColumn = findColumnPosition(tableColumns, "Priority");
-              
-                  //   // Queue a command to sort data by the fourth column of the table (descending)
-                  //   var sortRange = changedTable.getDataBodyRange();
-              
-                  //   sortRange.sort.apply([
-                  //       {
-                  //           key: priorityColumn,
-                  //           ascending: true,
-                  //       },
-                  //   ]);
-              
-                  //   // Sync to run the queued command in Excel
-              
-                  //   return context.sync();  
+
+                    if (changedColumnIndex == priorityColumn) {
+
+                      autoSort(changedTable, priorityColumn);
+
+                      console.log("sorting function was fired!");
                   
-                // };
+                    };
 
                 //#endregion -------------------------------------------------------------------------------------------------
 
@@ -1969,10 +1933,6 @@ Office.onReady((info) => {
         console.log("Promise Rejected");
       });
     });
-
-
-
-
   };
 
 //#endregion ------------------------------------------------------------------------------------------------------
@@ -1981,97 +1941,250 @@ Office.onReady((info) => {
 
 //#region SORTING -------------------------------------------------------------------------------------------------
 
+  var pp = 0; 
 
-      // .catch(function (error) {
-      //   console.log('Error: ' + error);
-      //   if (error instanceof OfficeExtension.Error) {
-      //       console.log('Debug info: ' + JSON.stringify(error.debugInfo));
-      //   };
-      //   console.log("Promise Rejected");
-      // });
+  async function sortDate(eventArgs) { //This function will be using event arguments to collect data from the workbook
+
+    await Excel.run(async (context) => {  
+
+      console.log("Fired " + pp + " times, here's the changeType:");
+      console.log(eventArgs.changeType);
+      pp++
+
+      //#region EVENT VARIABLES -----------------------------------------------------------------------------------
+
+        //#region EVENT ARGS --------------------------------------------------------------------------------------
+
+          var address = eventArgs.address; //Loads the cell's address where the event took place
+          var changeType = eventArgs.changeType;
+
+        //#endregion ----------------------------------------------------------------------------------------------
+
+        //#region WORKSHEET LEVEL VARIABLES -----------------------------------------------------------------------
+
+          var allWorksheets = context.workbook.worksheets;
+          allWorksheets.load("items/name");
+          var changedWorksheet = context.workbook.worksheets.getItem(eventArgs.worksheetId).load("name");
+          var changedAddress = changedWorksheet.getRange(address);
+          changedAddress.load("columnIndex");
+          changedAddress.load("rowIndex");
+          var validationSheet = context.workbook.worksheets.getItem("Validation");
+
+        //#endregion ----------------------------------------------------------------------------------------------
+
+        //#region TABLE LEVEL VARIABLES ---------------------------------------------------------------------------
+
+          var allTables = context.workbook.tables;
+          allTables.load("items/name");
+          var changedTable = context.workbook.tables.getItem(eventArgs.tableId).load("name"); //Returns tableId of the table where the event occured
+          var changedTableColumns = changedTable.columns
+          changedTableColumns.load("items/name");
+          var changedTableRows = changedTable.rows;
+          changedTableRows.load("items");
+          var startOfTable = changedTable.getRange().load("columnIndex");
+          var pickedUpColumnData = changedTable.columns.getItem("Picked Up / Started By").getDataBodyRange().load("values");
+          var proofToClientColumnData = changedTable.columns.getItem("Proof to Client").getDataBodyRange().load("values");
+          var priorityColumnData = changedTable.columns.getItem("Priority").getDataBodyRange().load("values");
+
+        //#endregion ----------------------------------------------------------------------------------------------
+
+      //#endregion ------------------------------------------------------------------------------------------------    
+
+      await context.sync().then(function () { //loads variable values
+
+        // if (changeType == "RowDeleted") {
+        //   return;
+        // };
+
+        // if (changeType == "RangeEdited" && eventArgs.details !== undefined ) {
+
+          if (changedWorksheet.id !== validationSheet.id) {
+
+            var changedColumnIndexOG = changedAddress.columnIndex;
+            var tableColumns = changedTableColumns.items;
+            var tableRows = changedTableRows.items;
+            var changedRowIndex = changedAddress.rowIndex;
+            var changedRowTableIndex = changedRowIndex - 1; //adjusts index number for table level (-1 to skip header row)
+            var rowValues = tableRows[changedRowTableIndex].values; //loads the values of the changed row in the changed table
+            var tableStart = startOfTable.columnIndex;
+            var changedColumnIndex = changedColumnIndexOG - tableStart;
+
+            var productCellValue = cellValue(tableColumns, rowValues, "Product");
+            var projectTypeCellValue = cellValue(tableColumns, rowValues, "Project Type");
+            var addedCellValue = cellValue(tableColumns, rowValues, "Added");
+            var pickedUpCellValue = cellValue(tableColumns, rowValues, "Picked Up / Started By");
+            var proofToClientCellValue = cellValue(tableColumns, rowValues, "Proof to Client");
+
+            //#region GENERATE PRIORITY NUMBER ----------------------------------------------------------------------
+                  
+            if (productCellValue == "" || projectTypeCellValue == "" || addedCellValue == "" || pickedUpCellValue == ("NO PRODUCT / PROJECT TYPE" || "") || proofToClientCellValue == ("NO PRODUCT / PROJECT TYPE" || "")) {
+
+              var priorityAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Priority");
+
+              priorityAddress.values = [["NA"]];
+
+              console.log("dart");
+
+              return;
+            };
+
+            if (changedTable.name == "UnassignedProjects") {
+
+              var pickedUpColumnValues = pickedUpColumnData.values;
+              var dupPickedUpColumnValues = JSON.parse(JSON.stringify(pickedUpColumnValues));
+
+              var arrayOfValues = [];
+              pushFromNestedArrayToNewArray(pickedUpColumnValues, arrayOfValues);
+
+              var sortedArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
+              sortedArrayOfValues.sort();
+
+              for (var n = 0; n < sortedArrayOfValues.length; n++) {
+                var index = arrayOfValues.indexOf(sortedArrayOfValues[n]);
+                if (dupPickedUpColumnValues[index][0] !== "NA") {
+                  dupPickedUpColumnValues[index][0] = (n + 1);
+                } else {
+                  dupPickedUpColumnValues[index][0] = "NA";
+                };
+              };
+
+              priorityColumnData.values = dupPickedUpColumnValues;
+
+            } else {
+
+              var proofToClientColumnValues = proofToClientColumnData.values;
+              var dupProofToClientColumnValues = JSON.parse(JSON.stringify(proofToClientColumnValues));
+
+              var arrayOfValues = [];
+              pushFromNestedArrayToNewArray(proofToClientColumnValues, arrayOfValues);
+
+              var sortedArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
+              sortedArrayOfValues.sort();
+
+              for (var n = 0; n < sortedArrayOfValues.length; n++) {
+                var index = arrayOfValues.indexOf(sortedArrayOfValues[n]);
+                if (dupPickedUpColumnValues[index][0] !== "NA") {
+                  dupProofToClientColumnValues[index][0] = (n + 1);
+                } else {
+                  dupPickedUpColumnValues[index][0] = "NA";
+                };
+              };
+
+              priorityColumnData.values = dupProofToClientColumnValues;
+
+            };
+
+          //#endregion --------------------------------------------------------------------------------------------
+
+            //if (productCellValue !== "" && projectTypeCellValue !== "" && addedCellValue !== "" && pickedUpCellValue !== ("NO PRODUCT / PROJECT TYPE" || "") && proofToClientCellValue !== ("NO PRODUCT / PROJECT TYPE" || "")) {
+
+              var priorityColumn = findColumnPosition(tableColumns, "Priority");
+        
+              // Queue a command to sort data by the fourth column of the table (descending)
+              var sortRange = changedTable.getDataBodyRange();
+        
+              sortRange.sort.apply([
+                {
+                  key: priorityColumn,
+                  ascending: true,
+                },
+              ]);
+        
+              // Sync to run the queued command in Excel
+        
+              //return context.sync();  
+                
+            //};
+          };
+        //};
+      });
+    });
+  };
+
+//#endregion ------------------------------------------------------------------------------------------------------
 
   //#region SORT BY DATE ------------------------------------------------------------------------------------------
-    async function sortDate(eventArgs) { //This function will be using event arguments to collect data from the workbook
-      // console.log("SORT FUNCTION FIRED!");
-      // console.log(eventArgs);
+    // async function sortDate(eventArgs) { //This function will be using event arguments to collect data from the workbook
+    //   // console.log("SORT FUNCTION FIRED!");
+    //   // console.log(eventArgs);
 
-      var theChange = eventArgs.changeType; //Kind of change that was made
-      var theDetails = eventArgs.details;
+    //   var theChange = eventArgs.changeType; //Kind of change that was made
+    //   var theDetails = eventArgs.details;
 
-      // console.log("args ");
+    //   // console.log("args ");
 
       
-      if (theChange == "RangeEdited" && (theDetails == undefined || theDetails.valueTypeAfter == "String")) { //&& theDetails == undefined) {
-        console.log("The sorting event has been initiated!!"); //Prevents an event from being triggered when a new row is inserted into the other sheet, thus causing duplicate runs
+    //   if (theChange == "RangeEdited" && (theDetails == undefined || theDetails.valueTypeAfter == "String")) { //&& theDetails == undefined) {
+    //     console.log("The sorting event has been initiated!!"); //Prevents an event from being triggered when a new row is inserted into the other sheet, thus causing duplicate runs
 
-        //#region SORTING VARIABLES ---------------------------------------------------------------------------------
-        Excel.run(async context => {
-          var changedTable = context.workbook.tables.getItem(eventArgs.tableId); //Returns tableId of the table where the event occured
-          var tableRange = changedTable.getRange(); //Gets the range of the changed table
-          var sortHeader = tableRange.find(sortColumn, {}); //Gets the range of the entire sortColumn (the "Date" column) from the changed table
-          sortHeader.load("columnIndex");
-          sortHeader.load("addressLocal")
-          // var sortTag = ["Urgent", "Semi-Urgent", "Not Urgent", "Eventual", "Downtime"];
-          // const list = [
-          //   { Tag: 'Urgent'},
-          //   { Tag: 'Semi-Urgent'},
-          //   { Tag: 'Not Urgent'},
-          //   { Tag: 'Eventual'},
-          //   { Tag: 'Downtime'},
-          // ]
-          //#endregion --------------------------------------------------------------------------------------------------
+    //     //#region SORTING VARIABLES ---------------------------------------------------------------------------------
+    //     Excel.run(async context => {
+    //       var changedTable = context.workbook.tables.getItem(eventArgs.tableId); //Returns tableId of the table where the event occured
+    //       var tableRange = changedTable.getRange(); //Gets the range of the changed table
+    //       var sortHeader = tableRange.find(sortColumn, {}); //Gets the range of the entire sortColumn (the "Date" column) from the changed table
+    //       sortHeader.load("columnIndex");
+    //       sortHeader.load("addressLocal")
+    //       // var sortTag = ["Urgent", "Semi-Urgent", "Not Urgent", "Eventual", "Downtime"];
+    //       // const list = [
+    //       //   { Tag: 'Urgent'},
+    //       //   { Tag: 'Semi-Urgent'},
+    //       //   { Tag: 'Not Urgent'},
+    //       //   { Tag: 'Eventual'},
+    //       //   { Tag: 'Downtime'},
+    //       // ]
+    //       //#endregion --------------------------------------------------------------------------------------------------
 
-        //#region SORTING CONDITIONS --------------------------------------------------------------------------------
-          return context.sync().then(function() {
-            console.log("Sync completed...Ready to sort")
-            // console.log(sortHeader.addressLocal);
-            // console.log(list);
+    //     //#region SORTING CONDITIONS --------------------------------------------------------------------------------
+    //       return context.sync().then(function() {
+    //         console.log("Sync completed...Ready to sort")
+    //         // console.log(sortHeader.addressLocal);
+    //         // console.log(list);
 
-            // if (sortHeader.columnIndex == 14) {
-            //   list.sort((a, b) => (a.Tag < b.Tag) ? 1 : -1);
-            //   console.log(list);
-            // }
+    //         // if (sortHeader.columnIndex == 14) {
+    //         //   list.sort((a, b) => (a.Tag < b.Tag) ? 1 : -1);
+    //         //   console.log(list);
+    //         // }
 
-            tableRange.sort.apply(
-              [
-                { //list of conditions to sort on
-                  key: sortHeader.columnIndex, //sorts based on data in Date column
-                  sortOn: Excel.SortOn.value, //sorts based on cell vlaues
-                  ascending: true
-                  // subField: Excel.subField, //sorts based on cell vlaues
-                  // subField: String(sortTag)
-                }
-              ],
-              false, //will not impact string ordering
-              true, //table has headers
-              Excel.SortOrientation.rows //sorts the rows based on previous conditions
-            );
+    //         tableRange.sort.apply(
+    //           [
+    //             { //list of conditions to sort on
+    //               key: sortHeader.columnIndex, //sorts based on data in Date column
+    //               sortOn: Excel.SortOn.value, //sorts based on cell vlaues
+    //               ascending: true
+    //               // subField: Excel.subField, //sorts based on cell vlaues
+    //               // subField: String(sortTag)
+    //             }
+    //           ],
+    //           false, //will not impact string ordering
+    //           true, //table has headers
+    //           Excel.SortOrientation.rows //sorts the rows based on previous conditions
+    //         );
 
-            // const myArray = [1, 2, 3, 4, 5, 6];
-            // let filteredArray = list.filter((x) => {
-            //   return x % 2 === 0;
-            // });
+    //         // const myArray = [1, 2, 3, 4, 5, 6];
+    //         // let filteredArray = list.filter((x) => {
+    //         //   return x % 2 === 0;
+    //         // });
             
 
         
 
-            // Queue a command to apply a filter on the Category column
-            // var filter = changedTable.columns.getItem("Tags").filter;
-            // filter.apply({
-            //     filterOn: Excel.FilterOn.values,
-            //     values: ["Urgent", "Semi-Urgent", "Not Urgent", "Eventual", "Downtime"]
-            // });
+    //         // Queue a command to apply a filter on the Category column
+    //         // var filter = changedTable.columns.getItem("Tags").filter;
+    //         // filter.apply({
+    //         //     filterOn: Excel.FilterOn.values,
+    //         //     values: ["Urgent", "Semi-Urgent", "Not Urgent", "Eventual", "Downtime"]
+    //         // });
 
 
 
-            console.log("Sorting is completed.")
-          }); 
-          //#endregion --------------------------------------------------------------------------------------------------
+    //         console.log("Sorting is completed.")
+    //       }); 
+    //       //#endregion --------------------------------------------------------------------------------------------------
 
-        }).catch(tryCatch); // CATCH EXCEL.RUN
+    //     }).catch(tryCatch); // CATCH EXCEL.RUN
       
-      }; // END IF  
-    } // END SORTDATE()
+    //   }; // END IF  
+    // } // END SORTDATE()
   //#endregion ----------------------------------------------------------------------------------------------------
 
 //#endregion ------------------------------------------------------------------------------------------------------
@@ -2205,6 +2318,95 @@ Office.onReady((info) => {
   };
 
   //#endregion -------------------------------------------------------------------------------------------
+
+
+  //#region GENERATE PRIORITY FUNCTION -------------------------------------------------------------------
+
+    /**
+     * Prioritizes the changed table by earilest turn around time, written to the priority column
+     * @param {Object} changedTable the changed table
+     * @param {Array} columnOneData an array of arrays containing all the data in the first column being used to sort data (the picked up / started by column in most cases) 
+     * @param {Array} columnTwoData an array of arrays containing all the data in the second column being used to sort data (the proof to client column in most cases)
+     * @param {Range} priorityColumnRange the range of the priority column that the priority numbers are going to be written to 
+     */
+    function generatePriorityNumber(changedTable, columnOneData, columnTwoData, priorityColumnRange) {
+                          
+      if (changedTable.name == "UnassignedProjects") {
+
+        var columnOneDataValues = columnOneData.values;
+        var dupColumnOneDataValues = JSON.parse(JSON.stringify(columnOneDataValues));
+
+        var arrayOfValues = [];
+        pushFromNestedArrayToNewArray(columnOneDataValues, arrayOfValues);
+
+        var sortedArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
+        sortedArrayOfValues.sort();
+
+        for (var n = 0; n < sortedArrayOfValues.length; n++) {
+          var index = arrayOfValues.indexOf(sortedArrayOfValues[n]);
+          if (dupColumnOneDataValues[index][0] !== "NA") {
+            dupColumnOneDataValues[index][0] = (n + 1);
+          } else {
+            dupColumnOneDataValues[index][0] = "NA";
+          };
+        };
+
+        priorityColumnRange.values = dupColumnOneDataValues;
+
+      } else {
+
+        var columnTwoDataValues = columnTwoData.values;
+        var dupColumnTwoDataValues = JSON.parse(JSON.stringify(columnTwoDataValues));
+
+        var arrayOfValues = [];
+        pushFromNestedArrayToNewArray(columnTwoDataValues, arrayOfValues);
+
+        var sortedArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
+        sortedArrayOfValues.sort();
+
+        for (var n = 0; n < sortedArrayOfValues.length; n++) {
+          var index = arrayOfValues.indexOf(sortedArrayOfValues[n]);
+          if (dupColumnTwoDataValues[index][0] !== "NA") {
+            dupColumnTwoDataValues[index][0] = (n + 1);
+          } else {
+            dupColumnTwoDataValues[index][0] = "NA";
+          };
+        };
+
+        priorityColumnRange.values = dupColumnTwoDataValues;
+
+      };
+
+    };
+
+  //#endregion -----------------------------------------------------------------------------------------
+
+  //#region AUTO SORT FUNCTION -------------------------------------------------------------------------
+
+    /**
+     * Sorts the data in the changedTable by the data in the sortColumn
+     * @param {Object} changedTable the changed table
+     * @param {Number} sortColumn index of column being used to sort the data
+     */
+    function autoSort(changedTable, sortColumn) {
+
+      // Queue a command to sort data by the fourth column of the table (descending)
+      var sortRange = changedTable.getDataBodyRange();
+
+      sortRange.sort.apply([
+        {
+          key: sortColumn,
+          ascending: true,
+        },
+      ]);
+
+      // Sync to run the queued command in Excel
+
+      //return context.sync();
+
+    };
+
+  //#endregion ------------------------------------------------------------------------------------------
 
 
   //#region CHECK IF TWO ARRAYS ARE EQUAL ----------------------------------------------------------------
