@@ -1308,6 +1308,7 @@ Office.onReady((info) => {
             var myRow = changedTableRows.getItemAt(changedRowTableIndex); //loads the changed row in the changed table as an object
             //var oldRowValues = myRow.values;
             var rowValues = tableRows[changedRowTableIndex].values; //loads the values of the changed row in the changed table
+            var rowRange = changedTableRows.getItemAt(changedRowTableIndex).getRange();
 
           //#endregion -------------------------------------------------------------------------------------------
 
@@ -1646,7 +1647,7 @@ Office.onReady((info) => {
 
                 //#endregion ----------------------------------------------------------------------------------------------
                           
-                //#region CLEAN UP TEXT FORMATTING ----------------------------------------------------------------------
+                //#region CONDITIONAL FORMATTING ----------------------------------------------------------------------
 
                   //changedAddress.format.font.name = "Calibri";
                   //changedAddress.format.font.size = 12;
@@ -1663,6 +1664,20 @@ Office.onReady((info) => {
 
                   var printDate = Math.trunc(printDateCellValue);
                   var currentDateAbsolute = Math.trunc(toSerial);
+
+                  if (pickedUpCellValue == "NO PRODUCT / PROJECT TYPE" || proofToClientCellValue == "NO PRODUCT / PROJECT TYPE") {
+
+                    rowRange.format.fill.color = "FFC5BB";
+                    pickedUpColumnAddress.format.font.bold = true;
+                    proofToClientColumnAddress.format.font.bold = true;
+
+                  } else {
+
+                    rowRange.format.fill.clear();
+                    pickedUpColumnAddress.format.font.bold = false;
+                    proofToClientColumnAddress.format.font.bold = false;
+
+                  };
 
                   //var appendGroup = groupCellValue + "!";
 
