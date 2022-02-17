@@ -1353,6 +1353,7 @@ Office.onReady((info) => {
             var artistColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Artist");
             var startColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Start Override");
             var workColumnAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Work Override");
+            var priorityAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Priority");
 
             parentSheet = changedWorksheet;
             parentTable = changedTable;
@@ -1750,9 +1751,6 @@ Office.onReady((info) => {
 
                   };
 
-
-
-
                 //#endregion --------------------------------------------------------------------------------------------
                     
                 //#region DO FUNCTIONS ----------------------------------------------------------------------------------
@@ -1799,18 +1797,33 @@ Office.onReady((info) => {
 
                   //#region GENERATE PRIORITY NUMBER ----------------------------------------------------------------------
                   
-                    // if (productCellValue == "" || projectTypeCellValue == "" || addedCellValue == "" || pickedUpCellValue == ("NO PRODUCT / PROJECT TYPE" || "") || proofToClientCellValue == ("NO PRODUCT / PROJECT TYPE" || "")) {
+                    // console.log("The Address of the change:");
+                    // console.log(eventArgs.address);
+                    // console.log("Event details:");
+                    // console.log(eventArgs.details);
 
-                    //   var priorityAddress = cellAddress(tableColumns, changedRowIndex, tableStart, changedWorksheet, "Priority");
+                    // var missingValue = false;
+                  
+                    // if (changedColumnIndex !== priorityColumn) {
 
-                    //   priorityAddress.values = [["NA"]];
+                    //   if (productCellValue == "" || projectTypeCellValue == "" || addedCellValue == "" || pickedUpCellValue == ("NO PRODUCT / PROJECT TYPE" || "") || proofToClientCellValue == ("NO PRODUCT / PROJECT TYPE" || "")) {
 
-                    //   console.log("dart");
+                    //     //priorityAddress.values = [["NA"]];
 
-                    //   return;
+                    //     missingValue = true;
+
+                    //     //console.log("Priority value of changed row was set to NA");
+
+                    //     //return;
+                    //   };
                     // };
 
                     if (changedColumnIndex == pickedUpColumn || changedColumnIndex == proofToClientColumn) {
+
+                      if (includesCompletedTables == true) {
+                        priorityAddress.values = [["NA"]];
+                        return;
+                      };
 
                       generatePriorityNumber(changedTable, pickedUpColumnData, proofToClientColumnData, priorityColumnData);
 
@@ -1837,7 +1850,6 @@ Office.onReady((info) => {
                         };
 
                       };
-                    
 
                     //#endregion ---------------------------------------------------------------------------------------------
 
@@ -1909,13 +1921,15 @@ Office.onReady((info) => {
 
                   //if (productCellValue !== "" && projectTypeCellValue !== "" && addedCellValue !== "" && pickedUpCellValue !== ("NO PRODUCT / PROJECT TYPE" || "") && proofToClientCellValue !== ("NO PRODUCT / PROJECT TYPE" || "")) {
 
+                    if (includesCompletedTables == false) {
 
-                    if (changedColumnIndex == priorityColumn) {
+                      if (changedColumnIndex == priorityColumn) {
 
-                      autoSort(changedTable, priorityColumn);
+                        autoSort(changedTable, priorityColumn);
 
-                      console.log("sorting function was fired!");
-                  
+                        console.log("sorting function was fired!");
+                    
+                      };
                     };
 
                 //#endregion -------------------------------------------------------------------------------------------------
@@ -2201,8 +2215,6 @@ Office.onReady((info) => {
 
 //#region AUTOFILL FUNCTIONS -------------------------------------------------------------------------------------
 
-
-
   //#region GET CELL ADDRESS -------------------------------------------------------------------------------------
 
     /**
@@ -2255,7 +2267,6 @@ Office.onReady((info) => {
 
   //#endregion ------------------------------------------------------------------------------------------------
 
-
   //#region CURRENT DATE & TIME IN ADDED COLUMN -------------------------------------------------------------------
 
     /**
@@ -2280,7 +2291,6 @@ Office.onReady((info) => {
 
   //#endregion ----------------------------------------------------------------------------------------------------
 
-
   //#region RETRIVE CELL VALUE -------------------------------------------------------------------------
 
   /**
@@ -2301,7 +2311,6 @@ Office.onReady((info) => {
   };
 
   //#endregion -----------------------------------------------------------------------------------------
-
 
   //#region FIND COLUMN POSITION -----------------------------------------------------------------------
   /**
@@ -2327,7 +2336,6 @@ Office.onReady((info) => {
 
   //#endregion -------------------------------------------------------------------------------------------
 
-
   //#region GENERATE PRIORITY FUNCTION -------------------------------------------------------------------
 
     /**
@@ -2347,17 +2355,61 @@ Office.onReady((info) => {
         var arrayOfValues = [];
         pushFromNestedArrayToNewArray(columnOneDataValues, arrayOfValues);
 
+        var q = 1;
+        arrayOfValues.forEach((element, index) => {
+          if(element === "NO PRODUCT / PROJECT TYPE") {
+            arrayOfValues[index] = "NA" + q;
+            q++
+          };
+        });
+
+        //var dupArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
+
+
+        // var missingValuesArray = [];
+
+        // var value = "NO PRODUCT / PROJECT TYPE";
+ 
+        // var newArrayOfValues = arrayOfValues.filter(function(x) {
+        //   return x !== value;
+        // });
+
+        // if (arrayOfValues.includes("NO PRODUCT / PROJECT TYPE")) {
+
+        //   for (var n = 0; n < arrayOfValues.length; n++) {
+        //     //var index = arrayOfValues.indexOf(n);
+        //     if (arrayOfValues[n] == "NO PRODUCT / PROJECT TYPE") {
+        //       missingValuesArray.push(arrayOfValues[n]);
+        //       // dupArrayOfValues[index] = "Done";
+        //       // arrayOfValues.splice(index, 1);
+        //     };
+        //   };
+        // };
+
         var sortedArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
         sortedArrayOfValues.sort();
 
         for (var n = 0; n < sortedArrayOfValues.length; n++) {
           var index = arrayOfValues.indexOf(sortedArrayOfValues[n]);
-          if (dupColumnOneDataValues[index][0] !== "NA") {
-            dupColumnOneDataValues[index][0] = (n + 1);
-          } else {
-            dupColumnOneDataValues[index][0] = "NA";
-          };
+          dupColumnOneDataValues[index][0] = (n + 1);
+
+          // if (index == changedRowTableIndex && missingValue == true) {
+          //   dupColumnOneDataValues[index][0] = "NA";
+          // } else {
+          //   dupColumnOneDataValues[index][0] = (n + 1);
+          // };
+          // if (dupColumnOneDataValues[index][0] !== "NA") {
+          //   dupColumnOneDataValues[index][0] = (n + 1);
+          // };
         };
+
+        // if (missingValuesArray !== undefined || missingValuesArray.length !== 0) {
+        //   for (var m = 0; m < missingValuesArray.length; m++) {
+        //     missingValuesArray[m] = "NA";
+        //     var newIndex = dupColumnTwoDataValues.indexOf("NO PRODUCT / PROJECT TYPE");
+        //     dupColumnOneDataValues[newIndex][0] = missingValuesArray[m];
+        //   };
+        // };
 
         priorityColumnRange.values = dupColumnOneDataValues;
 
@@ -2369,17 +2421,62 @@ Office.onReady((info) => {
         var arrayOfValues = [];
         pushFromNestedArrayToNewArray(columnTwoDataValues, arrayOfValues);
 
+        var q = 1;
+        arrayOfValues.forEach((element, index) => {
+          if(element === "NO PRODUCT / PROJECT TYPE") {
+            arrayOfValues[index] = "NA" + q;
+            q++
+          };
+        });
+
+        // var missingValuesArray = [];
+
+        // var value = "NO PRODUCT / PROJECT TYPE";
+ 
+        // var newArrayOfValues = arrayOfValues.filter(function(x) {
+        //   return x !== value;
+        // });
+
+        // if (arrayOfValues.includes("NO PRODUCT / PROJECT TYPE")) {
+
+        //   for (var n = 0; n < arrayOfValues.length; n++) {
+        //     //var index = arrayOfValues.indexOf(n);
+        //     if (arrayOfValues[n] == "NO PRODUCT / PROJECT TYPE") {
+        //       missingValuesArray.push(arrayOfValues[n]);
+        //       // dupArrayOfValues[index] = "Done";
+        //       // arrayOfValues.splice(index, 1);
+        //     };
+        //   };
+        // };
+
         var sortedArrayOfValues = JSON.parse(JSON.stringify(arrayOfValues));
         sortedArrayOfValues.sort();
 
+      
+
         for (var n = 0; n < sortedArrayOfValues.length; n++) {
           var index = arrayOfValues.indexOf(sortedArrayOfValues[n]);
-          if (dupColumnTwoDataValues[index][0] !== "NA") {
-            dupColumnTwoDataValues[index][0] = (n + 1);
-          } else {
-            dupColumnTwoDataValues[index][0] = "NA";
-          };
+          dupColumnTwoDataValues[index][0] = (n + 1);
+
+          // if (index == changedRowTableIndex && missingValue == true) {
+          //   dupColumnTwoDataValues[index][0] = "NA";
+          // } else {
+          //   dupColumnTwoDataValues[index][0] = (n + 1);
+          // };
+          // if (dupColumnTwoDataValues[index][0] !== "NA") {
+          //   dupColumnTwoDataValues[index][0] = (n + 1);
+          // } else {
+          //   dupColumnTwoDataValues[index][0] = "NA";
+          // };
         };
+
+        // if (missingValuesArray !== undefined || missingValuesArray.length !== 0) {
+        //   for (var m = 0; m < missingValuesArray.length; m++) {
+        //     missingValuesArray[m] = "NA";
+        //     var newIndex = dupColumnTwoDataValues.indexOf("NO PRODUCT / PROJECT TYPE");
+        //     dupColumnTwoDataValues[newIndex][0] = missingValuesArray[m];
+        //   };
+        // };
 
         priorityColumnRange.values = dupColumnTwoDataValues;
 
@@ -2416,7 +2513,6 @@ Office.onReady((info) => {
 
   //#endregion ------------------------------------------------------------------------------------------
 
-
   //#region CHECK IF TWO ARRAYS ARE EQUAL ----------------------------------------------------------------
 
     /**
@@ -2439,45 +2535,41 @@ Office.onReady((info) => {
 
     //#endregion ----------------------------------------------------------------------------------------
 
+  //#region NEW ARRAY FROM NESTED ARRAY ---------------------------------------------------------------
 
+    /**
+     * Pushes items from a complex nested array into a basic blank array
+     * @param {Array} array The nested array
+     * @param {Array} newArray The new blank array
+     */
+    function pushFromNestedArrayToNewArray(array, newArray) {
 
-    //#region NEW ARRAY FROM NESTED ARRAY ---------------------------------------------------------------
-
-      /**
-       * Pushes items from a complex nested array into a basic blank array
-       * @param {Array} array The nested array
-       * @param {Array} newArray The new blank array
-       */
-      function pushFromNestedArrayToNewArray(array, newArray) {
-
-        var p = 0;
-        for (var key of Object.keys(array)) { //loops through each column item in the tableColumns array
-          var arrayItem = array[p][0]; //gives us the array that was in whatever position l represents in the tableColumns array
-          newArray.push(arrayItem);
-          p++;
-        };
+      var p = 0;
+      for (var key of Object.keys(array)) { //loops through each column item in the tableColumns array
+        var arrayItem = array[p][0]; //gives us the array that was in whatever position l represents in the tableColumns array
+        newArray.push(arrayItem);
+        p++;
       };
+    };
     
-    //#endregion -----------------------------------------------------------------------------------------
+  //#endregion -----------------------------------------------------------------------------------------
 
+  //#region CONVERT SERIAL TO DATE ----------------------------------------------------------------------------------------------
 
-    //#region CONVERT SERIAL TO DATE ----------------------------------------------------------------------------------------------
+    /**
+     * Finds the value of Date Added in the changed row and converts it to be a date object in EST.
+     * @param {Number} serial The serial number to be converted
+     * @returns Date
+     */
+    function convertToDate(serial) {
 
-      /**
-       * Finds the value of Date Added in the changed row and converts it to be a date object in EST.
-       * @param {Number} serial The serial number to be converted
-       * @returns Date
-       */
-      function convertToDate(serial) {
+      var date = new Date(Math.round((serial - 25569)*86400*1000)); //convert serial number to date object
+      date.setMinutes(date.getMinutes() + date.getTimezoneOffset()); //adjusting from GMT to EST (adds 4 hours)
+      return date;
 
-        var date = new Date(Math.round((serial - 25569)*86400*1000)); //convert serial number to date object
-        date.setMinutes(date.getMinutes() + date.getTimezoneOffset()); //adjusting from GMT to EST (adds 4 hours)
-        return date;
+    };
 
-      };
-
-    //#endregion ---------------------------------------------------------------------------------------------------
-
+  //#endregion ---------------------------------------------------------------------------------------------------
 
   //#region MOVE DATA FUNCTION -----------------------------------------------------------------------------
 
@@ -2493,7 +2585,6 @@ Office.onReady((info) => {
     };
 
   //#endregion ---------------------------------------------------------------------------------------------
-
 
   //#region PRODUCT AND PROJECT TYPE VARIABLE ASSIGN -------------------------------------------------------
 
@@ -2624,7 +2715,6 @@ Office.onReady((info) => {
 
   //#endregion -------------------------------------------------------------------------------------------------------
 
-
   //#region START ADJUSTMENT HOURS -----------------------------------------------------------------------------------
 
     /**
@@ -2655,7 +2745,6 @@ Office.onReady((info) => {
     };
   
   //#endregion ---------------------------------------------------------------------------------------------------
-
 
   //#region PICKED UP / STARTED BY -------------------------------------------------------------------------------
 
@@ -2728,7 +2817,6 @@ Office.onReady((info) => {
     //#endregion ----------------------------------------------------------------------------------------------------
 
   //#endregion ------------------------------------------------------------------------------------------------------
-
 
   //#region PROOF TO CLIENT --------------------------------------------------------------------------------------
 
@@ -2836,7 +2924,6 @@ Office.onReady((info) => {
     //#endregion ----------------------------------------------------------------------------------------------------
 
   //#endregion ------------------------------------------------------------------------------------------------------
-
 
   //#region OFFICE HOURS ---------------------------------------------------------------------------------------
     /**
@@ -3225,7 +3312,6 @@ Office.onReady((info) => {
       //#endregion -------------------------------------------------------------------------------------------------------------------------------
 
   //#endregion -------------------------------------------------------------------------------------------------------------------------------------
-
 
 //#endregion ---------------------------------------------------------------------------------------------------------------------------------------
 
