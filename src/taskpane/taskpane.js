@@ -1089,19 +1089,19 @@ Office.onReady((info) => {
 
 
 //#region MOVING AND UPDATING DATA --------------------------------------------------------------------------------
-  var pp = 0; 
+  //var pp = 0; 
   async function onTableChanged(eventArgs) { //This function will be using event arguments to collect data from the workbook
   // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
     await Excel.run(async (context) => {      
-      console.log("Fired " + pp + " times, here's the changeType:");
-      console.log(eventArgs.changeType);
-      // console.log("Type of change:");
-      // console.log(eventArgs.type);
-      console.log("The Address of the change:");
-      console.log(eventArgs.address);
-      console.log("Event details:");
-      console.log(eventArgs.details);
-      pp++;
+      // console.log("Fired " + pp + " times, here's the changeType:");
+      // console.log(eventArgs.changeType);
+      // // console.log("Type of change:");
+      // // console.log(eventArgs.type);
+      // console.log("The Address of the change:");
+      // console.log(eventArgs.address);
+      // console.log("Event details:");
+      // console.log(eventArgs.details);
+      // pp++;
 
 
       //#region EVENT VARIABLES -----------------------------------------------------------------------------------
@@ -1451,6 +1451,15 @@ Office.onReady((info) => {
         //#region ON ROW DELETED -------------------------------------------------------------------------------------
 
           if (changeType == "RowDeleted") {
+
+              generatePriorityNumber(changedTable, pickedUpColumnData, proofToClientColumnData, priorityColumnData);
+
+              console.log("priority numbers were assigned");
+
+              autoSort(changedTable, priorityColumn);
+
+              console.log("sorting function was fired!");
+             
             return;
           };
 
@@ -1512,8 +1521,6 @@ Office.onReady((info) => {
                       
                     if (statusCellValue == "" && includesCompletedTables == true) { //if status column value is empty and the row is inserted in a Completed table, set status column value to "Completed"
                       statusColumnAddress.values = [["Completed"]];
-                    } else {
-                      //console.log("No status column values were defaulted");
                     };
 
                     if (statusCellValue == "" && includesCompletedTables == false && changedTable.name !== "UnassignedProjects") { //if status column value is empty and the row is not inserted in a Completed Table, set status column value to "Not Working"
@@ -1544,15 +1551,15 @@ Office.onReady((info) => {
         
         //#region ON RANGE EDITED ------------------------------------------------------------------------------------
 
-          if (changeType == "RangeEdited" && eventArgs.details !== undefined ) {
+          if (changeType == "RangeEdited" /* && eventArgs.details !== undefined */ ) {
             
             //#region ESCAPES ON TABLE CHANGED FUNCTION IF VALUES ARE UNCHANGED --------------------------------------
 
               // If values are the same as before, ignore the moved-to table's on change event        
-              if (eventArgs.details.valueAfter == eventArgs.details.valueBefore) {
-                //console.log("No values have changed. Exiting move data event...")
-                return;
-              };
+              // if (eventArgs.details.valueAfter == eventArgs.details.valueBefore) {
+              //   //console.log("No values have changed. Exiting move data event...")
+              //   return;
+              // };
 
             //#endregion --------------------------------------------------------------------------------------------
 
@@ -1926,7 +1933,8 @@ Office.onReady((info) => {
         //#endregion --------------------------------------------------------------------------------------------------------
 
       }).catch(function (error) {
-        console.log('Error: ' + error);
+        console.log('Error: ');
+        console.log(error);
         if (error instanceof OfficeExtension.Error) {
             console.log('Debug info: ' + JSON.stringify(error.debugInfo));
         };
