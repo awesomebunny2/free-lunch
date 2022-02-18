@@ -1657,114 +1657,141 @@ Office.onReady((info) => {
                   //tableRange.format.font.size = 12;
                   //tableRange.format.font.color = "#000000";
 
+                  if (includesCompletedTables == true) {
 
-                  var now = new Date();
-                  var justNowDate = now.getDate();
-                  var toSerial = JSDateToExcelDate(now);
-
-                  var printDate = Math.trunc(printDateCellValue);
-                  var currentDateAbsolute = Math.trunc(toSerial);
-
-                  if (pickedUpCellValue == "NO PRODUCT / PROJECT TYPE" || proofToClientCellValue == "NO PRODUCT / PROJECT TYPE") {
-
-                    rowRange.format.fill.color = "FFC5BB";
-                    pickedUpColumnAddress.format.font.bold = true;
-                    proofToClientColumnAddress.format.font.bold = true;
+                    rowRange.format.fill.clear();
+                    rowRange.format.font.color = "black";
+                    rowRange.format.font.bold = false;
+                    //return;
 
                   } else {
 
-                    rowRange.format.fill.clear();
-                    pickedUpColumnAddress.format.font.bold = false;
-                    proofToClientColumnAddress.format.font.bold = false;
+                    var now = new Date();
+                    var justNowDate = now.getDate();
+                    var toSerial = JSDateToExcelDate(now);
+
+                    var printDate = Math.trunc(printDateCellValue);
+                    var currentDateAbsolute = Math.trunc(toSerial);
+
+                    if (pickedUpCellValue == "NO PRODUCT / PROJECT TYPE" || proofToClientCellValue == "NO PRODUCT / PROJECT TYPE") {
+
+                      rowRange.format.fill.color = "FFC5BB";
+                      pickedUpColumnAddress.format.font.bold = true;
+                      proofToClientColumnAddress.format.font.bold = true;
+
+                    } else {
+
+                      rowRange.format.fill.clear();
+                      pickedUpColumnAddress.format.font.bold = false;
+                      proofToClientColumnAddress.format.font.bold = false;
+
+                    };
+
+                    //var appendGroup = groupCellValue + "!";
+
+                    if (toSerial > pickedUpCellValue) {
+                      pickedUpColumnAddress.format.fill.color = "FFC000";
+                    } else {
+                      pickedUpColumnAddress.format.fill.clear();
+                    };
+
+
+                    if (toSerial > proofToClientCellValue) {
+                      proofToClientColumnAddress.format.fill.color = "FF0000";
+                      proofToClientColumnAddress.format.font.color = "white";
+                    } else {
+                      proofToClientColumnAddress.format.fill.clear();
+                      proofToClientColumnAddress.format.font.color = "black";
+                    };
+
+
+                    if ((printDate < currentDateAbsolute) && (printDate !== 0)) { //if current date is after print date
+
+                      printDateColumnAddress.format.fill.color = "black";
+                      printDateColumnAddress.format.font.color = "white";
+                      printDateColumnAddress.format.font.bold = true;
+
+                      groupColumnAddress.format.fill.color = "black";
+                      groupColumnAddress.format.font.color = "white";
+                      groupColumnAddress.format.font.bold = true;
+
+                      //groupColumnAddress.values = [[appendGroup]];
+
+                    } else if (printDate == currentDateAbsolute) { //if current date = print date
+
+                      printDateColumnAddress.format.fill.color = "C00000";
+                      printDateColumnAddress.format.font.color = "white";
+                      printDateColumnAddress.format.font.bold = true;
+
+                      groupColumnAddress.format.fill.color = "C00000";
+                      groupColumnAddress.format.font.color = "white";
+                      groupColumnAddress.format.font.bold = true;
+
+                    } else if (((printDate - 1) == currentDateAbsolute)) { //if current date is the day before print date
+
+                      printDateColumnAddress.format.fill.color = "FF0000";
+                      printDateColumnAddress.format.font.color = "white";
+                      printDateColumnAddress.format.font.bold = false;
+
+                      groupColumnAddress.format.fill.color = "FF0000";
+                      groupColumnAddress.format.font.color = "white";
+                      groupColumnAddress.format.font.bold = false;
+
+                    } else if (((printDate - 6) <= currentDateAbsolute) && ((printDate - 2) >= currentDateAbsolute)) { //if current date is in the same group lock week as print date (between 7-2 days before)
+
+                      printDateColumnAddress.format.fill.color = "FF8B82";
+                      printDateColumnAddress.format.font.color = "black";
+                      printDateColumnAddress.format.font.bold = false;
+
+                      groupColumnAddress.format.fill.color = "FF8B82";
+                      groupColumnAddress.format.font.color = "black";
+                      groupColumnAddress.format.font.bold = false;
+
+                    } else if (((printDate - 13) <= currentDateAbsolute) && ((printDate - 7) >= currentDateAbsolute)) { //if current date is in the week before group lock week (between 8-14 days before)
+
+                      printDateColumnAddress.format.fill.color = "C6E0B4";
+                      printDateColumnAddress.format.font.color = "black";
+                      printDateColumnAddress.format.font.bold = false;
+
+                      groupColumnAddress.format.fill.color = "C6E0B4";
+                      groupColumnAddress.format.font.color = "black";
+                      groupColumnAddress.format.font.bold = false;
+
+                    // } else if (((printDate - 30) <= currentDateAbsolute) && ((printDate - 14) >= currentDateAbsolute)) { //if current date is within a month of print date (between 15-31 days before)
+
+                    //   printDateColumnAddress.format.fill.color = "C6E0B4";
+                    //   printDateColumnAddress.format.font.color = "black";
+                    //   printDateColumnAddress.format.font.bold = false;
+
+                    //   groupColumnAddress.format.fill.color = "C6E0B4";
+                    //   groupColumnAddress.format.font.color = "black";
+                    //   groupColumnAddress.format.font.bold = false;
+
+                    } else if (printDate == 0) { //if there are no values in the print date cell, revert to normal formatting
+
+                      printDateColumnAddress.format.fill.clear();
+                      printDateColumnAddress.format.font.color = "black";
+                      printDateColumnAddress.format.font.bold = false;
+
+                      groupColumnAddress.format.fill.clear();
+                      groupColumnAddress.format.font.color = "black";
+                      groupColumnAddress.format.font.bold = false;
+
+                    } else { //set cell formatting to normal
+
+                      printDateColumnAddress.format.fill.clear();
+                      printDateColumnAddress.format.font.color = "black";
+                      printDateColumnAddress.format.font.bold = false;
+
+                      groupColumnAddress.format.fill.clear();
+                      groupColumnAddress.format.font.color = "black";
+                      groupColumnAddress.format.font.bold = false;
+
+                    };
 
                   };
 
-                  //var appendGroup = groupCellValue + "!";
-
-
-                  if ((printDate < currentDateAbsolute) && (printDate !== 0)) { //if current date is after print date
-
-                    printDateColumnAddress.format.fill.color = "4472C4";
-                    printDateColumnAddress.format.font.color = "white";
-                    printDateColumnAddress.format.font.bold = true;
-
-                    groupColumnAddress.format.fill.color = "4472C4";
-                    groupColumnAddress.format.font.color = "white";
-                    groupColumnAddress.format.font.bold = true;
-
-                    //groupColumnAddress.values = [[appendGroup]];
-
-                  } else if (printDate == currentDateAbsolute) { //if current date = print date
-
-                    printDateColumnAddress.format.fill.color = "FF0000";
-                    printDateColumnAddress.format.font.color = "white";
-                    printDateColumnAddress.format.font.bold = true;
-
-                    groupColumnAddress.format.fill.color = "FF0000";
-                    groupColumnAddress.format.font.color = "white";
-                    groupColumnAddress.format.font.bold = true;
-
-                  } else if (((printDate - 1) == currentDateAbsolute)) { //if current date is the day before print date
-
-                    printDateColumnAddress.format.fill.color = "FF8B82";
-                    printDateColumnAddress.format.font.color = "black";
-                    printDateColumnAddress.format.font.bold = false;
-
-                    groupColumnAddress.format.fill.color = "FF8B82";
-                    groupColumnAddress.format.font.color = "black";
-                    groupColumnAddress.format.font.bold = false;
-
-                  } else if (((printDate - 6) <= currentDateAbsolute) && ((printDate - 2) >= currentDateAbsolute)) { //if current date is in the same group lock week as print date (between 7-2 days before)
-
-                    printDateColumnAddress.format.fill.color = "FFC58E";
-                    printDateColumnAddress.format.font.color = "black";
-                    printDateColumnAddress.format.font.bold = false;
-
-                    groupColumnAddress.format.fill.color = "FFC58E";
-                    groupColumnAddress.format.font.color = "black";
-                    groupColumnAddress.format.font.bold = false;
-
-                  } else if (((printDate - 13) <= currentDateAbsolute) && ((printDate - 7) >= currentDateAbsolute)) { //if current date is in the week before group lock week (between 8-14 days before)
-
-                    printDateColumnAddress.format.fill.color = "FFFF00";
-                    printDateColumnAddress.format.font.color = "black";
-                    printDateColumnAddress.format.font.bold = false;
-
-                    groupColumnAddress.format.fill.color = "FFFF00";
-                    groupColumnAddress.format.font.color = "black";
-                    groupColumnAddress.format.font.bold = false;
-
-                  } else if (((printDate - 30) <= currentDateAbsolute) && ((printDate - 14) >= currentDateAbsolute)) { //if current date is within a month of print date (between 15-31 days before)
-
-                    printDateColumnAddress.format.fill.color = "C6E0B4";
-                    printDateColumnAddress.format.font.color = "black";
-                    printDateColumnAddress.format.font.bold = false;
-
-                    groupColumnAddress.format.fill.color = "C6E0B4";
-                    groupColumnAddress.format.font.color = "black";
-                    groupColumnAddress.format.font.bold = false;
-
-                  } else if (printDate == 0) { //if there are no values in the print date cell, revert to normal formatting
-
-                    printDateColumnAddress.format.fill.clear();
-                    printDateColumnAddress.format.font.color = "black";
-                    printDateColumnAddress.format.font.bold = false;
-
-                    groupColumnAddress.format.fill.clear();
-                    groupColumnAddress.format.font.color = "black";
-                    groupColumnAddress.format.font.bold = false;
-
-                  } else { //set cell formatting to normal
-
-                    printDateColumnAddress.format.fill.clear();
-                    printDateColumnAddress.format.font.color = "black";
-                    printDateColumnAddress.format.font.bold = false;
-
-                    groupColumnAddress.format.fill.clear();
-                    groupColumnAddress.format.font.color = "black";
-                    groupColumnAddress.format.font.bold = false;
-
-                  };
+                  
 
                 //#endregion --------------------------------------------------------------------------------------------
                     
