@@ -976,7 +976,7 @@ Office.onReady((info) => {
         startHour: 8,
         startMinute: 30,
         endHour: 17,
-        endMinute: 30,
+        endMinute: 0,
         workDay: 0,
       }
       var wednesday = {
@@ -984,7 +984,7 @@ Office.onReady((info) => {
         startHour: 8,
         startMinute: 30,
         endHour: 17,
-        endMinute: 30,
+        endMinute: 0,
         workDay: 0,
       }
       var thursday = {
@@ -999,8 +999,8 @@ Office.onReady((info) => {
         dayID: 5,
         startHour: 8,
         startMinute: 30,
-        endHour: 13,
-        endMinute: 30,
+        endHour: 15,
+        endMinute: 0,
         workDay: 0,
       }
       var saturday = {
@@ -1092,6 +1092,7 @@ Office.onReady((info) => {
   //var pp = 0; 
   async function onTableChanged(eventArgs) { //This function will be using event arguments to collect data from the workbook
   // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
+    console.log("Event fired!")
     await Excel.run(async (context) => {      
       // console.log("Fired " + pp + " times, here's the changeType:");
       // console.log(eventArgs.changeType);
@@ -1175,8 +1176,8 @@ Office.onReady((info) => {
         var alainaHeader = alainaTable.getHeaderRowRange().load("values");
 
 
-        var bertoTable = context.workbook.tables.getItem("BertoProjects").load("worksheet");
-        var bertoHeader = bertoTable.getHeaderRowRange().load("values");
+        var sarahTable = context.workbook.tables.getItem("SarahProjects").load("worksheet");
+        var sarahHeader = sarahTable.getHeaderRowRange().load("values");
 
 
         var breBTable = context.workbook.tables.getItem("BreBProjects").load("worksheet");
@@ -1195,8 +1196,8 @@ Office.onReady((info) => {
         var ianHeader = ianTable.getHeaderRowRange().load("values");
 
 
-        var jeffTable = context.workbook.tables.getItem("JeffProjects").load("worksheet");
-        var jeffHeader = jeffTable.getHeaderRowRange().load("values");
+        var michaelTable = context.workbook.tables.getItem("MichaelProjects").load("worksheet");
+        var michaelHeader = michaelTable.getHeaderRowRange().load("values");
 
 
         var joshTable = context.workbook.tables.getItem("JoshProjects").load("worksheet");
@@ -1307,7 +1308,9 @@ Office.onReady((info) => {
             var changedRowTableIndex = changedRowIndex - 1; //adjusts index number for table level (-1 to skip header row)
             var myRow = changedTableRows.getItemAt(changedRowTableIndex); //loads the changed row in the changed table as an object
             //var oldRowValues = myRow.values;
+
             var rowValues = tableRows[changedRowTableIndex].values; //loads the values of the changed row in the changed table
+
             var rowRange = changedTableRows.getItemAt(changedRowTableIndex).getRange();
 
           //#endregion -------------------------------------------------------------------------------------------
@@ -1581,8 +1584,8 @@ Office.onReady((info) => {
                     destinationTable = alainaTable;
                     destinationHeader = alainaHeader;
                   } else if (artistCellValue == "Berto") {
-                    destinationTable = bertoTable;
-                    destinationHeader = bertoHeader;
+                    destinationTable = sarahTable;
+                    destinationHeader = sarahHeader;
                   } else if (artistCellValue == "Bre B.") {
                     destinationTable = breBTable;
                     destinationHeader = breBHeader;
@@ -1596,8 +1599,8 @@ Office.onReady((info) => {
                     destinationTable = ianTable;
                     destinationHeader = ianHeader;
                   } else if (artistCellValue == "Jeff") {
-                    destinationTable = jeffTable;
-                    destinationHeader = jeffHeader;
+                    destinationTable = michaelTable;
+                    destinationHeader = michaelHeader;
                   } else if (artistCellValue == "Josh") {
                     destinationTable = joshTable;
                     destinationHeader = joshHeader;
@@ -1719,43 +1722,43 @@ Office.onReady((info) => {
 
                     } else if (printDate == currentDateAbsolute) { //if current date = print date
 
-                      printDateColumnAddress.format.fill.color = "C00000";
-                      printDateColumnAddress.format.font.color = "white";
+                      printDateColumnAddress.format.fill.clear();
+                      printDateColumnAddress.format.font.color = "FF0000";
                       printDateColumnAddress.format.font.bold = true;
 
-                      groupColumnAddress.format.fill.color = "C00000";
-                      groupColumnAddress.format.font.color = "white";
+                      groupColumnAddress.format.fill.clear();
+                      groupColumnAddress.format.font.color = "FF0000";
                       groupColumnAddress.format.font.bold = true;
 
                     } else if (((printDate - 1) == currentDateAbsolute)) { //if current date is the day before print date
 
-                      printDateColumnAddress.format.fill.color = "FF0000";
-                      printDateColumnAddress.format.font.color = "white";
-                      printDateColumnAddress.format.font.bold = false;
+                      printDateColumnAddress.format.fill.clear();
+                      printDateColumnAddress.format.font.color = "FF0000";
+                      printDateColumnAddress.format.font.bold = true;
 
-                      groupColumnAddress.format.fill.color = "FF0000";
-                      groupColumnAddress.format.font.color = "white";
-                      groupColumnAddress.format.font.bold = false;
+                      groupColumnAddress.format.fill.clear();
+                      groupColumnAddress.format.font.color = "FF0000";
+                      groupColumnAddress.format.font.bold = true;
 
                     } else if (((printDate - 6) <= currentDateAbsolute) && ((printDate - 2) >= currentDateAbsolute)) { //if current date is in the same group lock week as print date (between 7-2 days before)
 
-                      printDateColumnAddress.format.fill.color = "FF8B82";
-                      printDateColumnAddress.format.font.color = "black";
-                      printDateColumnAddress.format.font.bold = false;
+                      printDateColumnAddress.format.fill.clear();
+                      printDateColumnAddress.format.font.color = "FF0000";
+                      printDateColumnAddress.format.font.bold = true;
 
-                      groupColumnAddress.format.fill.color = "FF8B82";
-                      groupColumnAddress.format.font.color = "black";
-                      groupColumnAddress.format.font.bold = false;
+                      groupColumnAddress.format.fill.clear(); //FF8B82
+                      groupColumnAddress.format.font.color = "FF0000";
+                      groupColumnAddress.format.font.bold = true;
 
                     } else if (((printDate - 13) <= currentDateAbsolute) && ((printDate - 7) >= currentDateAbsolute)) { //if current date is in the week before group lock week (between 8-14 days before)
 
-                      printDateColumnAddress.format.fill.color = "C6E0B4";
-                      printDateColumnAddress.format.font.color = "black";
-                      printDateColumnAddress.format.font.bold = false;
+                      printDateColumnAddress.format.fill.clear();
+                      printDateColumnAddress.format.font.color = "70AD47";
+                      printDateColumnAddress.format.font.bold = true;
 
-                      groupColumnAddress.format.fill.color = "C6E0B4";
-                      groupColumnAddress.format.font.color = "black";
-                      groupColumnAddress.format.font.bold = false;
+                      groupColumnAddress.format.fill.clear();
+                      groupColumnAddress.format.font.color = "70AD47";
+                      groupColumnAddress.format.font.bold = true;
 
                     // } else if (((printDate - 30) <= currentDateAbsolute) && ((printDate - 14) >= currentDateAbsolute)) { //if current date is within a month of print date (between 15-31 days before)
 
@@ -1915,7 +1918,7 @@ Office.onReady((info) => {
                         //#region MOVES DATA TO COMPLETED TABLE ----------------------------------------------------------------
 
                           if ((statusCellValue == "Completed" || statusCellValue == "Cancelled") && includesCompletedTables == false && isUnassigned == false) { //if status column = "Completed" or "Cancelled", the changedTable is not a Completed table, & the changedWorksheet is not UnassignedProjects, move data to changedWorksheet's completed table
-                            completedTable.rows.add(null, rowValues); //Adds empty row to bottom of the completedTable, then inserts the changed values into this empty row
+                            completedTable.rows.add(0, rowValues); //Adds empty row to bottom of the completedTable, then inserts the changed values into this empty row
                             myRow.delete(); //Deletes the changed row from the original sheet
                             console.log("Data was moved to the artist's Completed Projects Table!");
                             return;
