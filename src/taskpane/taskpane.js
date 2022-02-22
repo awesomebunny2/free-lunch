@@ -1072,7 +1072,7 @@ Office.onReady((info) => {
 
           moveEvent = context.workbook.tables.onChanged.add(onTableChanged);
 
-          console.log("I made it!");
+         // console.log("I made it!");
 
          // sortEvent = context.workbook.tables.onChanged.add(sortDate);
 
@@ -1092,7 +1092,7 @@ Office.onReady((info) => {
   //var pp = 0; 
   async function onTableChanged(eventArgs) { //This function will be using event arguments to collect data from the workbook
   // async function onTableChanged(eventArgs: Excel.TableChangedEventArgs) { //TypeScript version of this command
-    console.log("Event fired!")
+    //console.log("Event fired!")
     await Excel.run(async (context) => {      
       // console.log("Fired " + pp + " times, here's the changeType:");
       // console.log(eventArgs.changeType);
@@ -1583,7 +1583,7 @@ Office.onReady((info) => {
                   } else if (artistCellValue == "Alaina") {
                     destinationTable = alainaTable;
                     destinationHeader = alainaHeader;
-                  } else if (artistCellValue == "Berto") {
+                  } else if (artistCellValue == "Sarah") {
                     destinationTable = sarahTable;
                     destinationHeader = sarahHeader;
                   } else if (artistCellValue == "Bre B.") {
@@ -1598,7 +1598,7 @@ Office.onReady((info) => {
                   } else if (artistCellValue == "Ian") {
                     destinationTable = ianTable;
                     destinationHeader = ianHeader;
-                  } else if (artistCellValue == "Jeff") {
+                  } else if (artistCellValue == "Michael") {
                     destinationTable = michaelTable;
                     destinationHeader = michaelHeader;
                   } else if (artistCellValue == "Josh") {
@@ -1652,13 +1652,16 @@ Office.onReady((info) => {
                           
                 //#region CONDITIONAL FORMATTING ----------------------------------------------------------------------
 
-                  //changedAddress.format.font.name = "Calibri";
-                  //changedAddress.format.font.size = 12;
-                  //changedAddress.format.font.color = "#000000";
+                  // changedAddress.format.font.name = "Calibri";
+                  // changedAddress.format.font.size = 12;
+                  // changedAddress.format.font.color = "#000000";
 
-                  //tableRange.format.font.name = "Calibri";
-                  //tableRange.format.font.size = 12;
-                  //tableRange.format.font.color = "#000000";
+                  // tableRange.format.font.name = "Calibri";
+                  // tableRange.format.font.size = 12;
+                  // tableRange.format.font.color = "#000000";
+
+                  //console.log(eventArgs.address);
+        
 
                   if (includesCompletedTables == true) {
 
@@ -1676,11 +1679,17 @@ Office.onReady((info) => {
                     var printDate = Math.trunc(printDateCellValue);
                     var currentDateAbsolute = Math.trunc(toSerial);
 
+                    rowRange.format.font.name = "Calibri";
+                    rowRange.format.font.size = 12;
+                    rowRange.format.font.color = "#000000";
+
                     if (pickedUpCellValue == "NO PRODUCT / PROJECT TYPE" || proofToClientCellValue == "NO PRODUCT / PROJECT TYPE") {
 
                       rowRange.format.fill.color = "FFC5BB";
                       pickedUpColumnAddress.format.font.bold = true;
                       proofToClientColumnAddress.format.font.bold = true;
+                      pickedUpColumnAddress.format.fill.color = "FFC5BB";
+                      proofToClientColumnAddress.format.fill.color = "FFC5BB";
 
                     } else {
 
@@ -2722,7 +2731,7 @@ Office.onReady((info) => {
         product = "biFoldMenu";
       } else if (productInput == "Media Kit") {
         product = "mediaKit";
-      } else if (productInput == "POP Banner") {
+      } else if (productInput == "POPBanner") {
         product = "popBanner";
       } else {
         product = "";
