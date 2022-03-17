@@ -22,10 +22,18 @@
     <!-- Template styles -->
     <link href="taskpane.css" rel="stylesheet" type="text/css" />
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="js/jquery-datepicker/jquery-ui.min.css"> -->
+
     
 </head>
 
-<body class="ms-font-m ms-welcome ms-Fabric">
+<!-- <body class="ms-font-m ms-welcome ms-Fabric">
     <header class="ms-welcome__header ms-bgColor-neutralLighter">
         <img width="90" height="90" src="../../assets/logo-filled.png" alt="Contoso" title="Contoso" />
         <h1 class="ms-font-su">Welcome to the TEST Prepress Art Queue!</h1>
@@ -49,11 +57,274 @@
                 <span class="ms-font-m">Automatically assigns and sorts data by priority</span>
             </li>
         </ul>
-        <!-- <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
+        <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
         <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
             <span class="ms-Button-label">Run</span>
-        </div> -->
+        </div>
     </main>
+</body> -->
+
+<body>
+    <div id="container">
+
+        <div id="header">
+
+            <div id="icon">
+              <i class="fa-solid fa-square-plus"></i>
+            </div>
+            <h4 class="custom-header">Add A Project</h4>
+
+        </div>
+
+
+        <div id="form">
+
+          <div class="form-item">
+
+            <label for="text-box-label">Subject</label><br>
+            <input class="text-box" type="text" id="subject" name="text-box" placeholder="Copy & paste email subject line to autofill other fields" />
+            <p id="message"></p>
+
+          </div>
+
+          <div class="form-item">
+
+            <label for="text-box-label" title="Required for submission">Client<span class="astrick">*</span></label><br>
+            <input class="text-box" type="text" id="client" name="text-box" placeholder="Type in the client's business name" />
+
+          </div>
+
+          <div class="form-item">
+
+            <label for="text-box-label">Location</label><br>
+            <input class="text-box" type="text" id="location" name="text-box" placeholder="Type in the city / location of the client's business" />
+
+          </div>
+
+          <div class="form-item-split">
+
+            <div class="split-left">
+
+              <label for="text-box-label" title="Required for submission">Product<span class="astrick">*</span></label><br>
+              <select class="text-box sel grey-sel" id="product">
+                <option value="null" disabled selected hidden>Choose a product...</option>
+                <option value="Menu">Menu </option>
+                <option value="MenuXL">MenuXL </option>
+                <option value="Small Menu">Small Menu</option>
+                <option value="Brochure">Brochure </option> 
+                <option value="BrochureXL">BrochureXL</option>
+                <option value="Small Brochure">Small Brochure</option>
+                <option value="Postcard">Postcard </option>
+                <option value="Jumbo Postcard">Jumbo Postcard</option>
+                <option value="Colossal Postcard"> Colossal Postcard</option>
+                <option value="Scratch-Off Postcard">Scratch-Off Postcard</option>
+                <option value="Jumbo Scratch-Off Postcard">Jumbo Scratch-Off Postcard</option>
+                <option value="Peel-A-Box Postcard"> Peel-A-Box Postcard</option>
+                <option value="Magnet">Magnet </option>
+                <option value="Folded Magnet"> Folded Magnet</option>
+                <option value="2SBT">2SBT </option>
+                <option value="Box Topper">Box Topper</option>
+                <option value="Flyer"> Flyer </option>
+                <option value="Door Hanger"> Door Hanger</option>
+                <option value="Small Plastic"> Small Plastic</option>
+                <option value="Medium Plastic">Medium Plastic</option>
+                <option value="Large Plastic"> Large Plastic</option>
+                <option value="New Mover"> New Mover </option>
+                <option value="Plastic New Mover"> Plastic New Mover</option>
+                <option value="Birthday Postcard"> Birthday Postcard</option>
+                <option value="Envelope Mailer"> Envelope Mailer</option>
+                <option value="Legal Letter">Legal Letter</option>
+                <option value="Envelope Insert">Envelope Insert</option>
+                <option value="Artwork Only">Artwork Only</option>
+                <option value="MenuXXL">MenuXXL</option>
+                <option value="Bi-Fold Menu">Bi-Fold Menu</option>
+                <option value="Coupon Booklet">Coupon Booklet</option>
+                <option value="Logo Creation"> Logo Creation</option>
+                <option value="Logo Recreation"> Logo Recreation</option>
+                <option value="Map Creation">Map Creation</option>
+                <option value="Business Cards">Business Cards</option>
+                <option value="Window Clings"> Window Clings</option>
+                <option value="Wide Format"> Wide Format</option>
+                <option value="Media Kit"> Media Kit </option>
+                <option value="POP Banner">POP Banner</option>
+                <option value="Marco's 6.8 Box Topper A La Carte - MPBTAC">Marco's 6.8 Box Topper A La Carte - MPBTAC</option>
+                <option value="Marco's 6.8 Box Topper National Offer - MPBTNO">Marco's 6.8 Box Topper National Offer - MPBTNO</option>
+                <option value="Marco's 8.5x11 Poster - MPP">Marco's 8.5x11 Poster - MPP</option>
+                <option value="Marco's 24x36 Poster - MPPO2436">Marco's 24x36 Poster - MPPO2436</option>
+                <option value="Marco's 30x40 Poster - MPPO3040">Marco's 30x40 Poster - MPPO3040</option>
+                <option value="Marco's Counter Card - MPCC">Marco's Counter Card - MPCC</option>
+                <option value="Marco's Door Stickers - MPCMS">Marco's Door Stickers - MPCMS</option>
+                <option value="Marco's Interior Sticker - MPIS">Marco's Interior Sticker - MPIS</option>
+                <option value="Marco's Floor Stickers - MPSCFS">Marco's Floor Stickers - MPSCFS</option>
+                <option value="Marco's Napkin Dispenser Insert - MPND">Marco's Napkin Dispenser Insert - MPND</option>
+                <option value="Marco's Laminated Menu - MPPICMENU">Marco's Laminated Menu - MPPICMENU</option>
+                <option value="Marco's Laminated Sign - MPCVDLAM">Marco's Laminated Sign - MPCVDLAM</option>
+                <option value="Marco's 8.5x11 Window Cling - MPC">Marco's 8.5x11 Window Cling - MPC</option>
+                <option value="Marco's 24x36 Exterior Window Cling A La Carte - MPEXTWC2436AC">Marco's 24x36 Exterior Window Cling A La Carte - MPEXTWC2436AC</option>
+                <option value="Marco's 24x36 Exterior Window Cling National Offer - MPEXTWC2436NO">Marco's 24x36 Exterior Window Cling National Offer - MPEXTWC2436NO</option>
+                <option value="Marco's 30x40 Exterior Window Cling A La Carte - MPEXTWC3040AC">Marco's 30x40 Exterior Window Cling A La Carte - MPEXTWC3040AC</option>
+                <option value="Marco's 30x40 Exterior Window Cling National Offer - MPEXTWC3040NO">Marco's 30x40 Exterior Window Cling National Offer - MPEXTWC3040NO</option>
+                <option value="Marco's 24x36 Interior Window Cling A La Carte - MPINTWC2436AC">Marco's 24x36 Interior Window Cling A La Carte - MPINTWC2436AC</option>
+                <option value="Marco's 24x36 Interior Window Cling National Offer - MPINTWC2436NO">Marco's 24x36 Interior Window Cling National Offer - MPINTWC2436NO</option>
+                <option value="Marco's 30x40 Interior Window Cling A La Carte - MPINTWC3040AC">Marco's 30x40 Interior Window Cling A La Carte - MPINTWC3040AC</option>
+                <option value="Marco's 30x40 Interior Window Cling National Offer - MPINTWC3040NO">Marco's 30x40 Interior Window Cling National Offer - MPINTWC3040NO</option>
+                <option value="Marco's Nutritional Guide - MPNutGuide">Marco's Nutritional Guide - MPNutGuide</option>
+                <option value="Other">Other</option>
+              </select>
+
+            </div>
+
+            <div class="split-right">
+              <label for="text-box-label" title="Required for submission">Project Type<span class="astrick">*</span></label><br>
+              <select class="text-box sel grey-sel" id="project-type">
+                <option value="null" disabled selected hidden>Choose a project type...</option>
+                <option value="Brand New Build">Brand New Build </option>
+                <option value="Brand New Build from Other Product Natives">Brand New Build from Other Product Natives </option>
+                <option value="Brand New Build From Template">Brand New Build From Template</option>
+                <option value="Changes to Existing Natives">Changes to Existing Natives </option> 
+                <option value="Specification Check">Specification Check</option>
+                <option value="WeTransfer Upload to MS">WeTransfer Upload to MS</option>
+                <option value="Special Request">Special Request</option>
+                <option value="Other">Other</option>
+              </select> 
+
+            </div>
+
+          </div>
+
+          <div class="form-item-split">
+
+            <div class="split-left">
+              <label for="text-box-label" title="Required for submission">Code<span class="astrick">*</span></label><br>
+              <input class="text-box" type="text" id="code" name="text-box" placeholder="Type in the client code of the project" />
+
+            </div>
+
+            <div class="split-right">
+              <label for="text-box-label" title="Client Success Manager who sent the request">CSM</label><br>
+              <input class="text-box" type="text" id="csm" name="text-box" placeholder="Type in the name of the CSM" />
+
+            </div>
+
+          </div>
+
+          <div class="form-item-split">
+
+            <div class="split-left">
+              <label for="text-box-label" title="Required for submission">Print Date<span class="astrick">*</span></label><br>
+              <input class="text-box" type="text" id="print-date" name="text-box" placeholder="Date project is looking to print" />
+
+            </div>
+
+            <div class="split-right">
+              <label for="text-box-label" title="Required for submission">Group<span class="astrick">*</span></label><br>
+              <input class="text-box" type="text" id="group" name="text-box" placeholder="Print group the project is currently in" />
+
+            </div>
+
+          </div>
+
+          <div class="form-item-split">
+
+            <div class="split-left">
+              <label for="text-box-label" title="The Artist Lead submitting the request (if applicable)">Artist Lead</label><br>
+                <select class="text-box sel grey-sel" id="artist-lead">
+                  <option value="null" disabled selected hidden>Choose an artist lead...</option>
+                  <option value="Emily">Emily</option>
+                  <option value="Peter">Peter</option>
+                  <option value="Luke">Luke</option>
+                </select>  
+
+              </div>
+
+            <div class="split-right">
+              <label for="text-box-label" title="The Queue the request belongs to">Queue</label><br>
+                <select class="text-box sel grey-sel" id="queue">
+                  <option value="null" disabled selected hidden>Choose a Queue...</option>
+                  <option value="Regular">Regular</option>
+                  <option value="Automotive">Automotive</option>
+                  <option value="Dental">Dental</option>
+                </select>  
+
+            </div>
+
+          </div>
+
+          <div class="form-item-split">
+
+            <div class="split-left">
+
+              <label for="text-box-label" title="The Tier of the request">Tier</label><br>
+                <select class="text-box sel grey-sel" id="tier">
+                  <option value="null" disabled selected hidden>Choose a tier...</option>
+                  <option value="Grey">Grey</option>
+                  <option value="Orange">Orange</option>
+                  <option value="Blue">Blue</option>
+                </select>  
+
+            </div>
+
+            <div class="split-right">
+
+              <label for="text-box-label" title="Any urgency overrides">Tags</label><br>
+                <select class="text-box sel grey-sel" id="tags">
+                  <option value="null" disabled selected hidden>Choose a tag...</option>
+                  <option value="Urgent">Urgent</option>
+                  <option value="Semi-Urgent">Semi-Urgent</option>
+                  <option value="Not-Urgent">Not Urgent</option>
+                  <option value="Downtime">Downtime</option>
+                  <option value="Eventual">Eventual</option>
+                </select>  
+
+            </div>
+
+          </div>
+
+          <div class="form-item-split">
+
+            <div class="split-left">
+
+              <label for="text-box-label" title="Add extra hours to the time that a piece needs to be picked up by">Start Override</label><br>
+              <input class="text-box" type="text" id="start-override" name="text-box" value="0" />
+
+            </div>
+
+            <div class="split-right">
+
+              <label for="text-box-label" title="Add extra hours to the time that a piece needs to have a first proof to the client by">Work Override</label><br>
+              <input class="text-box" type="text" id="work-override" name="text-box" value="0" />
+
+            </div>
+
+          </div>
+   
+        </div>
+
+
+        <div id="buttons">
+          <div class="submit-button">
+            <input class="submit" type="submit" value="SUBMIT">
+          </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <!-- <script src="./js/jquery-datepicker/jquery-ui.min.js" type="text/javascript"></script> -->
+    <script src="taskpane.js" type="text/javascript"></script>
+
+
+    <script>
+
+      
+
+
+    </script>
 </body>
 
 </html>

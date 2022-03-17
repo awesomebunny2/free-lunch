@@ -82,3 +82,235 @@ b {
 h1 {
     text-align: center;
 }
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body, html {
+    /* font-family: 'Roboto', sans-serif;     */
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#container {
+    display:flex;
+    flex-direction:column;
+    width:100vw;
+    height:100vh;
+}
+
+#icon {
+    font-size: 32pt;
+    color: #67ACE6;
+}
+
+#header {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    background-color:#F4F4F4;
+    min-height:175px;
+    width:100%;
+}
+
+.custom-header {
+    margin:0px;
+    margin-top:10px;
+    font-weight: 900;
+    font-size: 25pt;
+    color: #022A42;
+}
+
+
+.custom-dropdown {
+    display:flex;
+
+}
+
+#message {
+    display: none;
+    color: crimson;
+    font-size: 9px;
+}
+
+
+
+
+
+#form {
+    display: flex;
+    flex-direction:column;
+    margin: auto;
+    background-color:white;
+    flex-grow:1;
+    width:100%;
+    overflow: auto;
+    /* justify-content: auto; */
+    justify-content: space-between;
+    align-items: flex-start;
+    
+}
+
+.form-item {
+    align-self: center;
+    justify-items: center;
+    text-align: center;
+    margin:10px 0px;
+    padding: 10px 0px;
+    font-weight: 500;
+    width: 85%;
+}
+
+label {
+    color: #515151;
+}
+
+input {
+    box-sizing: border-box;
+}
+
+
+
+::placeholder {
+    font-size: 9px;
+    font-style: italic;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.25);
+}
+
+span.astrick {
+    font-size: 10px;
+    vertical-align: super;
+    color: red;
+}
+
+.form-item-split {
+    align-items: center;
+    text-align: center;
+    column-count: 2;
+    align-self: center;
+    column-gap: 35px;
+    margin: 20px 0px;
+    /* padding: 10px 0px; */
+    font-weight: 500;
+    width: 85%;
+}
+
+.split-left {
+    text-align: center;
+    width: 100%;
+    /* float: left; */
+}
+
+.split-right {
+    text-align: center;
+    width: 100%;
+    /* float: right; */
+}
+
+.text-box {
+        height: 29px;
+    border-style: groove;
+    border-width: 1.5px;
+    min-height: 30px;
+    margin-top: 7px;
+    width: 100%;
+    text-align: center;
+    border-color: #C8C8C8;
+    border-width: 1.5px;
+    border-style: groove;
+    background-color: #f4f4f444;
+}
+
+.sel {
+    height: 29px;
+    border-style: groove;
+    border-width: 1.5px;
+    min-height: 30px;
+    border-color: #C8C8C8;
+    background-color: #f4f4f444;
+}
+
+select {
+    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 95% 50%;
+	-moz-appearance: none; 
+	-webkit-appearance: none; 
+	appearance: none;
+    text-align:-webkit-center;
+    text-indent: 10px;
+    border-style: groove;
+    border-color: #C8C8C8;
+    background-color: #f4f4f444;
+    border-width: 5px;
+    -webkit-appearance: textfield;
+}
+
+
+
+.grey-sel {
+    font-size: 9px;
+    font-style: italic;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.25);
+    background-color: #f4f4f444;
+    border-color: #C8C8C8;
+    /* border-width: 1.5px; */
+    border-style: groove;
+    width: 100%;
+}
+
+
+.my-arrow {
+    position:relative;
+    right:24px;
+    top:13px;
+}
+
+::-ms-expand {
+    display: none;
+}
+
+list {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+
+
+
+
+
+
+
+#buttons {
+    text-align: center;
+    background-color:#F4F4F4;
+    min-height:120px;
+    width:100%;
+}
+
+.submit-button {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height:100%
+}
+
+.submit {
+    size: 100px;
+    background-color: #022A42;
+    width: 125px;
+    border-radius: 50px;
+    color: #F4F4F4;
+    font-family: "HelveticaNeue-Thin", "Helvetica Neue Thin", "Helvetica Neue";
+    font-size: 16pt;
+    font-weight: 100;
+    padding: 15px;
+}
+ 
