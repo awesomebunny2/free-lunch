@@ -56,84 +56,181 @@ $(".sel").on("change", function() {
 
 $(".submit").on("click", function() {
 
-  var artistLeadVal = $("#artist-lead").val();
+  ugh();
 
-  var queueVal = $("#queue").val();
+});
 
-  var tierVal = $("#tier").val();
+async function ugh() {
 
-  var subjectVal = $("#subject").val();
+  await Excel.run(async (context) => {
 
-  var clientVal = $("#client").val();
+    var sheet = context.workbook.worksheets.getActiveWorksheet();
+    var sheetTable = sheet.tables.getItemAt(0);
+    // let bodyRange = sheetTable.getDataBodyRange().load("values");
 
-  var locationVal = $("#location").val();
+    // Data from DOM
+    var artistLeadVal = $("#artist-lead").val();
+    var queueVal = $("#queue").val();
+    var tierVal = $("#tier").val();
+    var subjectVal = $("#subject").val();
+    var clientVal = $("#client").val();
+    var locationVal = $("#location").val();
+    var productVal = $("#product").val();
+    var projectTypeVal = $("#project-type").val();
+    var csmVal = $("#csm").val();
+    var printDateVal = $("#print-date").val();
+    var groupVal = $("#group").val();
+    var tagsVal = $("#tags").val();
+    var codeVal = $("#code").val();
+    var startOverrideVal = $("#start-override").val();
+    var workOverrideVal = $("#work-override").val();
 
-  var productVal = $("#product").val();
+    // Data to send to Table
+    var write = [[
+      "", // 1 - Priority
+      artistLeadVal, // 2 - Artist Lead
+      queueVal, // 3 - Queue
+      tierVal, // 4 - Tier
+      subjectVal, // 5 - Subject
+      clientVal, // 6 - Client
+      locationVal, // 7 - Location
+      productVal, // 8 - Product
+      projectTypeVal, // 9 - Project Type
+      csmVal, // 10 - CSM
+      "", // 11 - Added
+      printDateVal, // 12 - Print Data
+      groupVal, // 13 - Group
+      "", // 14 - Picked Up / Started By
+      "", // 15 - Proof to Client
+      "", // 16 - Date of Last Edit
+      tagsVal, // 17 - Tags
+      "", // 18 - Status
+      codeVal, // 19 - Code
+      "", // 20 - Artist
+      "", // 21 - Notes
+      startOverrideVal, // 22 - Start Override
+      workOverrideVal // 23 - Work Override
+    ]];
 
-  var projectTypeVal = $("#project-type").val();
+    sheetTable.rows.add(null /*add rows to the end of the table*/, write);
 
-  var csmVal = $("#csm").val();
 
-  var printDateVal = $("#print-date").val();
 
-  var groupVal = $("#group").val();
+    await context.sync(); // BOOM!
 
-  var tagsVal = $("#tags").val();
+    // console.log(bodyRange.values);
 
-  var codeVal = $("#code").val();
+    /*
+   
+      */
 
-  var startOverrideVal = $("#start-override").val();
 
-  var workOverrideVal = $("#work-override").val();
-
-  await Excel.run(async (context) => {      
-
+    /*
     var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
 
-    var sheetTables = sheet.tables.load("items/name");
+    var sheetTables = sheet.tables.load("items");
 
-    var allTables = context.workbook.tables;
-    allTables.load("items/name");
+    var cspt = sheetTables.items[0]; //stands for Current Sheet Project Table
+
+    var ruhRows = cspt.rows
+    ruhRows.load("items");
+
+
+
+    var artistLeadVal = $("#artist-lead").val();
+    var queueVal = $("#queue").val();
+    var tierVal = $("#tier").val();
+    var subjectVal = $("#subject").val();
+    var clientVal = $("#client").val();
+    var locationVal = $("#location").val();
+    var productVal = $("#product").val();
+    var projectTypeVal = $("#project-type").val();
+    var csmVal = $("#csm").val();
+    var printDateVal = $("#print-date").val();
+    var groupVal = $("#group").val();
+    var tagsVal = $("#tags").val();
+    var codeVal = $("#code").val();
+    var startOverrideVal = $("#start-override").val();
+    var workOverrideVal = $("#work-override").val();
+
+    
+    
 
     await context.sync().then(function () { //loads variable values
 
+      // var cspt = sheetTables.items[0]; //stands for Current Sheet Project Table
+      
+      // var ruhRows = cspt.rows
+      // ruhRows.load("items");
 
-      //#region FINDS IF CHANGED TABLE IS A COMPLETED TABLE OR NOT ------------------------------------------
-
-        var listOfCompletedTables = [];
-
-        allTables.items.forEach(function (table) { //for each table in the workbook...
-          if (table.name.includes("Completed")) { //if the table name includes the word "Completed" in it...
-            listOfCompletedTables.push(table.name); //push the name of that table into an array
-          };
-        });
-
-        //returns true if the changedTable is a completed table from the array previously made, false if it is anything else
-        var includesCompletedTables = listOfCompletedTables.includes(sheetTables.name);
-
-      //#endregion ------------------------------------------------------------------------------------------
-
-      //#region FINDS IF CHANGE WAS MADE TO THE UNASSIGNED PROJECTS TABLE OR NOT ----------------------------
-
-        var isUnassigned;
-
-        if (sheet.name == "Unassigned Projects") {
-          isUnassigned = true;
-        } else {
-          isUnassigned = false;
-        };
-
-      //#endregion ------------------------------------------------------------------------------------------
+      // var changedTableRows = changedTable.rows;
+      // changedTableRows.load("items");
 
 
-        var write = [[""]];
+      console.log(cspt.rows);
+      
+      var write = [
+        [""], // 1
+        [artistLeadVal], // 2
+        [queueVal], // 3
+        [tierVal], // 4
+        [subjectVal], // 5
+        [clientVal], // 6
+        [locationVal], // 7
+        [productVal], // 8
+        [projectTypeVal], // 9
+        [csmVal], // 10
+        [""], // 11
+        [printDateVal], // 12
+        [groupVal], // 13
+        [""], // 14
+        [""], // 15
+        [""], // 16
+        [tagsVal], // 17
+        [""], // 18
+        [codeVal], // 19
+        [""], // 20
+        [""], // 21
+        [startOverrideVal], // 22 
+        [workOverrideVal] // 23
+      ];
 
-        write.push([artistLeadVal], [queueVal], [tierVal], [subjectVal], [clientVal], [locationVal], [productVal], [projectTypeVal], [csmVal], [""], [printDateVal], [groupVal], [""], [""], [""], [tagsVal], [""], [codeVal], [""], [""], [startOverrideVal], [workOverrideVal]);
+      console.log(write);
+      //cspt.rows.add(null, write);
 
-        console.log(write);
+
+      //write.push([""], [artistLeadVal], [queueVal], [tierVal], [subjectVal], [clientVal], [locationVal], [productVal], [projectTypeVal], [csmVal], [""], [printDateVal], [groupVal], [""], [""], [""], [tagsVal], [""], [codeVal], [""], [""], [startOverrideVal], [workOverrideVal]);
+
+
+
     });
+
+          */
   });
-});
+}
+
+// async function findTable() { //This function will be using event arguments to collect data from the workbook
+
+//   await Excel.run(async (context) => {      
+
+//     var sheet = context.workbook.worksheets.getActiveWorksheet().load("name");
+
+//     var sheetTables = sheet.tables.load("items/name");
+
+//     var allTables = context.workbook.tables;
+//     allTables.load("items/name");
+
+//     await context.sync().then(function () { //loads variable values
+
+//       console.log(sheetTables.items[0]);
+
+//       var cspt = sheetTables.items[0]; //stands for Current Sheet Project Table
+
+//       return cspt;
+
+//     });
+//   });
+// };
 
 
 
@@ -1525,8 +1622,8 @@ function productAdjust(leProductInput) {
     */
     Office.onReady((info) => {
       if (info.host === Office.HostType.Excel) { //If application is Excel
-        document.getElementById("sideload-msg").style.display = "none"; //Don't show side-loading message
-        document.getElementById("app-body").style.display = "flex"; //Keep content in taskpane flexible to scaling, I think...
+        // document.getElementById("sideload-msg").style.display = "none"; //Don't show side-loading message
+        // document.getElementById("app-body").style.display = "flex"; //Keep content in taskpane flexible to scaling, I think...
           
         Excel.run(async context => { //Do while Excel is running
 
