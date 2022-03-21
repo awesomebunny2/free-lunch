@@ -27,9 +27,12 @@ Office.onReady((info) => {
   // RUNS WHEN DOCUMENT IS LOADED
   //console.log("Ready!");
 
+  // tryCatch(updateDropDowns);
+
 
 
 });
+
 
 $(".sel").on("change", function() {
   console.log("SOMETHING CHANGED!");
@@ -475,7 +478,7 @@ function productAdjust(leProductInput) {
     } else if ($.inArray(leProductInput, ["NEW MOVERS PLASTIC"]) >= 0) {
       leProduct = "Plastic New Mover";
 
-    } else if ($.inArray(leProductInput, ["WCCust", "WC2030", "WC2430", "WC2436", "WC3040"]) >= 0) {
+    } else if ($.inArray(leProductInput, ["WCCust", "WC2030", "WC2430", "WC2436", "WC3040", "WCPoster2Side2430", "WCPoster2Side2436"]) >= 0) {
       leProduct = "Window Clings";
 
     } else if ($.inArray(leProductInput, ["BusinessCard"]) >= 0) {
@@ -1627,6 +1630,11 @@ function productAdjust(leProductInput) {
           
         Excel.run(async context => { //Do while Excel is running
 
+          var valSheet = context.workbook.worksheets.getItem("Validation");
+
+          valSheet.onChanged.add(updateDropDowns);
+
+
           moveEvent = context.workbook.tables.onChanged.add(onTableChanged);
 
          // console.log("I made it!");
@@ -1642,6 +1650,61 @@ function productAdjust(leProductInput) {
   //#endregion ------------------------------------------------------------------------------------------------
 
 //#endregion -----------------------------------------------------------------------------------------------------
+
+
+async function updateDropDowns() {
+  await Excel.run(async (context) => {
+    var sheet = context.workbook.worksheets.getItem("Validation");
+    let productIDTable = sheet.tables.getItem("ProductIDTable");
+    // Get data from the table.
+    let productIDBodyRange = productIDTable.getDataBodyRange().load("values");
+
+    await context.sync();
+
+    let productIDBodyValues = productIDBodyRange.values;
+    // console.log(productIDBodyValues);
+    productIDBodyValues.forEach(function(row) {
+      // row = ["I'm", "a", "row"]
+      // console.log(row);
+      // Add an option to the select box
+      var option = `<option product-id="${row[0]}" relative-product="${row[1]}" product-code="${row[2]}">${row[1]}</option>`;
+
+      var x = $(`#product > option[relative-product="${row[1]}"]`).length;
+      var y = $(`#product > option[relative-product="${row[1]}"]`);
+      console.log(y);
+      console.log("Cheese " + y);
+      // console.log(x);
+      if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+        $("#product").append(option);
+      }
+
+      if (y == "") {
+        $("product").remove(option);
+      }
+
+      // //CHECK IF OPTION ALREADY EXISTS IN SELECT
+      // var newItem;
+      // var optionValues = [];
+      // $('#product option').each(function () {
+      //   if ($.inArray(this.value, optionValues) > -1) {
+      //     $(this).remove()
+      //     newItem = false;
+      //   } else {
+      //     optionValues.push(this.value);
+      //     newItem = true;
+      //   }
+      // });
+
+      // console.log(optionValues);
+
+      // // IF IT'S NOT, ADD IT
+      // if (newItem == true) {
+      //   $("#product").append(option);
+      // };          
+    });
+  });
+}
+
 
 
 
