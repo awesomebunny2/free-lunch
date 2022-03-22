@@ -1652,35 +1652,53 @@ function productAdjust(leProductInput) {
 //#endregion -----------------------------------------------------------------------------------------------------
 
 
-async function updateDropDowns() {
+async function updateDropDowns(eventArgs) {
   await Excel.run(async (context) => {
     var sheet = context.workbook.worksheets.getItem("Validation");
     let productIDTable = sheet.tables.getItem("ProductIDTable");
     // Get data from the table.
     let productIDBodyRange = productIDTable.getDataBodyRange().load("values");
+    var eventType = eventArgs.changeType;
+    var details = eventArgs.details;
 
     await context.sync();
 
     let productIDBodyValues = productIDBodyRange.values;
+
+    if (details.valueAfter == "") {
+      $(`#product > option[relative-product="${details.valueBefore}"]`).remove();
+    };
     // console.log(productIDBodyValues);
+    var i = 0;
     productIDBodyValues.forEach(function(row) {
+      var j = i + 1;
       // row = ["I'm", "a", "row"]
       // console.log(row);
       // Add an option to the select box
       var option = `<option product-id="${row[0]}" relative-product="${row[1]}" product-code="${row[2]}">${row[1]}</option>`;
 
       var x = $(`#product > option[relative-product="${row[1]}"]`).length;
-      var y = $(`#product > option[relative-product="${row[1]}"]`);
-      console.log(y);
-      console.log("Cheese " + y);
-      // console.log(x);
-      if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
-        $("#product").append(option);
-      }
 
-      if (y == "") {
-        $("product").remove(option);
-      }
+      if (`${row[1]}` == "") {
+        console.log(`AH! I'M EMPTY!!! My ProductID is ${row[0]}`);
+        $("product").remove();
+
+      } else if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+        $("#product").append(option);
+        // $("#product").eq(i).after(option);
+        // $("#product > option(" + (i) + ")").after(option);
+        // $("#product").eq(j).before($(option));
+        // $("#product").eq(2).before($("<option></option>").val("").text("Select"));
+
+
+
+      };
+      // $(".dll option").eq(2).before($("<option></option>").val("").text("Select"));
+      // $('#Select-option-id-here'). eq(7).before($('', { value: 7, text: 'Dynamic Append' }));
+
+
+
+      i++;
 
       // //CHECK IF OPTION ALREADY EXISTS IN SELECT
       // var newItem;
