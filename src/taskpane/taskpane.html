@@ -65,6 +65,7 @@
 </body> -->
 
 <body>
+
     <div id="container">
 
         <div id="header">
@@ -76,18 +77,48 @@
 
         </div>
 
-
         <div id="form">
 
+          <main class="single-main">
+
+            <div class="input-group">
+    
+                <input type="text" id="inputField" required class="input-area single" />
+    
+                <label for="subject" id="thelabel" class="label">Subject</label>
+                <p id="warning"></p>
+            </div>
+  
+            <div class="input-group">
+    
+              <input type="text" id="inputField" required class="input-area single" />
+  
+              <label for="inputField" id="thelabel" class="label">Field</label>
+              <p id="warning"></p>
+            </div>
+  
+          </main>
+
+
+        </div>
+
+
+
+
+
+
+        <!-- <div id="form">
+
           <div class="form-item">
 
-            <label for="text-box-label">Subject</label><br>
-            <input class="text-box" type="text" id="subject" name="text-box" placeholder="Copy & paste email subject line to autofill other fields" />
-            <p id="message"></p>
+            <input class="text-box" type="text" id="subject" name="text-box" required class="input-area"/>
+            <label for="subject" id="thelabel" class="label">Subject</label>
+            placeholder="Copy & paste email subject line to autofill other fields" -->
+            <!-- <p id="message"></p> -->
 
-          </div>
+          <!-- </div> -->
 
-          <div class="form-item">
+          <!-- <div class="form-item">
 
             <label for="text-box-label" title="Required for submission">Client<span class="astrick">*</span></label><br>
             <input class="text-box" type="text" id="client" name="text-box" placeholder="Type in the client's business name" />
@@ -101,14 +132,14 @@
 
           </div>
 
-          <div class="form-item-split">
+          <div class="form-item">
 
             <div class="split-left">
 
                 <label for="text-box-label" title="Required for submission">Product<span class="astrick">*</span></label><br>
                 <select class="text-box sel grey-sel" id="product">
                     <option disabled selected hidden>Choose a product...</option>
-                </select>
+                </select> -->
 
 
               <!-- <label for="text-box-label" title="Required for submission">Product<span class="astrick">*</span></label><br>
@@ -178,7 +209,7 @@
                 <option value="Other">Other</option>
               </select> -->
 
-            </div>
+            <!-- </div>
 
             <div class="split-right">
               <label for="text-box-label" title="Required for submission">Project Type<span class="astrick">*</span></label><br>
@@ -302,7 +333,7 @@
 
             </div>
 
-          </div>
+          </div> -->
    
         </div>
 
@@ -326,6 +357,23 @@
 
 
     <script>
+
+
+      // $("#inputField").change(function() {
+      //   console.log("change@")
+      //   if ($(this).val() == "Todd" || $(this).val() == "") {
+      //       $(".input-group .input-area").css("border-color", "royalblue");
+      //       $(".input-group .input-area + .label").css("color", "royalblue");
+      //       $("#thelabel").text($("#thelabel").text().replace("*", ""));
+      //       $("#warning").empty().hide();
+      //   } else {
+      //       // ERROR!
+      //       $(".input-group .input-area").css("border-color", "crimson");
+      //       $(".input-group .input-area + .label").css("color", "crimson");
+      //       $("#thelabel").text($("#thelabel").text().replace("*", "")).append("*");
+      //       $("#warning").text("What a drag, man...").show();
+      //   }
+      // })
 
       
 
