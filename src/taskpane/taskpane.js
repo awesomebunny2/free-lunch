@@ -2960,7 +2960,7 @@ async function updateDropDowns() {
     let productIDBodyValues = productIDBodyRange.values;
 
     $("#product").empty();
-    $("#product").append($("<option disabled selected hidden></option>").val("").text("Choose a product..."));
+    $("#product").append($("<option disabled selected hidden></option>").val("").text("---"));
 
     productIDBodyValues.forEach(function(row) {
 
