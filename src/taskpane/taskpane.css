@@ -145,19 +145,29 @@ body, html {
     justify-content: center;
     background-color: white;
     min-height:175px;
-    width:100%;}
+    width:100%;
+}
 
-main {
-    position: absolute;
+.label {
+    font-size: 10pt;
+}
+
+
+
+.double-main {
     display: flex;
+    flex-direction: row;
     align-content: space-evenly;
+    width: 100%;
     /* top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); */
 }
 
 .single-main {
+    display: flex;
     flex-direction: column;
+    margin-top: 20px;
     width: 100%;
     align-items: center;
 }
@@ -172,10 +182,32 @@ main {
     width: 90%;
 }
 
+.double {
+    width: 79%;
+}
+
+.mini {
+    width: 50%;
+}
+
+.left {
+    margin-left: 5%;
+    margin-right: 2.5%;
+}
+
+.right {
+    margin-right: 5%;
+    margin-left: 2.5%;
+}
+
+.split {
+    width: 100%;
+}
+
 .input-group .input-area {
     border: 1px solid #dadce0;
-    padding: 12px 13px;
-    font-size: 16px;
+    padding: 5px 13px;
+    font-size: 12px;
     font-weight: 400;
     border-radius: 5px;
     color: #515151;
@@ -193,7 +225,7 @@ main {
 .input-group .input-area:focus + .label {
     top: -8px;
     padding: 0 3px;
-    font-size: 14px;
+    font-size: 12px;
     color: royalblue;
     font-weight: 500;
 }
@@ -202,7 +234,7 @@ main {
     color: #8d8d8d;
     position: absolute;
     font-weight: 400;
-    top: 14px;
+    top: 9px;
     left: 13px;
     background: #ffffff;
     transition: .1s;
@@ -211,7 +243,7 @@ main {
 .input-group .input-area:valid + .label {
     top: -8px;
     padding: 0 3px;
-    font-size: 14px;
+    font-size: 12px;
     color: #515151;
     font-weight: 500;
 }
@@ -232,6 +264,15 @@ main {
 .input-group .input-area:focus:hover {
     border-color: royalblue;
     color: royalblue;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* border-color: #8ba479 */
