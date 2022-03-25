@@ -153,33 +153,44 @@ body, html {
 }
 
 
-
-.double-main {
+.main {
     display: flex;
-    flex-direction: row;
-    align-content: space-evenly;
-    width: 100%;
-    /* top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
-}
-
-.single-main {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
     width: 100%;
     align-items: center;
 }
 
+
+/* .double-main {
+    display: flex;
+    flex-direction: row;
+    align-content: space-evenly;
+    width: 100%;
+    align-items: center; */
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+/* } */
+
+.uno {
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+
+.dos {
+    flex-direction: row;
+
+}
+
 .input-group {
     position: relative;
-    width: 90%;
+    width: 85%;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 .single {
-    width: 90%;
+    width: 100%;
 }
 
 .double {
@@ -187,21 +198,26 @@ body, html {
 }
 
 .mini {
-    width: 50%;
+    width: 85%;
+    position: relative;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
 .left {
-    margin-left: 5%;
-    margin-right: 2.5%;
+    /* margin-left: 5%;
+    margin-right: 2.5%; */
 }
 
 .right {
-    margin-right: 5%;
-    margin-left: 2.5%;
+    /* margin-right: 5%;
+    margin-left: 2.5%; */
 }
 
 .split {
-    width: 100%;
+    /* width: 100%; */
 }
 
 .input-group .input-area {
@@ -211,6 +227,8 @@ body, html {
     font-weight: 400;
     border-radius: 5px;
     color: #515151;
+    box-sizing: border-box;
+    align-items: center;
 }
 
 .input-group .input-area:focus {
