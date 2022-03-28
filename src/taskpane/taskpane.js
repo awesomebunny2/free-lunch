@@ -56,8 +56,15 @@ $(".sel").on("change", function() {
 });
 
 
+$("#clear")/on("click", function() {
 
-$(".submit").on("click", function() {
+  $("#client, #location, #product, #code, #project-type, #csm, #print-date, #group, #artist-lead, #queue, #tier, #tags, #start-override, #work-override").val(""); // Empty all inputs
+
+});
+
+
+
+$("#submit").on("click", function() {
 
   ugh();
 
@@ -573,6 +580,7 @@ function productAdjust(leProductInput) {
 
 };
 
+import { on } from "process";
 /*
  * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
@@ -2950,34 +2958,196 @@ function productAdjust(leProductInput) {
 async function updateDropDowns() {
   await Excel.run(async (context) => {
     var sheet = context.workbook.worksheets.getItem("Validation");
-    let productIDTable = sheet.tables.getItem("ProductIDTable");
-    // Get data from the table.
-    let productIDBodyRange = productIDTable.getDataBodyRange().load("values");
+    var productIDValTable = sheet.tables.getItem("ProductIDTable");
+    var projectTypeValTable = sheet.tables.getItem("ProjectTypeTable");
+    var groupPrintValTable = sheet.tables.getItem("GroupPrintTable");
+    var artistLeadValTable = sheet.tables.getItem("ArtistLeadTable");
+    var queueValTable = sheet.tables.getItem("QueueTable");
+    var tierValTable = sheet.tables.getItem("TierTable");
+    var tagsValTable = sheet.tables.getItem("TagsTable");
 
+    // Get data from the table.
+    var productIDBodyRange = productIDValTable.getDataBodyRange().load("values");
+    var projectTypeBodyRange = projectTypeValTable.getDataBodyRange().load("values");
+    var groupPrintBodyRange = groupPrintValTable.getDataBodyRange().load("values");
+    var artistLeadBodyRange = artistLeadValTable.getDataBodyRange().load("values");
+    var queueBodyRange = queueValTable.getDataBodyRange().load("values");
+    var tierBodyRange = tierValTable.getDataBodyRange().load("values");
+    var tagsBodyRange = tagsValTable.getDataBodyRange().load("values");
 
     await context.sync();
 
-    let productIDBodyValues = productIDBodyRange.values;
+    //#region PRODUCT ID VALUES -----------------------------------------------------------------------------------
 
-    $("#product").empty();
-    $("#product").append($("<option disabled selected hidden></option>").val("").text("---"));
+      var productIDBodyValues = productIDBodyRange.values;
 
-    productIDBodyValues.forEach(function(row) {
+      $("#product").empty();
+      $("#product").append($("<option disabled selected hidden></option>").val("").text("---"));
 
-      // Add an option to the select box
-      var option = `<option product-id="${row[0]}" relative-product="${row[1]}" product-code="${row[2]}">${row[1]}</option>`;
+      productIDBodyValues.forEach(function(row) {
 
-      var x = $(`#product > option[relative-product="${row[1]}"]`).length;
+        // Add an option to the select box
+        var option = `<option product-id="${row[0]}" relative-product="${row[1]}" product-code="${row[2]}">${row[1]}</option>`;
 
-      if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+        var x = $(`#product > option[relative-product="${row[1]}"]`).length;
 
-      if (row[1] !== "") {
-        $("#product").append(option);
-      };
+        if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+          if (row[1] !== "") {
+            $("#product").append(option);
+          };
+        };
+      });
+
+    //#endregion ---------------------------------------------------------------------------------------------------
+
+    //#region PROJECT TYPE VALUES -----------------------------------------------------------------------------------
+
+      var projectTypeBodyValues = projectTypeBodyRange.values;
+
+      $("#project-type").empty();
+      $("#project-type").append($("<option disabled selected hidden></option>").val("").text("---"));
+
+      projectTypeBodyValues.forEach(function(row) {
+
+        // Add an option to the select box
+        var option = `<option project-type-id="${row[0]}">${row[0]}</option>`;
+
+        var x = $(`#project-type > option[project-type-id="${row[0]}"]`).length;
+
+        if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+          $("#project-type").append(option);
+        };
+      });
+
+    //#endregion ---------------------------------------------------------------------------------------------------
+
+    //#region PRINT DATE & GROUP VALUES -----------------------------------------------------------------------------------
+
+      var groupPrintBodyValues = groupPrintBodyRange.values;
+
+      $("#print-date").empty();
+      $("#print-date").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#group").empty();
+      $("#group").append($("<option disabled selected hidden></option>").val("").text("---"));
+
+      groupPrintBodyValues.forEach(function(row) {
+
+        // Add an option to the select box
+        var option = `<option group-id="${row[0]}" print-date-id="${row[1]}">${row[0]}</option>`;
+
+        var x = $(`#print-date > option[print-date-id="${row[1]}"]`).length;
+        var y = $(`#group > option[group-id="${row[0]}"]`).length;
 
 
+        if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+          var leDate = convertToDate(`${row[1]}`);
 
-    };
+          var d = new Date(leDate);
+
+          //converts the date into a simplifed format for dropdown: mm/dd/yy
+          leDate = [('0' + (d.getMonth() + 1)).slice(-2), ('0' + d.getDate()).slice(-2), (d.getFullYear() % 100)].join('/');
+
+          //create proper html formatting for option to be added to select box
+          var printDateOption = `<option print-date-convert="${leDate}">${leDate}</option>`;
+
+          $("#print-date").append(printDateOption);
+        };
+
+        if (y == 0) { // Meaning, it's not there yet, because it's length count is 0
+          $("#group").append(option);
+        };
+      });
+
+    //#endregion ---------------------------------------------------------------------------------------------------
+
+    //#region ARTIST LEAD VALUES -----------------------------------------------------------------------------------
+
+      var artistLeadBodyValues = artistLeadBodyRange.values;
+
+      $("#artist-lead").empty();
+      $("#artist-lead").append($("<option disabled selected hidden></option>").val("").text("---"));
+
+      artistLeadBodyValues.forEach(function(row) {
+
+        // Add an option to the select box
+        var option = `<option artist-lead-id="${row[0]}">${row[0]}</option>`;
+
+        var x = $(`#artist-lead > option[artist-lead-id="${row[0]}"]`).length;
+
+        if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+          $("#artist-lead").append(option);
+        };
+      });
+
+    //#endregion ---------------------------------------------------------------------------------------------------
+
+    //#region QUEUE VALUES -----------------------------------------------------------------------------------
+
+      var queueBodyValues = queueBodyRange.values;
+
+      $("#queue").empty();
+      $("#queue").append($("<option disabled selected hidden></option>").val("").text("---"));
+
+      queueBodyValues.forEach(function(row) {
+
+        // Add an option to the select box
+        var option = `<option queue-id="${row[0]}">${row[0]}</option>`;
+
+        var x = $(`#queue > option[queue-id="${row[0]}"]`).length;
+
+        if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+          $("#queue").append(option);
+        };
+      });
+
+    //#endregion ---------------------------------------------------------------------------------------------------
+
+    //#region TIER VALUES -----------------------------------------------------------------------------------
+
+      var tierBodyValues = tierBodyRange.values;
+
+      $("#tier").empty();
+      $("#tier").append($("<option disabled selected hidden></option>").val("").text("---"));
+
+      tierBodyValues.forEach(function(row) {
+
+        // Add an option to the select box
+        var option = `<option tier-id="${row[0]}">${row[0]}</option>`;
+
+        var x = $(`#tier > option[tier-id="${row[0]}"]`).length;
+
+        if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+          $("#tier").append(option);
+        };
+      });
+  
+    //#endregion ---------------------------------------------------------------------------------------------------
+
+    //#region TAGS VALUES -----------------------------------------------------------------------------------
+
+      var tagsBodyValues = tagsBodyRange.values;
+
+      $("#tags").empty();
+      $("#tags").append($("<option disabled selected hidden></option>").val("").text("---"));
+
+      tagsBodyValues.forEach(function(row) {
+
+        // Add an option to the select box
+        var option = `<option tags-id="${row[0]}">${row[0]}</option>`;
+
+        var x = $(`#tags > option[tags-id="${row[0]}"]`).length;
+
+        if (x == 0) { // Meaning, it's not there yet, because it's length count is 0
+          $("#tags").append(option);
+        };
+      });
+
+    //#endregion ---------------------------------------------------------------------------------------------------
+    
+  });
+};
+
+
 
     // //CHECK IF OPTION ALREADY EXISTS IN SELECT
       // var newItem;
@@ -2997,12 +3167,7 @@ async function updateDropDowns() {
       // // IF IT'S NOT, ADD IT
       // if (newItem == true) {
       //   $("#product").append(option);
-      // };    
-
-    });
-  });
-}
-
+      // };  
 
 
 //#region AUTOFILL FUNCTIONS -------------------------------------------------------------------------------------
