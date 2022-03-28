@@ -29,6 +29,10 @@ Office.onReady((info) => {
 
   tryCatch(updateDropDowns);
 
+  $("#container").each(function () {
+    $(this).html($(this).html().replace(/(\*)/g, '<span style="color: rgba(220, 20, 60, 0.50); font-size: 9pt; padding-left: 1px; padding-bottom: 1px;">$1</span>'));
+  });
+
 
 
 });
@@ -65,6 +69,12 @@ $("#clear")/on("click", function() {
 
 
 $("#submit").on("click", function() {
+
+  if ($("#client") == "") {
+    $(this).addClass("warning-box")
+    $(this).addClass("warning-box + .label")
+
+  }
 
   ugh();
 
@@ -250,17 +260,34 @@ $("#subject").on("keyup", function() {
  
   if (paste.length == 0) { // If what's pasted is empty
     
-     $("#message").hide(); // Don't show the error
+     $("#warning").hide(); // Don't show the error
+     $(this).removeClass("warning-box")
+     $(this).removeClass("warning-box + .label")
      $("#client, #location, #product, #code").val(""); // Empty all inputs
    
   } else if (!paste.includes("~/*")) { // If what's pasted does not contain "~/*"
         
-     $("#message").show().text(`This subject does not contain "~/*"`);
+     $("#warning").show().text(`This subject does not contain "~/*"`);
+
+    //  var warningCSS = {
+    //    "border": "2px",
+    //    "border-color": "red"
+    //  }
+    //  $(this).css("border", "2px solid red");
+
+      $(this).addClass("warning-box")
+      $(this).addClass("warning-box + .label")
+
+
+    //  $(this).css("pointer-events", "none");
      $("#client, #location, #product, #code").val(""); // Empty all inputs
           
   } else { // Probably a valid subject (contains ~/*)
     
-     $("#message").hide() // Hide error
+     $("#warning").hide() // Hide error
+     $(this).removeClass("warning-box")
+     $(this).removeClass("warning-box + .label")
+     
     
       /** ------------------------------------------------------------
        Parse the subject, fill the other inputs
@@ -350,7 +377,7 @@ $("#subject").on("keyup", function() {
               $("#code").val(updatedCode);
           } catch (e) {
               // Something was wrong with the subject
-              $("#message").show().text(`Something's wrong with this subject. Error: ` + e);
+              $("#warning").show().text(`Something's wrong with this subject. Error: ` + e);
           }
 
       } else { //if subject line does not include a location, do this...
@@ -378,7 +405,7 @@ $("#subject").on("keyup", function() {
               $("#code").val(updatedCode);
           } catch (e) {
               // Something was wrong with the subject
-              $("#message").show().text(`Something's wrong with this subject. Error: ` + e);
+              $("#warning").show().text(`Something's wrong with this subject. Error: ` + e);
           }
 
       };
@@ -3045,7 +3072,7 @@ async function updateDropDowns() {
           var d = new Date(leDate);
 
           //converts the date into a simplifed format for dropdown: mm/dd/yy
-          leDate = [('0' + (d.getMonth() + 1)).slice(-2), ('0' + d.getDate()).slice(-2), (d.getFullYear() % 100)].join('/');
+          leDate = [('' + (d.getMonth() + 1)).slice(-2), ('' + d.getDate()).slice(-2), (d.getFullYear() % 100)].join('/');
 
           //create proper html formatting for option to be added to select box
           var printDateOption = `<option print-date-convert="${leDate}">${leDate}</option>`;
