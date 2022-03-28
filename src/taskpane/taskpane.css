@@ -120,6 +120,7 @@ body, html {
     background-color:#F4F4F4;
     min-height:85px;
     width:100%;
+    /* position: fixed; */
 }
 
 .custom-header {
@@ -140,9 +141,26 @@ body, html {
     flex-direction:column;
     justify-content: center;
     background-color: white;
+    /* margin-top: 85px; */
     min-height:175px;
     width:100%;
+    overflow: auto;
+    flex-grow: 1;
+    align-items: flex-start;
+    margin: auto;
+    /* position: absolute; */
 }
+
+/* width:100%; */
+/* overflow: auto; */
+/* justify-content: auto; */
+/* justify-content: space-between;
+align-items: flex-start;*/
+
+/* position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%); */
 
 .label {
     font-size: 10pt;
@@ -203,20 +221,6 @@ body, html {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-}
-
-.left {
-    /* margin-left: 5%;
-    margin-right: 2.5%; */
-}
-
-.right {
-    /* margin-right: 5%;
-    margin-left: 2.5%; */
-}
-
-.split {
-    /* width: 100%; */
 }
 
 .input-group .input-area {
