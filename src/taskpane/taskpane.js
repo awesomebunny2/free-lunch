@@ -26,7 +26,7 @@ Office.onReady((info) => {
   // RUNS WHEN DOCUMENT IS LOADED
   //console.log("Ready!");
 
-  tryCatch(updateDropDowns);
+  // tryCatch(updateDropDowns);
 
   // $("#container").each(function () {
   //   $(this).html($(this).html().replace(/(\*)/g, '<span style="color: rgba(220, 20, 60, 0.50); font-size: 9pt; padding-left: 1px; padding-bottom: 1px;">$1</span>'));
@@ -56,6 +56,10 @@ Office.onReady((info) => {
 
 
 });
+
+
+tryCatch(updateDropDowns);
+
 
 
 
@@ -144,7 +148,7 @@ function addWarningClass(object, warning) {
 
 $("#clear").on("click", function() {
 
-  $("#client, #location, #product, #code, #project-type, #csm, #print-date, #group, #artist-lead, #queue, #tier, #tags, #start-override, #work-override").val(""); // Empty all inputs
+  $("#subject, #client, #location, #product, #code, #project-type, #csm, #print-date, #group, #artist-lead, #queue, #tier, #tags, #start-override, #work-override").val(""); // Empty all inputs
   removeWarningClass("#subject", ".warning1");
   removeWarningClass("#client", ".warning2");
   removeWarningClass("#product", ".warning3");
@@ -3142,7 +3146,7 @@ async function updateDropDowns() {
       var productIDBodyValues = productIDBodyRange.values;
 
       $("#product").empty();
-      $("#product").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#product").append($("<option disabled selected hidden></option>").val("").text(""));
 
       productIDBodyValues.forEach(function(row) {
 
@@ -3165,7 +3169,7 @@ async function updateDropDowns() {
       var projectTypeBodyValues = projectTypeBodyRange.values;
 
       $("#project-type").empty();
-      $("#project-type").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#project-type").append($("<option disabled selected hidden></option>").val("").text(""));
 
       projectTypeBodyValues.forEach(function(row) {
 
@@ -3186,9 +3190,9 @@ async function updateDropDowns() {
       var groupPrintBodyValues = groupPrintBodyRange.values;
 
       $("#print-date").empty();
-      $("#print-date").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#print-date").append($("<option disabled selected hidden></option>").val("").text(""));
       $("#group").empty();
-      $("#group").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#group").append($("<option disabled selected hidden></option>").val("").text(""));
 
       groupPrintBodyValues.forEach(function(row) {
 
@@ -3225,7 +3229,7 @@ async function updateDropDowns() {
       var artistLeadBodyValues = artistLeadBodyRange.values;
 
       $("#artist-lead").empty();
-      $("#artist-lead").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#artist-lead").append($("<option disabled selected hidden></option>").val("").text(""));
 
       artistLeadBodyValues.forEach(function(row) {
 
@@ -3246,7 +3250,7 @@ async function updateDropDowns() {
       var queueBodyValues = queueBodyRange.values;
 
       $("#queue").empty();
-      $("#queue").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#queue").append($("<option disabled selected hidden></option>").val("").text(""));
 
       queueBodyValues.forEach(function(row) {
 
@@ -3267,7 +3271,7 @@ async function updateDropDowns() {
       var tierBodyValues = tierBodyRange.values;
 
       $("#tier").empty();
-      $("#tier").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#tier").append($("<option disabled selected hidden></option>").val("").text(""));
 
       tierBodyValues.forEach(function(row) {
 
@@ -3288,7 +3292,7 @@ async function updateDropDowns() {
       var tagsBodyValues = tagsBodyRange.values;
 
       $("#tags").empty();
-      $("#tags").append($("<option disabled selected hidden></option>").val("").text("---"));
+      $("#tags").append($("<option disabled selected hidden></option>").val("").text(""));
 
       tagsBodyValues.forEach(function(row) {
 
