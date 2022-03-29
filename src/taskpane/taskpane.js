@@ -23,62 +23,195 @@ Office.onReady((info) => {
 
   // $( "#print-date" ).datepicker();
 
-
   // RUNS WHEN DOCUMENT IS LOADED
   //console.log("Ready!");
 
   tryCatch(updateDropDowns);
 
-  $("#container").each(function () {
-    $(this).html($(this).html().replace(/(\*)/g, '<span style="color: rgba(220, 20, 60, 0.50); font-size: 9pt; padding-left: 1px; padding-bottom: 1px;">$1</span>'));
-  });
+  // $("#container").each(function () {
+  //   $(this).html($(this).html().replace(/(\*)/g, '<span style="color: rgba(220, 20, 60, 0.50); font-size: 9pt; padding-left: 1px; padding-bottom: 1px;">$1</span>'));
+  // });
 
+  // $("#submit").on("click", function() {
 
-
-});
-
-
-$(".sel").on("change", function() {
-  console.log("SOMETHING CHANGED!");
-  var it = $(this).val();
-
-
-  if (it == "null") {
-    // make it grey
-    $(this).addClass("grey-sel");
-
-  } else {
-    // make it black
-    $(this).removeClass("grey-sel");
-  }
-
-
-
-//   console.log();
+  //   console.log("Ek");
   
+  //   if ($("#client") == "") {
+  //     $(this).addClass("warning-box")
+  //     $(this).addClass("warning-box + .label")
+  
+  //   }
+  
+  //   ugh();
+  
+  // });
+
+
+  // $("#clear").on("click", function() {
+
+  //   $("#client, #location, #product, #code, #project-type, #csm, #print-date, #group, #artist-lead, #queue, #tier, #tags, #start-override, #work-override").val(""); // Empty all inputs
+  
+  // });
+
+
 
 });
 
 
-$("#clear")/on("click", function() {
 
-  $("#client, #location, #product, #code, #project-type, #csm, #print-date, #group, #artist-lead, #queue, #tier, #tags, #start-override, #work-override").val(""); // Empty all inputs
-
+$("#container").each(function () {
+  $(this).html($(this).html().replace(/(\*)/g, '<span style="color: rgba(220, 20, 60, 0.50); font-size: 9pt; padding-left: 1px; padding-bottom: 1px;">$1</span>'));
 });
 
 
 
 $("#submit").on("click", function() {
+  // var clientWarningText = `Client name required to submit request`;
+  // var productWarningText = `Product required to submit request`;
+  // var projectTypeWarningText = `Project Type required to submit request`;
 
-  if ($("#client") == "") {
-    $(this).addClass("warning-box")
-    $(this).addClass("warning-box + .label")
+  if ((($("#client").val()) == "") || (($("#product").val()) == null) || (($("#project-type").val()) == null)) {
+    addWarningClass("#client", ".warning2");
+    addWarningClass("#product", ".warning3");
+    addWarningClass("#project-type", ".warning4");
+    return;
+  };
 
-  }
+  if ((($("#client").val()) !== "") || (($("#product").val()) !== null) || (($("#project-type").val()) !== null)) {
+    removeWarningClass("#client", ".warning2");
+    removeWarningClass("#product", ".warning3");
+    removeWarningClass("#project-type", ".warning4");
+    ugh();
+  };
+});
 
-  ugh();
+
+
+$("#client").on("focusout", function() {
+
+  removeWarningClass("#client", ".warning2");
 
 });
+
+$("#product").on("focusout", function() {
+
+  removeWarningClass("#product", ".warning3");
+
+});
+
+$("#project-type").on("focusout", function() {
+
+  removeWarningClass("#project-type", ".warning4");
+
+});
+
+
+
+
+
+
+
+
+
+
+function removeWarningClass(object, warning) {
+
+  if ((($(object).val()) !== "") || (($(object).val()) !== null)) {
+
+    $(warning).hide(); // Don't show the error
+    $(object).removeClass("warning-box")
+    $(object).removeClass("warning-box + .label")
+  
+  }
+  
+};
+
+function addWarningClass(object, warning) {
+
+  var cheese = $(object).val();
+
+  if ((($(object).val()) == "") || (($(object).val()) == null)) {
+
+    $(warning).show().text(`Required`); //show error
+    $(object).addClass("warning-box")
+    $(object).addClass("warning-box + .label")
+  
+  };
+
+};
+
+
+
+$("#clear").on("click", function() {
+
+  $("#client, #location, #product, #code, #project-type, #csm, #print-date, #group, #artist-lead, #queue, #tier, #tags, #start-override, #work-override").val(""); // Empty all inputs
+  removeWarningClass("#subject", ".warning1");
+  removeWarningClass("#client", ".warning2");
+  removeWarningClass("#product", ".warning3");
+  removeWarningClass("#project-type", ".warning4");
+
+});
+
+
+
+// $("#subject").on("keyup", function() {
+
+//   var paste = $(this).val(); // Get value from pasted input
+ 
+//   if (paste.length == 0) { // If what's pasted is empty
+    
+//      $(".warning1").hide(); // Don't show the error
+//      $(this).removeClass("warning-box")
+//      $(this).removeClass("warning-box + .label")
+//      $("#client, #location, #product, #code").val(""); // Empty all inputs
+   
+//   } else if (!paste.includes("~/*")) { // If what's pasted does not contain "~/*"
+        
+//      $(".warning1").show().text(`This subject does not contain "~/*"`);
+
+//     //  var warningCSS = {
+//     //    "border": "2px",
+//     //    "border-color": "red"
+//     //  }
+//     //  $(this).css("border", "2px solid red");
+
+//       $(this).addClass("warning-box")
+//       $(this).addClass("warning-box + .label")
+
+
+//     //  $(this).css("pointer-events", "none");
+//      $("#client, #location, #product, #code").val(""); // Empty all inputs
+          
+//   } else { // Probably a valid subject (contains ~/*)
+    
+//      $(".warning1").hide() // Hide error
+//      $(this).removeClass("warning-box")
+//      $(this).removeClass("warning-box + .label")
+
+
+
+// $(".sel").on("change", function() {
+//   console.log("SOMETHING CHANGED!");
+//   var it = $(this).val();
+
+
+//   if (it == "null") {
+//     // make it grey
+//     $(this).addClass("grey-sel");
+
+//   } else {
+//     // make it black
+//     $(this).removeClass("grey-sel");
+//   }
+
+
+
+// //   console.log();
+  
+
+// });
+
+
 
 async function ugh() {
 
@@ -260,14 +393,14 @@ $("#subject").on("keyup", function() {
  
   if (paste.length == 0) { // If what's pasted is empty
     
-     $("#warning").hide(); // Don't show the error
+     $(".warning1").hide(); // Don't show the error
      $(this).removeClass("warning-box")
      $(this).removeClass("warning-box + .label")
      $("#client, #location, #product, #code").val(""); // Empty all inputs
    
   } else if (!paste.includes("~/*")) { // If what's pasted does not contain "~/*"
         
-     $("#warning").show().text(`This subject does not contain "~/*"`);
+     $(".warning1").show().text(`This subject does not contain "~/*"`);
 
     //  var warningCSS = {
     //    "border": "2px",
@@ -284,7 +417,7 @@ $("#subject").on("keyup", function() {
           
   } else { // Probably a valid subject (contains ~/*)
     
-     $("#warning").hide() // Hide error
+     $(".warning1").hide() // Hide error
      $(this).removeClass("warning-box")
      $(this).removeClass("warning-box + .label")
      
@@ -377,7 +510,7 @@ $("#subject").on("keyup", function() {
               $("#code").val(updatedCode);
           } catch (e) {
               // Something was wrong with the subject
-              $("#warning").show().text(`Something's wrong with this subject. Error: ` + e);
+              $(".warning1").show().text(`Something's wrong with this subject. Error: ` + e);
           }
 
       } else { //if subject line does not include a location, do this...
@@ -405,7 +538,7 @@ $("#subject").on("keyup", function() {
               $("#code").val(updatedCode);
           } catch (e) {
               // Something was wrong with the subject
-              $("#warning").show().text(`Something's wrong with this subject. Error: ` + e);
+              $(".warning1").show().text(`Something's wrong with this subject. Error: ` + e);
           }
 
       };

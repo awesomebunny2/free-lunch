@@ -226,7 +226,7 @@ transform: translate(-50%, -50%); */
     position: relative;
     box-sizing: border-box;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .input-group .input-area {
@@ -343,7 +343,7 @@ select:hover {
     display:none;
     color:crimson;
     font-size: 8pt;
-    margin-top: 4px;
+    margin-top: 2px;
     margin-bottom: -5px;
     padding-left: 8px;
     font-style: italic;
@@ -358,6 +358,52 @@ select:hover {
     color: crimson !important;
 }
 
+/* p {
+    display: flex;
+    flex-direction: column;
+} */
+
+
+
+#buttons {
+    text-align: center;
+    min-height: 60px;
+    width: 85%;
+}
+
+.bottom-buttons {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.butt {
+    background-color: #022A42;
+    width: 100%;
+    border-radius: 15px;
+    border: solid;
+    color: #F4F4F4;
+    font-family: "HelveticaNeue-Thin", "Helvetica Neue Thin", "Helvetica Neue";
+    font-size: 12pt;
+    font-weight: 100;
+    padding: 10px;
+}
+
+.butt:hover {
+    background-color: #67ACE6;
+}
+
+.butt:active:hover {
+    background-color: #014671;
+    transform: scale(0.95);
+    /* background: 99%; */
+    /* font-size: 11pt; */
+    /* size: 95%; */
+    /* height: 95%;
+    width: 95%; */
+    justify-content: center;
+}
 
 
 
@@ -573,50 +619,4 @@ list {
     -moz-appearance: none;
 }
  */
-
-
-
-
-
-
-
-#buttons {
-    text-align: center;
-    min-height: 60px;
-    width: 85%;
-}
-
-.bottom-buttons {
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-.butt {
-    background-color: #022A42;
-    width: 100%;
-    border-radius: 15px;
-    border: solid;
-    color: #F4F4F4;
-    font-family: "HelveticaNeue-Thin", "Helvetica Neue Thin", "Helvetica Neue";
-    font-size: 12pt;
-    font-weight: 100;
-    padding: 10px;
-}
-
-.butt:hover {
-    background-color: #67ACE6;
-}
-
-.butt:active:hover {
-    background-color: #014671;
-    transform: scale(0.95);
-    /* background: 99%; */
-    /* font-size: 11pt; */
-    /* size: 95%; */
-    /* height: 95%;
-    width: 95%; */
-    justify-content: center;
-}
  
